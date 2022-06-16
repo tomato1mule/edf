@@ -1,2 +1,2 @@
-# edf
-Codes for the Equivariant Descriptor Fields (EDFs)
+# Equivariant Descriptor Fields (EDFs)
+Codes will be released soon
