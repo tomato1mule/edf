@@ -1,2 +1,2 @@
 # Equivariant Descriptor Fields (EDFs)
-Codes will be released soon
+Instructions will be released soon
