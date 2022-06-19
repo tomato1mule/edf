@@ -40,8 +40,8 @@ We also provide pickles of the tensor product layers as there is some numerical 
 
 Since our algorithm heavily relies on MCMC, very small errors may accumulate to result in huge differences.
 Unfortunately, there are small numerical differences across different platforms for some modules.
-As a result, the reproduciblity of the algorithm is not guaranteed across different platforms.
-Nevertheless, the reproducibility is at least guaranteed in the same platform.
+As a result, the reproducibility of the algorithm is not guaranteed across different platforms.
+Nevertheless, reproducibility is at least guaranteed in the same platform.
 Therefore, we provide the checkpoints for the trained models. 
 ```shell
 mkdir checkpoint
