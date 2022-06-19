@@ -1,4 +1,6 @@
 # Equivariant Descriptor Fields (EDFs)
+PyTorch Implementation for the EDFs.
+The paper can be found at: https://arxiv.org/abs/2206.08321
 
 ## Installation
 
