@@ -10,6 +10,7 @@ conda create --name edf python=3.9.12 -y
 conda activate edf
 ```
 If using VSC, add python interpreter path: ~/anaconda3/envs/edf/bin/python
+
 (ctrl+shift+P => Python: Select Interpreter => Enter interpreter path)
 
 **Step 2.**
@@ -35,7 +36,7 @@ pip3 install --no-index --no-cache-dir pytorch3d==0.6.2 -f https://dl.fbaipublic
 
 ## Reproducibility
 For the reproducibility, we fixed all the seeds for the random number generators and used deterministic algorithms only.
-We also provide pickles of the tensor product layers as there is some nondeterminism (of order 1e-6) in the initialization of E3NN that cannot be controlled by simply setting the seeds.
+We also provide pickles of the tensor product layers as there is some numerical nondeterminism (of order 1e-6) in the initialization of E3NN that cannot be controlled by simply setting the seeds.
 
 Since our algorithm heavily relies on MCMC, very small errors may accumulate to result in huge differences.
 Unfortunately, there are small numerical differences across different platforms for some modules.
@@ -43,7 +44,12 @@ As a result, the reproduciblity of the algorithm is not guaranteed across differ
 Nevertheless, the reproducibility is at least guaranteed in the same platform.
 Therefore, we provide the checkpoints for the trained models. 
 ```shell
-s
+mkdir checkpoint
+wget --load-cookies ~/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies ~/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1GyIz-u928OLP9myUC31QV3rHayyz48J3' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1GyIz-u928OLP9myUC31QV3rHayyz48J3" -O train_pick_reproducible.zip && rm -rf ~/cookies.txt
+wget --load-cookies ~/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies ~/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1_54umYhNJTwEThPPgQUnah9zjog_ap7C' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1_54umYhNJTwEThPPgQUnah9zjog_ap7C" -O train_place_reproducible.zip && rm -rf ~/cookies.txt
+unzip train_pick_reproducible.zip
+unzip train_place_reproducible.zip
+cd ..
 ```
 We also provide the train/test datasets.
 ```shell
