@@ -4,7 +4,7 @@ The paper can be found at: https://arxiv.org/abs/2206.08321
 
 ## Installation
 
-**Step 1.**
+**Step 1.** We recommend using Anaconda, although not necessary.
 ```shell
 git clone --recursive https://github.com/tomato1mule/edf.git
 cd edf
