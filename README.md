@@ -2,6 +2,17 @@
 PyTorch Implementation for the EDFs.
 The paper can be found at: https://arxiv.org/abs/2206.08321
 
+### New version coming soon!!! (in September)
+We are planning on releasing the revised version (both paper and the codes) in September.
+
+The new features are:
+- Corrected equivariance for the place agent with new query model
+- Performance optimization (>2x speedup)
+- Refactored code
+- Analytic jacobian for the calculation of the Lie derivative for stable Langevin dynamics.
+- Improved continuity/differentiability.
+- New task demonstrations / baseline experiments
+
 ## Installation
 
 **Step 1.** We recommend using Anaconda, although not necessary.
