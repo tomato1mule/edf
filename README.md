@@ -1,5 +1,5 @@
 # Equivariant Descriptor Fields (EDFs)
-PyTorch Implementation for the EDFs.
+PyTorch Implementation of Equivariant Descriptor Fields: SE(3)-Equivariant Energy-Based Models for End-to-End Visual Robotic Manipulation Learning
 
 ## Installation
 
