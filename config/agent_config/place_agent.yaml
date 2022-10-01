@@ -1,0 +1,40 @@
+max_radius: 4.
+field_cutoff: 5.
+#field_cutoff: 2.5
+std_theta_degree: 45.
+std_X: 5.
+# ranges: [[-21., 21.],
+#          [-21., 21.],
+#          [-30., -5.]]
+ranges: [[-23., 23.],
+         [-23., 23.],
+         [-33., 0.]]
+irreps_descriptor: "10x0e + 10x1e + 4x2e + 2x3e"
+sh_lmax_descriptor: 3
+number_of_basis_descriptor: 5
+irrep_normalization: 'norm'
+tp_type: 'direct'
+
+N_query: 50
+# N_query: 10
+query_radius: 4.
+#query_radius: 2.5
+max_radius_Q: 4.
+field_cutoff_Q: 5.
+# ranges_Q: [[-15., 15.],
+#            [-15., 15.],
+#            [-10., 10.]]
+ranges_Q: [[-20., 20.],
+           [-20., 20.],
+           [-10., 20.]]
+irreps_out_Q: "10x0e + 10x1e + 4x2e + 2x3e"
+sh_lmax_descriptor_Q: 3
+number_of_basis_descriptor_Q: 10
+irrep_normalization_Q: 'norm'
+learnable_query: False
+
+mh_iter: 500
+langevin_iter: 100
+
+
+

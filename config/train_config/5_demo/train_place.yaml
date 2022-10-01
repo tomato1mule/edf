@@ -1,0 +1,30 @@
+device: 'cuda'
+characteristic_length: 0.01
+temperature: 1.
+max_epochs: 120
+N_transform_init: 10
+mh_iter_init: 10000
+langevin_iter_init: 3000
+langevin_begin_epoch: 0
+report_freq: 10
+
+init_CD_ratio: 0.0
+end_CD_ratio: 0.0
+CD_end_iter: 0
+lr_se3T : 0.001
+lr_energy_fast : 0.005
+lr_energy_slow : 0.005
+lr_query_fast: 0.005
+lr_query_slow: 0.001
+std_theta_degree_perturb: 2.
+std_X_perturb: 0.2
+edf_norm_std: False
+langevin_dt: 0.003
+
+query_anneal_end_iter: 0
+query_init_temp: 1.
+query_end_temp: 1.
+
+elbo_end_iter: 100
+
+

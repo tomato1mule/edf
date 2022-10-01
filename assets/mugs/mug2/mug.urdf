@@ -1,0 +1,31 @@
+<?xml version="0.0" ?>
+<robot name="mug">
+    <link concave="yes" name="base_link">
+        <contact>
+            <lateral_friction value="0.8"/>
+            <!--rolling_friction value="0.3"/-->
+            <!--spinning_friction value="0.3"/-->
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0.03"/>
+            <mass value="1"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="mug.dae" scale="0.05 0.05 0.05 "/>
+            </geometry>
+      <material name="mug">
+        <color rgba="1 0.2 0.2 1"/>
+        <specular rgb="1 1 1"/>
+      </material>
+        </visual>
+        <collision concave="yes">
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="mug.dae" scale="0.05 0.05 0.05 "/>
+            </geometry>
+        </collision>
+    </link>
+</robot>

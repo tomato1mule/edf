@@ -1,5 +1,7 @@
 import pybullet as p
 import numpy as np
+import torch
+from torch_scatter import scatter
 
 def get_image(cam_config, physicsClientId = 0):
     cam_target_pos = cam_config['target_pos']
@@ -145,6 +147,34 @@ def img_data_to_pointcloud(data, xlim, ylim, zlim, stride=(1,1)):
         outputs['X_sg'] = X_sg
 
     return outputs
+
+
+def voxel_filter(coord, color, d, device = 'cpu'):
+    mins = coord.min(axis=-2)
+    maxs = coord.max(axis=-2)
+
+    vox_idx = ((coord - mins) // d).astype(int)
+    shape = vox_idx.max(axis=-2) + 1
+    raveled_idx = torch.tensor(np.ravel_multi_index(vox_idx.T, shape), device=device)
+
+    n_pts_per_vox = scatter(torch.ones_like(raveled_idx, device=device), raveled_idx, dim_size=shape[0]*shape[1]*shape[2])
+    nonzero_vox = n_pts_per_vox.nonzero()
+    n_pts_per_vox = n_pts_per_vox[nonzero_vox].squeeze(-1)
+
+    color_vox = scatter(torch.tensor(color, dtype=torch.float32, device=device), raveled_idx.unsqueeze(-1), dim=-2, dim_size=shape[0]*shape[1]*shape[2])[nonzero_vox].squeeze(-2)
+    color_vox /= n_pts_per_vox.unsqueeze(-1)
+    color_vox = color_vox.cpu().numpy()
+
+    # Type 1: Center of voxel
+    # coord_vox = np.stack(np.unravel_index(nonzero_vox.cpu().numpy().reshape(-1), shape), axis=-1)
+    # coord_vox = coord_vox * d + mins + (d/2)
+
+    # Type 2: Avg coord
+    coord_vox = scatter(torch.tensor(coord, dtype=torch.float32, device=device), raveled_idx.unsqueeze(-1), dim=-2, dim_size=shape[0]*shape[1]*shape[2])[nonzero_vox].squeeze(-2)
+    coord_vox /= n_pts_per_vox.unsqueeze(-1)
+    coord_vox = coord_vox.cpu().numpy()
+
+    return coord_vox, color_vox
 
 
 ##################################################################################

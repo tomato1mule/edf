@@ -206,7 +206,7 @@ class UniformDistR3(nn.Module):
         self.is_isotropic = False
 
     def sample(self, N=1):
-        return (torch.rand(N,3, device=self.ranges.device) - .5) * (self.ranges[:,1] - self.ranges[:,0]) + self.ranges.mean(dim=-1)
+        return torch.rand(N,3, device=self.ranges.device) * (self.ranges[:,1] - self.ranges[:,0]) + self.ranges[:,0]
 
     def propose(self, X):
         N = len(X)
@@ -234,22 +234,26 @@ class UniformDistR3(nn.Module):
 
 
 class DistSE3(nn.Module):
-    def __init__(self):
+    def __init__(self, decoupled = False):
         super().__init__()
         self.dist_X = None
         self.dist_R = None
+        self.decoupled = decoupled
 
     def sample(self, N=1):
         q = self.dist_R.sample(N=N)
         x = self.dist_X.sample(N=N)
-        x = transforms.quaternion_apply(q, x)
+        x = transforms.quaternion_apply(q, x)    # TODO: this does not work well with UniformDist so needs to be fixed
         return torch.cat([q, x], dim=-1)
 
     def propose(self, T):                                               
         q_old, X_old = T[...,:4], T[...,4:]                             
         q_new = self.dist_R.propose(q_old)                              
         X_prop = self.dist_X.propose(torch.zeros_like(X_old))           
-        X_new = transforms.quaternion_apply(q_old, X_prop) + X_old
+        if self.decoupled:
+            X_new = X_old + X_prop
+        else:
+            X_new = transforms.quaternion_apply(q_old, X_prop) + X_old
         
         return torch.cat([q_new, X_new], dim=-1)
 
@@ -258,7 +262,10 @@ class DistSE3(nn.Module):
         q1, X1 = T1[...,:4], T1[...,4:]                                       
         
         log_factor_q = self.dist_R.log_factor(q2, q1)
-        X_prop = transforms.quaternion_apply(transforms.quaternion_invert(q1), X2-X1) # X2 and X1 are represented in space frame, but DeltaX is sampled from gaussian in (old) body frame(=q1) so X2-X1 should be transported to q1 body frame
+        if self.decoupled:
+            X_prop = X2-X1
+        else:
+            X_prop = transforms.quaternion_apply(transforms.quaternion_invert(q1), X2-X1) # X2 and X1 are represented in space frame, but DeltaX is sampled from gaussian in (old) body frame(=q1) so X2-X1 should be transported to q1 body frame
         log_factor_X = self.dist_X.log_factor(X_prop, torch.zeros_like(X_prop))
 
         return log_factor_q + log_factor_X
@@ -269,7 +276,7 @@ class DistSE3(nn.Module):
         
         log_factor_q_diff = self.dist_R.log_factor_diff(q2, q1)
 
-        if self.dist_X.is_isotropic is True:
+        if self.dist_X.is_isotropic is True or self.decoupled:
             log_factor_X_diff = self.dist_X.log_factor_diff(X2, X1)
         else:
             X_prop_21 = transforms.quaternion_apply(transforms.quaternion_invert(q1), X2-X1)
@@ -287,8 +294,8 @@ class DistSE3(nn.Module):
 
 
 class GaussianDistSE3(DistSE3):
-    def __init__(self, std_theta, std_X):
-        super().__init__()
+    def __init__(self, std_theta, std_X, decoupled = False):
+        super().__init__(decoupled=decoupled)
         self.dist_R = IgSO3Dist(std=std_theta)
         self.dist_X = GaussianDistR3(std=std_X)
 
@@ -301,8 +308,8 @@ class GaussianDistSE3(DistSE3):
 
 
 class UniformDistSE3(DistSE3):
-    def __init__(self, ranges_X):
-        super().__init__()
+    def __init__(self, ranges_X, decoupled = False):
+        super().__init__(decoupled=decoupled)
         self.dist_R = QuaternionUniformDist()
         self.dist_X = UniformDistR3(ranges = ranges_X)
 
@@ -316,8 +323,8 @@ class UniformDistSE3(DistSE3):
 
 
 class MixedDistSE3(DistSE3):
-    def __init__(self, std_X):
-        super().__init__()
+    def __init__(self, std_X, decoupled = False):
+        super().__init__(decoupled=decoupled)
         self.dist_R = QuaternionUniformDist()
         self.dist_X = GaussianDistR3(std=std_X)
 
@@ -329,8 +336,10 @@ class MixedDistSE3(DistSE3):
 
 
 class NewGaussianDistSE3(nn.Module):
-    def __init__(self, std_theta, std_X):
+    def __init__(self, std_theta, std_X, decoupled = False):
         super().__init__()
+        if decoupled:
+            raise NotImplementedError
         self.dist_X = GaussianDistR3(std=std_X)
         self.dist_R = IgSO3Dist(std=std_theta)
 

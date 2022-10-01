@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<robot name="torus_textured.urdf">
+  <link name="baseLink">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+       <mass value="0.0"/>
+       <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="torus_textured.obj" scale="0.7 0.7 0.7"/>
+      </geometry>
+      <!--material name="brown">
+       <color rgba="0.64 0.16 0.16 1"/-->
+      <material name="red">
+       <color rgba="1. 0. 0. 1"/>
+     </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="torus_textured.obj" scale="0.7 0.7 0.7"/>
+        <!-- You could also specify the collision (for the torus_textured) with a "box" tag: -->
+        <!-- <box size=".06 .06 .06"/> -->
+      </geometry>
+    </collision>
+  </link>
+</robot>
+        

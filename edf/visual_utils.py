@@ -6,6 +6,7 @@ import numpy as np
 
 import torch
 from torch_cluster import radius_graph, radius
+from pytorch3d import transforms
 
 
 
@@ -32,7 +33,7 @@ def plot_color_and_depth(data, axs = None):
 def append_alpha(color):
     assert len(color.shape) == 2
     if color.shape[-1] == 3:
-        alpha = np.ones((len(color),1),dtype=np.float)
+        alpha = np.ones((len(color),1),dtype=float)
         color = np.concatenate((color,alpha), axis=-1)
     elif color.shape[-1] == 4:
         pass
@@ -61,11 +62,14 @@ def draw_poincloud_line(begin, end, color, N=100):
 
     return coord_line, color_line
 
-def draw_poincloud_arrow(begin, end, color, arrowhead_size = 1., N=50):
+def draw_poincloud_arrow(begin, end, color, arrowhead_size = 1., N=50, view_normal = None):
     c1, d1 = draw_poincloud_line(begin, end, color, N=N)
     dir = end-begin
     scale = np.linalg.norm(dir) + 1e-5
-    normal = np.array([1., 1., -1.]) /np.sqrt(3)
+    if view_normal is None:
+        normal = np.array([1., 1., -1.]) /np.sqrt(3)
+    else:
+        normal = view_normal
     perp1 = np.cross(dir / scale, normal)
     perp2 = np.cross(dir / scale, -normal)
     arr1 = (2*perp1 - dir) * 0.1 * arrowhead_size
@@ -77,6 +81,31 @@ def draw_poincloud_arrow(begin, end, color, arrowhead_size = 1., N=50):
     color_line = np.concatenate([d1,d2,d3], axis=0)
     
     return coord_line, color_line
+
+def draw_poincloud_arrow_new(begin, end, color, arrowhead_size = 1., density=10, view_normal = None):
+    dir = end-begin
+    scale = np.linalg.norm(dir) + 1e-5
+    c1, d1 = draw_poincloud_line(begin, end, color, N=int(scale*density)+1)
+
+    if view_normal is None:
+        normal = np.array([1., 1., -1.]) /np.sqrt(3)
+    else:
+        normal = view_normal
+    perp1 = np.cross(dir / scale, normal)
+    perp2 = np.cross(dir / scale, -normal)
+    arr1 = (2*perp1 - dir)
+    arr2 = (2*perp2 - dir)
+    arr1 = arr1 / np.linalg.norm(arr1) * arrowhead_size
+    arr2 = arr2 / np.linalg.norm(arr2) * arrowhead_size
+
+    c2, d2 = draw_poincloud_line(end, end + arr1, color, N=int(density*arrowhead_size) + 1 )
+    c3, d3 = draw_poincloud_line(end, end + arr2, color, N=int(density*arrowhead_size) + 1 )
+
+    coord_line = np.concatenate([c1,c2,c3], axis=0)
+    color_line = np.concatenate([d1,d2,d3], axis=0)
+    
+    return coord_line, color_line
+
 
 def draw_frame(ax, frame, origin, scale=1., alpha = 1., pointcloud = None):
 
@@ -162,12 +191,11 @@ def scatter_plot(coord, color, ranges, frame_infos = [],
     plt.show();
 
 
-def visualize_samples_key(samples, coord_key='coord', color_key='color', range_key='range', grasp_key=None):
+def visualize_samples_key(samples, coord_key='coord', color_key='color', range_key='range', grasp_key=None, fig_W=8):
     sample_indices = np.arange(len(samples))
     sample_len = len(sample_indices)
     columns = 4
     rows = (sample_len-1) // columns + 1
-    fig_W = 8
 
     fig, axes = plt.subplots(rows, columns, figsize=(fig_W*columns,fig_W*rows), subplot_kw={'projection':'3d'})
 
@@ -187,10 +215,10 @@ def visualize_samples_key(samples, coord_key='coord', color_key='color', range_k
         else:
             scatter_plot_ax(axes[r,c], coord, color, ranges, frame_info)
 
-def visualize_samples(samples):
-    visualize_samples_key(samples, coord_key='coord', color_key='color', range_key='range', grasp_key='grasp')
-    visualize_samples_key(samples, coord_key='coord_pick', color_key='color_pick', range_key='range_pick', grasp_key=None)
-    visualize_samples_key(samples, coord_key='coord_place', color_key='color_place', range_key='range_place', grasp_key='place')
+def visualize_samples(samples, fig_W=8):
+    visualize_samples_key(samples, coord_key='coord', color_key='color', range_key='range', grasp_key='grasp', fig_W=fig_W)
+    visualize_samples_key(samples, coord_key='coord_pick', color_key='color_pick', range_key='range_pick', grasp_key=None, fig_W=fig_W)
+    visualize_samples_key(samples, coord_key='coord_place', color_key='color_place', range_key='range_place', grasp_key='place', fig_W=fig_W)
 
 
 def add_gaussian_blob(pointcloud, pos, std, N=100):
@@ -203,7 +231,7 @@ def add_gaussian_blob(pointcloud, pos, std, N=100):
 
     return coord, color
 
-def visualize_cluster(coord, color, ranges, grasp, max_radius):
+def visualize_cluster(coord, color, ranges, grasp, max_radius, figsize=8):
     X_sdg, R_sdg = grasp
 
     num_nodes = coord.shape[0]
@@ -213,7 +241,7 @@ def visualize_cluster(coord, color, ranges, grasp, max_radius):
     green_node = np.argmax(color[:,1])
 
     src_nodes_to_visualize = [closest_node, red_node, green_node, 123]
-    fig, axes = plt.subplots(1,len(src_nodes_to_visualize), figsize=(8 * len(src_nodes_to_visualize),8), subplot_kw={'projection':'3d'})
+    fig, axes = plt.subplots(1,len(src_nodes_to_visualize), figsize=(figsize * len(src_nodes_to_visualize),figsize), subplot_kw={'projection':'3d'})
 
     for i, src_node in enumerate(src_nodes_to_visualize):
         neighbor = edge_dst[(edge_src == src_node).nonzero().squeeze(1)]
@@ -225,10 +253,10 @@ def visualize_cluster(coord, color, ranges, grasp, max_radius):
         scatter_plot_ax(axes[i], *add_gaussian_blob((coord,color_neighbor), coord[src_node], 0.001, 100), ranges)
     print(f"Number of Edges: {len(edge_src)}")
 
-def visualize_sample_cluster(sample, max_radius = 0.025, max_radius_pick = None, max_radius_place = None):
-    visualize_cluster(sample['coord'], sample['color'], sample['range'], sample['grasp'], max_radius=max_radius)
+def visualize_sample_cluster(sample, max_radius = 0.025, max_radius_pick = None, max_radius_place = None, figsize=8):
+    visualize_cluster(sample['coord'], sample['color'], sample['range'], sample['grasp'], max_radius=max_radius, figsize=figsize)
     if max_radius_pick is not None:
         grasp = (np.zeros(3), np.eye(3))
-        visualize_cluster(sample['coord_pick'], sample['color_pick'], sample['range_pick'], grasp, max_radius=max_radius_pick)
+        visualize_cluster(sample['coord_pick'], sample['color_pick'], sample['range_pick'], grasp, max_radius=max_radius_pick, figsize=figsize)
     if max_radius_place is not None:
-        visualize_cluster(sample['coord_place'], sample['color_place'], sample['range_place'], sample['place'], max_radius=max_radius_place)
+        visualize_cluster(sample['coord_place'], sample['color_place'], sample['range_place'], sample['place'], max_radius=max_radius_place, figsize=figsize)

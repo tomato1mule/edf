@@ -1,10 +1,11 @@
+<?xml version="0.0" ?>
 <robot name="mug">
     <link concave="yes" name="base_link">
-        <contact>
-            <lateral_friction value="0.5"/>
+        <!--contact>
+            <lateral_friction value="0.8"/>
             <rolling_friction value="0.3"/>
-            <spinning_friction value="0.5"/>
-        </contact>
+            <spinning_friction value="0.3"/>
+        </contact-->
         <inertial>
             <origin xyz="0 0 0.03"/>
             <mass value="1"/>

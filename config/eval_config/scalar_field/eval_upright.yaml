@@ -1,0 +1,42 @@
+device: 'cuda'
+characteristic_length: 0.01
+plot_figsize: [28,7]
+plot_result_figsize: [21,7]
+pick_only: False
+
+pick_policy: 'sorted'
+pick_dist_temp: 1.
+pick_policy_temp: 1.
+pick_attempt_max: 100
+N_transform_pick: 100
+mh_iter_pick: 1000
+langevin_iter_pick: 300
+optim_iter_pick: 100
+langevin_dt_pick: 0.001
+optim_lr_pick: 0.005
+X_seed_mean_pick: [0.,0., -29.]
+X_seed_std_pick: [2.5, 2.5, 0.5]
+max_N_query_pick: 30
+
+place_policy: 'sorted'
+place_dist_temp: 1.
+place_policy_temp: 1.
+place_attempt_max: 100
+N_transform_place: 100
+mh_iter_place: 1000
+langevin_iter_place: 300
+optim_iter_place: 100
+langevin_dt_place: 0.001
+optim_lr_place: 0.005
+X_seed_mean_place: [0.,0., -29.]
+X_seed_std_place: [2.5, 2.5, 0.5]
+max_N_query_place: 10
+query_temp_place: 1.
+
+schedules:
+  - init_seed: 100
+    end_seed: 200
+    mug_pose: 'upright'
+    mug_type: 'default'
+    distractor: False
+    use_support: False
