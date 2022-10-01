@@ -6,6 +6,8 @@ The paper can be found at: https://openreview.net/forum?id=dnjZSPGmY5O
 
 **Step 1.** We recommend using Anaconda, although not necessary.
 ```shell
+git clone --recursive https://github.com/tomato1mule/edf.git
+cd edf
 conda create --name edf python=3.9.12 -y
 conda activate edf
 ```
@@ -13,12 +15,8 @@ If using VSC, add python interpreter path: ~/anaconda3/envs/edf/bin/python
 
 (ctrl+shift+P => Python: Select Interpreter => Enter interpreter path)
 
+
 **Step 2.**
-Download the following file and unzip it as ./pybullet-planning
-
-Link: https://drive.google.com/file/d/1rNUZeRdb6WmbOMCW48PHS26-HG4fgto9/view?usp=sharing
-
-**Step 3.**
 ```shell
 pip3 install -r requirements.txt
 cd pybullet-planning/pybullet_tools/ikfast/franka_panda
@@ -28,7 +26,7 @@ conda develop ./pybullet-planning
 conda develop .
 ```
 
-**Step 4.**
+**Step 3.**
 ```shell
 pip3 install torch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
 pip3 install torch-scatter==2.0.9 -f https://data.pyg.org/whl/torch-1.11.0+cu113.html
