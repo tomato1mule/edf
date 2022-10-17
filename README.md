@@ -1,6 +1,7 @@
 # Equivariant Descriptor Fields (EDFs)
 PyTorch Implementation of Equivariant Descriptor Fields: SE(3)-Equivariant Energy-Based Models for End-to-End Visual Robotic Manipulation Learning.
-The paper can be found at: https://arxiv.org/abs/2206.08321 (Previous version: https&#65279;://arxiv.org/abs/2206.08321v1)
+
+The paper can be found at: https://arxiv.org/abs/2206.08321 $\quad$(Previous version: https&#65279;://arxiv.org/abs/2206.08321v1)
 
 ### Changes
 - Bi-equivariant policy with new query model.
