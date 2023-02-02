@@ -1,6 +1,8 @@
-# Equivariant Descriptor Fields (EDFs)
-PyTorch Implementation for the EDFs.
-The paper can be found at: anon
+# [ICLR 2023] Equivariant Descriptor Fields (EDFs)
+
+Official PyTorch implementation of Equivariant Descriptor Fields: SE(3)-Equivariant Energy-Based Models for End-to-End Visual Robotic Manipulation Learning (ICLR 2023 Poster).
+
+The paper can be found at: https://openreview.net/forum?id=dnjZSPGmY5O
 
 ## Installation
 
