@@ -494,7 +494,7 @@ class QueryModel(nn.Module):
 
 
 class SimpleQueryModel(QueryModel):
-    def __init__(self, irreps_descriptor, N_query, query_radius, irrep_normalization = 'norm', layernorm = False):
+    def __init__(self, irreps_descriptor, N_query, query_radius, irrep_normalization = 'norm', layernorm = False, max_N_query = None):
         super().__init__(irreps_descriptor=irreps_descriptor, N_query=N_query, irrep_normalization=irrep_normalization)
         self.query_radius = query_radius   # maximum radius for query points' positions.
 
@@ -508,6 +508,7 @@ class SimpleQueryModel(QueryModel):
         else:
             self.layernorm = nn.Identity()
             self.register_parameter('dummy_param', torch.nn.Parameter(torch.randn(1, requires_grad=True)))
+        self.max_N_query = max_N_query
 
     def init_query_points(self, N, max_radius):
         ### Generates N points within a ball whose radius is max_radius
@@ -524,7 +525,16 @@ class SimpleQueryModel(QueryModel):
             query_feature = self.query_feature                         # (N_query, feature_len)
             query_feature = self.layernorm(query_feature)
             query_points = self.query_points                           # (N_query, 3)
-            query_attention = F.softmax(self.query_attention, dim=-1)  # (N_query,)
+            if self.max_N_query is not None:
+                if self.max_N_query != len(self.query_attention):
+                    indices = self.query_attention.argsort(descending=True)[:self.max_N_query] # (max_N_query,)
+                    query_feature = query_feature[indices]  # (max_N_query, feature_len)
+                    query_points = query_points[indices] # (max_N_query, 3)
+                    query_attention = F.softmax(self.query_attention[indices], dim=-1)  # (max_N_query,)
+                else:
+                    query_attention = F.softmax(self.query_attention, dim=-1)  # (N_query,)
+            else:
+                query_attention = F.softmax(self.query_attention, dim=-1)  # (N_query,)
 
             return {'query_feature': query_feature, 'query_points': query_points, 'query_attention': query_attention}
         else:
@@ -532,7 +542,16 @@ class SimpleQueryModel(QueryModel):
                 query_feature = self.query_feature                         # (N_query, feature_len)
                 query_feature = self.layernorm(query_feature)
                 query_points = self.query_points                           # (N_query, 3)
-                query_attention = F.softmax(self.query_attention, dim=-1)  # (N_query,)
+                if self.max_N_query is not None:
+                    if self.max_N_query != len(self.query_attention):
+                        indices = self.query_attention.argsort(descending=True)[:self.max_N_query] # (max_N_query,)
+                        query_feature = query_feature[indices]  # (max_N_query, feature_len)
+                        query_points = query_points[indices] # (max_N_query, 3)
+                        query_attention = F.softmax(self.query_attention[indices], dim=-1)  # (max_N_query,)
+                    else:
+                        query_attention = F.softmax(self.query_attention, dim=-1)  # (N_query,)
+                else:
+                    query_attention = F.softmax(self.query_attention, dim=-1)  # (N_query,)
 
                 return {'query_feature': query_feature, 'query_points': query_points, 'query_attention': query_attention}
 

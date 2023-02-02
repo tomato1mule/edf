@@ -599,8 +599,8 @@ class FrankaTask(BulletTask):
         X_sde = X_sdg - R_sde@self.X_eg
 
 
-        pre_grasp = {'pose':(X_sde_pre, R_sde_pre), 'gripper_val': 0., 'col_check_items': [self.table_id, self.target_item]}
-        grasp1 = {'pose':(X_sde, R_sde), 'gripper_val': 0., 'col_check_items': [self.table_id, self.target_item]}
+        pre_grasp = {'pose':(X_sde_pre, R_sde_pre), 'gripper_val': 0., 'col_check_items': [self.table_id, self.target_item]}        
+        grasp1 = {'pose':(X_sde, R_sde), 'gripper_val': 0., 'col_check_items': [self.table_id, self.target_item]}                   
         grasp2 = {'pose':(X_sde, R_sde), 'gripper_val': 1., 'col_check_items': []}
         lift = {'pose':(X_sde + np.array([0., 0., 0.2]), R_sde), 'gripper_val': 1., 'col_check_items': []}
 
@@ -2436,3 +2436,2213 @@ class StickTask(FrankaTask):
             p.setCollisionFilterPair(self.target_item, self.robot, -1, i, 1, self.physicsClientId)
 
         return result
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class BowlTask(FrankaTask):
+    def __init__(self, use_gui = True):
+        super().__init__(use_gui=use_gui)
+
+    def init_task(self, mug_type = 'default', distractor = False, use_support = False, **kwargs):
+        super().init_task()
+
+        self.mug_scale = 1.
+        self.X_mh = np.array([0., 0.0, -0.03]) * (self.mug_scale) # mug to handle
+        self.R_mh = np.eye(3)
+        self.X_eg = np.array([0, 0, 0.105]) # EE to gripper sweet-spot
+        self.R_eg = np.eye(3)
+        self.X_m_top = np.array([0., 0., 0.01]) * self.mug_scale
+        self.R_m_top = np.eye(3)
+        self.branch_length = 0.065
+        self.branchLinkId = -1
+
+        if mug_type == 'default':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bowls/bowl0/bowl.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+        elif mug_type == 'cup1':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bowls/bowl1/bowl.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0., 0.065, 0.01]) * (self.mug_scale)
+        elif mug_type == 'cup2':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bowls/bowl2/bowl.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0.0, 0.075, 0.01]) * (self.mug_scale)
+        elif mug_type == 'cup3':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bowls/bowl3/bowl.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([-0.0, 0.07, 0.015]) * (self.mug_scale)
+        elif mug_type == 'cup4':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bowls/bowl4/bowl.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0.0, 0.07, 0.015]) * (self.mug_scale)
+        elif mug_type == 'cup5':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bowls/bowl5/bowl.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([-0.0, 0.07, 0.01]) * (self.mug_scale)
+        elif mug_type == 'cup6':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bowls/bowl6/bowl.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0., 0.06, 0.015]) * (self.mug_scale)
+        elif mug_type == 'cup7':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bowls/bowl7/bowl.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0., 0.08, 0.01]) * (self.mug_scale)
+        elif mug_type == 'cup8':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bowls/bowl8/bowl.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0.0, 0.06, 0.01]) * (self.mug_scale)
+        elif mug_type == 'cup9':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bowls/bowl9/bowl.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0.0, 0.06, 0.03]) * (self.mug_scale)
+        elif mug_type == 'cup10':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bowls/bowl10/bowl.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0.0, 0.05, 0.01]) * (self.mug_scale)
+        else:
+            raise KeyError
+        p.changeDynamics(self.mug_id, -1, lateralFriction=0.8, rollingFriction=0.3, spinningFriction=0.3)
+        self.hook_scale = 1.
+        self.hook_id = p.loadURDF("assets/traybox.urdf", basePosition=[0.5, 0., 0.], globalScaling=0.15 * self.hook_scale, physicsClientId = self.physicsClientId, useFixedBase = True)
+
+        if use_support:
+            # self.support_box_id = p.loadURDF("assets/traysupport.urdf", basePosition=[0.5, 0., 0.3], globalScaling=0.2, physicsClientId = self.physicsClientId, useFixedBase = True)
+            self.support_box_h = 0.3
+            self.support_box_id = create_box(w=0.15, l=0.15, h=self.support_box_h, color=(72/255,72/255,72/255,1.))
+            p.changeDynamics(self.support_box_id, -1, lateralFriction = 3., rollingFriction=3., spinningFriction=3.)
+        else:
+            self.support_box_id = None
+
+        if distractor:
+            self.lego_scale = 2.5
+            self.lego_id = p.loadURDF("assets/distractor/lego.urdf", basePosition=[0.7, -0.2, 0.35], baseOrientation=p.getQuaternionFromEuler([0, 0, 0]), globalScaling=self.lego_scale, physicsClientId = self.physicsClientId)
+            self.duck_scale = 0.07
+            self.duck_id = p.loadURDF("assets/distractor/duck.urdf", basePosition=[0.7, 0.2, 0.35], baseOrientation=p.getQuaternionFromEuler([0, 0, 0]), globalScaling=self.duck_scale, physicsClientId = self.physicsClientId)
+            self.torus_scale = 0.07
+            self.torus_id = p.loadURDF("assets/distractor/torus_textured.urdf", basePosition=[0.5, -0.2, 0.35], baseOrientation=p.getQuaternionFromEuler([0, 0, 0]), globalScaling=self.torus_scale, physicsClientId = self.physicsClientId)
+            self.bunny_scale = 0.07
+            self.bunny_id = p.loadURDF("assets/distractor/bunny.urdf", basePosition=[0.5, 0.2, 0.35], baseOrientation=p.getQuaternionFromEuler([0, 0, 0]), globalScaling=self.torus_scale, physicsClientId = self.physicsClientId)
+
+
+    def reset(self, seed = None, mug_pose = 'upright', mug_type = 'default', distractor = False, use_support = False, step=1):
+        if mug_type == 'cups':
+            mug_type = f'cup{seed%10 + 1}'
+        super().reset(seed = seed, step = False, mug_type=mug_type, distractor=distractor, use_support=use_support)
+
+        randomize_mug_pos = True
+        randomize_hook_pos = True
+
+        self.target_item = self.mug_id
+
+        if mug_pose == 'arbitrary' or mug_pose == 'lying':
+            arbitrary_tray = True
+        else:
+            arbitrary_tray = False
+
+        if mug_pose == 'arbitrary':
+            #if seed %2 == 0:
+            if np.random.rand() > 0.5:
+                mug_pose = 'lying'
+            else:
+                mug_pose = 'upright'
+
+
+        # Reset cup orientation
+        if mug_pose == 'upright':
+            mug_orn = np.array([0., 0., np.random.rand()*np.pi*2])
+            mug_orn = p.getQuaternionFromEuler(mug_orn)
+        elif mug_pose == 'lying':
+            mug_orn = np.array([np.pi /2, 0., -np.random.rand()*np.pi])
+            mug_orn = p.getQuaternionFromEuler(mug_orn)
+            mug_orn = multiply_quats(mug_orn, p.getQuaternionFromEuler(np.array([0., 0., (2*np.random.rand()-1)*np.pi*1/2])))
+        else:
+            raise KeyError
+
+
+        # Sample and mug displacement(s) from center
+        if randomize_mug_pos:
+            if distractor is True:
+                disp_x_abs_max = 0.01
+                disp_y_abs_max = 0.01
+            elif mug_pose == 'upright':
+                disp_x_abs_max = 0.05
+                disp_y_abs_max = 0.05
+            elif mug_pose == 'lying':
+                disp_x_abs_max = 0.03
+                disp_y_abs_max = 0.03
+            mug_disp = np.array([(2*np.random.rand() - 1) * disp_x_abs_max, (2*np.random.rand() - 1) * disp_y_abs_max, 0.])
+        else:
+            mug_disp = np.array([0., 0., 0.])
+        mug_origin = self.center + np.array([-0.05, 0., 0.])
+
+        if distractor:
+            p.changeVisualShape(objectUniqueId=self.bunny_id, linkIndex=-1, rgbaColor = np.concatenate([np.random.rand(3), np.array([1.])]))
+            p.changeVisualShape(objectUniqueId=self.lego_id, linkIndex=-1, rgbaColor = np.concatenate([np.random.rand(3), np.array([1.])]))
+            p.changeVisualShape(objectUniqueId=self.torus_id, linkIndex=-1, rgbaColor = np.concatenate([np.random.rand(3), np.array([1.])]))
+            p.changeVisualShape(objectUniqueId=self.duck_id, linkIndex=-1, rgbaColor = np.concatenate([np.random.rand(3), np.array([1.])]))
+
+
+        # Sample and distractors displacement(s) from center
+        if distractor:
+            if randomize_mug_pos:
+                disp_x_max = 0.01
+                disp_y_max = 0.01
+                disps = []
+                disps.append(np.array([np.random.rand() * disp_x_max, np.random.rand() * disp_y_max, 0.]))
+                disps.append(np.array([-np.random.rand() * disp_x_max, np.random.rand() * disp_y_max, 0.]))
+                disps.append(np.array([np.random.rand() * disp_x_max, -np.random.rand() * disp_y_max, 0.]))
+                disps.append(np.array([-np.random.rand() * disp_x_max, -np.random.rand() * disp_y_max, 0.]))
+            else:
+                disps = []
+                disps.append(np.array([0., 0., 0.]))
+                disps.append(np.array([0., 0., 0.]))
+                disps.append(np.array([0., 0., 0.]))
+                disps.append(np.array([0., 0., 0.]))
+
+
+        # Origin pos for mug (and distractors)
+        if distractor:
+            global_offset = np.array([0.0, 0., 0.])
+            dx = 0.12
+            dy = 0.12
+            origins = [self.center + global_offset + np.array([dx, dy, 0.]),
+                       self.center + global_offset + np.array([-dx, dy, 0.]),
+                       self.center + global_offset + np.array([dx, -dy, 0.]),
+                       self.center + global_offset + np.array([-dx, -dy, 0.])]
+            
+
+        # Allocate origin and disp for mugs and distractors
+        if distractor:
+            idx = list(range(4))
+            np.random.shuffle(idx)
+
+            bunny_disp = disps[idx[0]]
+            lego_disp = disps[idx[1]]
+            duck_disp = disps[idx[2]]
+            torus_disp =  disps[idx[3]]
+
+            bunny_origin = origins[idx[0]]
+            lego_origin = origins[idx[1]]
+            duck_origin = origins[idx[2]]
+            torus_origin = origins[idx[3]]
+
+
+
+        # Reset mug
+        mug_pos = mug_origin + mug_disp
+        if self.support_box_id is not None:
+            # First reset the support
+            support_box_pos = mug_pos + np.array([0., 0., 2.])
+            # support_box_pos[-1] = stable_z(self.support_box_id, self.table_id) + (np.random.rand() * 0.04 * randomize_mug_pos)
+            support_box_pos[-1] = stable_z(self.support_box_id, self.table_id) - self.support_box_h + (np.random.rand() * 0.07 * randomize_mug_pos)
+            p.resetBasePositionAndOrientation(self.support_box_id, support_box_pos, np.array([0., 0., 0., 1.]), physicsClientId = self.physicsClientId)
+
+            # Reset mug on top of the support
+            mug_pos = support_box_pos + np.array([(2*np.random.rand() -1)*0.01, (2*np.random.rand() -1)*0.01, 4.])
+            p.resetBasePositionAndOrientation(self.mug_id, mug_pos, mug_orn, physicsClientId = self.physicsClientId)
+            mug_pos[2] = stable_z(self.mug_id, self.support_box_id)
+            p.resetBasePositionAndOrientation(self.mug_id, mug_pos, mug_orn, physicsClientId = self.physicsClientId)
+        else:
+            mug_pos = mug_pos + np.array([0., 0., 4.])
+            p.resetBasePositionAndOrientation(self.mug_id, mug_pos, mug_orn, physicsClientId = self.physicsClientId)
+            mug_pos[2] = stable_z(self.mug_id, self.table_id)
+            p.resetBasePositionAndOrientation(self.mug_id, mug_pos, mug_orn, physicsClientId = self.physicsClientId)
+        
+
+        # Reset distractor
+        if distractor:
+            bunny_pos = bunny_origin + bunny_disp + np.array([0., 0., 4.])
+            bunny_pos[2] = stable_z(self.bunny_id, self.table_id)
+            bunny_orn = p.getQuaternionFromEuler([0., 0., np.random.rand()*np.pi*2])
+
+            lego_pos = lego_origin + lego_disp + np.array([0., 0., 4.])
+            lego_pos[2] = stable_z(self.lego_id, self.table_id)
+            lego_orn = p.getQuaternionFromEuler([0., 0., np.random.rand()*np.pi*2])
+
+            duck_pos = duck_origin + duck_disp + np.array([0., 0., 4.])
+            duck_pos[2] = stable_z(self.duck_id, self.table_id)
+            duck_orn = p.getQuaternionFromEuler([0., 0., np.random.rand()*np.pi*2])
+
+            torus_pos = torus_origin + torus_disp + np.array([0., 0., 4.])
+            torus_pos[2] = stable_z(self.torus_id, self.table_id)
+            torus_orn = p.getQuaternionFromEuler([0., 0., np.random.rand()*np.pi*2])
+
+            p.resetBasePositionAndOrientation(self.bunny_id, bunny_pos, bunny_orn, physicsClientId = self.physicsClientId)
+            p.resetBasePositionAndOrientation(self.lego_id, lego_pos, lego_orn, physicsClientId = self.physicsClientId)
+            p.resetBasePositionAndOrientation(self.duck_id, duck_pos, duck_orn, physicsClientId = self.physicsClientId)
+            p.resetBasePositionAndOrientation(self.torus_id, torus_pos, torus_orn, physicsClientId = self.physicsClientId)
+
+        # Reset Hook
+        hook_pos = self.center + np.array([0.13, 0.0 ,0.])
+        if randomize_hook_pos:
+            hook_pos = hook_pos + np.array([0., (2*np.random.rand() - 1) * 0.05, (2*np.random.rand() - 1) * 0.01])
+        hook_orn = np.array([0., 0., np.pi]) + np.array([0., 0., (2*np.random.rand() - 1) * np.pi / 8])
+        hook_orn = p.getQuaternionFromEuler(hook_orn)
+        if arbitrary_tray:
+            theta_ = np.random.rand() * np.pi/12
+            dOrn = p.getQuaternionFromEuler(np.array([0, theta_, 0]))
+            hook_orn = np.array(p.multiplyTransforms(np.zeros(3),hook_orn, np.zeros(3), dOrn)[-1])
+            hook_pos[-1] += 0.0
+        p.resetBasePositionAndOrientation(self.hook_id, hook_pos, hook_orn, physicsClientId = self.physicsClientId)
+
+
+        # Disable collision for visual distractors with robot
+        for i in range(12):
+            #p.setCollisionFilterPair(self.hook_id, self.robot, -1, i, 0, self.physicsClientId)
+            #p.setCollisionFilterPair(self.hook_id, self.robot, 0, i, 0, self.physicsClientId)
+            if self.support_box_id is not None:
+                p.setCollisionFilterPair(self.support_box_id, self.robot, -1, i, 0, self.physicsClientId)
+            if distractor:
+                p.setCollisionFilterPair(self.bunny_id, self.robot, -1, i, 0, self.physicsClientId)
+                p.setCollisionFilterPair(self.lego_id, self.robot, -1, i, 0, self.physicsClientId)
+                p.setCollisionFilterPair(self.duck_id, self.robot, -1, i, 0, self.physicsClientId)
+                p.setCollisionFilterPair(self.torus_id, self.robot, -1, i, 0, self.physicsClientId)
+        if distractor:
+            p.setCollisionFilterPair(self.bunny_id, self.mug_id, -1, -1, 0, self.physicsClientId)
+            p.setCollisionFilterPair(self.lego_id, self.mug_id, -1, -1, 0, self.physicsClientId)
+            p.setCollisionFilterPair(self.duck_id, self.mug_id, -1, -1, 0, self.physicsClientId)
+            p.setCollisionFilterPair(self.torus_id, self.mug_id, -1, -1, 0, self.physicsClientId)
+
+
+        p.changeDynamics(self.mug_id, -1, linearDamping = 0.3, angularDamping = 0.3)
+        #p.changeDynamics(self.mug_id, -1, contactStiffness = 100000000., contactDamping = 100.)
+
+        # step sim
+        if step:
+            step = int(step/self.freq)
+            for _ in range(step):
+                p.stepSimulation(physicsClientId = self.physicsClientId)
+
+    def get_state(self):
+        state = super().get_state()
+
+        # Suffix guide
+        # ==>  m: Mug, h: Handle, dg: Desired grasp sweet spot, de: Desired End Effector, pre: Pregrasp
+        X_sm, R_sm = p.getBasePositionAndOrientation(self.mug_id, physicsClientId = self.physicsClientId)
+        X_sm, R_sm = np.array(X_sm), Rotation.from_quat(R_sm).as_matrix()
+        X_s_hook, R_s_hook = p.getBasePositionAndOrientation(self.hook_id, physicsClientId = self.physicsClientId)
+        X_s_hook, R_s_hook = np.array(X_s_hook), Rotation.from_quat(R_s_hook).as_matrix()
+        # X_s_branch, R_s_branch = p.getLinkState(self.hook_id, self.branchLinkId)[:2]
+        # X_s_branch, R_s_branch = np.array(X_s_branch), Rotation.from_quat(R_s_branch).as_matrix()
+        # R_s_tip = R_s_branch.copy()
+        # X_s_tip = X_s_branch + (R_s_branch @ np.array([0., 0., self.branch_length]))
+        X_s_branch, R_s_branch = X_s_hook.copy(), R_s_hook.copy()
+        R_s_tip, X_s_tip = R_s_hook.copy(), X_s_hook.copy()
+
+        X_mh, R_mh = self.X_mh.copy(), self.R_mh.copy()
+        X_sh, R_sh = X_sm + (R_sm @ X_mh), R_sm @ R_mh
+
+        state['T_sm'] = (X_sm, R_sm)
+        state['T_sh'] = (X_sh, R_sh)
+        state['T_s_hook'] = (X_s_hook, R_s_hook)
+        state['T_s_tip'] = (X_s_tip, R_s_tip)
+        state['T_s_branch'] = (X_s_branch, R_s_branch)
+
+        return state
+
+#     Z-axis
+#       ↑
+    #       #
+    #       ####
+    #       #  # -> Y-axis
+    #       ####
+    #########
+
+
+    def oracle_pick_rim(self, mod):
+        state = self.get_state()
+        X_sm, R_sm = state['T_sm']
+        X_se, R_se = state['T_se']
+
+        X_mh, R_mh = self.X_mh.copy(), self.R_mh.copy()
+        X_m_top, R_m_top = self.X_m_top, self.R_m_top
+
+        
+        #yaw = -np.pi / 2 # 0 ~ pi
+        #yaw = yaw + (2*np.random.rand()-1)*np.pi*2/3
+        #yaw = yaw + np.pi/2
+
+        # yaw_mod_1 = 0.
+        # yaw_mod_1 += (2*np.random.rand()-1)*np.pi*1/6
+        # yaw_mod_2 = np.pi 
+        # yaw_mod_2 += (2*np.random.rand()-1)*np.pi*1/6
+
+        # yaw = yaw_mod_1*mod + yaw_mod_2*(1-mod)
+        yaw = (2*np.random.rand()-1)*np.pi
+
+        R_top_rim = p.getMatrixFromQuaternion(p.getQuaternionFromEuler(np.array([0., 0., yaw])))
+        R_top_rim = np.array(R_top_rim).reshape(3,3)
+        rim_X_top_rim = np.array([0.05, 0., 0.])
+        X_top_rim = R_top_rim @ rim_X_top_rim
+        X_rim_dg = np.array([0., 0., 0.]) 
+        R_rim_dg = np.array([[0. ,1. ,0.],
+                             [1. ,0. ,0.],
+                             [0. ,0. ,-1.]])
+
+        R_sdg = R_sm @ R_m_top @ R_top_rim @ R_rim_dg
+        X_top_dg = X_top_rim + (R_top_rim @ X_rim_dg)
+        X_mdg = X_m_top + (R_m_top @ X_top_dg)
+        X_sdg = X_sm + (R_sm @ X_mdg)
+
+
+        perturb_axis = np.random.randn(3)
+        perturb_axis = perturb_axis / np.linalg.norm(perturb_axis)
+        perturb_angle = (2*np.random.rand()-1) * (np.pi/180 * 5)
+        R_perturb = Rotation.from_rotvec(perturb_angle * perturb_axis).as_matrix()
+        R_sdg = R_sdg @ R_perturb
+
+        R_dg_dgpre = np.eye(3)
+        R_s_dgpre = R_sdg @ R_dg_dgpre
+        X_dg_dgpre = np.array([0., 0., -0.03])
+        sX_dg_dgpre = R_sdg @ X_dg_dgpre
+        X_s_dgpre = X_sdg + sX_dg_dgpre
+
+        pre_grasp = (X_s_dgpre, R_s_dgpre)
+        grasp = X_sdg, R_sdg
+
+        return pre_grasp, grasp
+
+    def oracle_place_handle_horizontal(self, mod, low_var = False):
+        state = self.get_state()
+        X_sm, R_sm = state['T_sm']
+        X_se, R_se = state['T_se']
+        X_s_tip, R_s_tip = state['T_s_tip']
+        X_s_base, R_s_base = state['T_s_hook']
+        R_sg = R_se @ self.R_eg
+        X_sg = X_se + (R_se @ self.X_eg)
+        X_mh, R_mh = self.X_mh.copy(), self.R_mh.copy()
+        X_sh, R_sh = X_sm + (R_sm @ X_mh), R_sm @ R_mh
+
+        X_gh = R_sg.T @ (X_sh - X_sg)
+        X_dgdh = X_gh
+        R_dgdh = R_sg.T @ R_sh
+        X_dhdg = - R_dgdh.T @ X_dgdh
+
+        # if mod:
+        #     # theta = -np.pi*np.random.rand() # -pi~0
+        #     offset = np.pi/4
+        #     if low_var:
+        #         theta = -(np.pi-2*offset)*(0.5 + (np.random.rand()-0.5)*0.3) - offset # 30 percent of original variance
+        #     else:
+        #         theta = -(np.pi-2*offset)*np.random.rand() - offset # -pi/4 ~ -3pi/4
+        #     R_base_dh = np.array([[ 0.0,    np.sin(theta),          np.cos(theta)],
+        #                           [ 0.0,   -np.cos(theta),          np.sin(theta)],
+        #                           [ 1.0,              0.0,                    0.0]])
+        # else:
+        #     offset = np.pi/4
+        #     if low_var:
+        #         theta = (np.pi-2*offset)*(0.5 + (np.random.rand()-0.5)*0.3) + offset # 30 percent of original variance
+        #     else:
+        #         theta = (np.pi-2*offset)*np.random.rand() + offset # pi/4 ~ 3pi/4
+        #     R_base_dh = np.array([[ 0.0,   -np.sin(theta),          np.cos(theta)],
+        #                           [ 0.0,    np.cos(theta),          np.sin(theta)],
+        #                           [-1.0,              0.0,                    0.0]])
+
+        theta = np.random.rand() * 2 * np.pi
+        R_base_dh = np.array([[ np.cos(theta),   -np.sin(theta),       0.0],
+                              [ np.sin(theta),   np.cos(theta),        0.0],
+                              [ 0.0,              0.0,                 1.0]])
+                                
+
+        R_sdg = R_s_base @ R_base_dh @ R_dgdh.T
+
+        sX_tip_dh = np.array([0., 0., 0.00]) # np.array([0., 0., 0.02])
+        R_sdh = R_sdg @ R_dgdh
+        sX_dhdg = R_sdh @ X_dhdg
+        X_sdg = X_s_tip + sX_tip_dh + sX_dhdg
+
+        R_dg_dgpre = np.eye(3)
+        R_s_dgpre = R_sdg @ R_dg_dgpre
+        X_dg_dgpre = np.array([0., 0., -0.03])
+        sX_dg_dgpre = R_sdg @ X_dg_dgpre
+        X_s_dgpre = X_sdg + sX_dg_dgpre
+
+        pre_place = (X_s_dgpre, R_s_dgpre)
+        place = (X_sdg, R_sdg)
+
+        return pre_place, place
+
+
+    def debug(self, debug_items = ['grasp']):
+        super().debug(debug_items=debug_items)
+        for item in debug_items:
+            if item == 'mug':
+                mugFrame_ID = axiscreator(self.mug_id, physicsClientId = self.physicsClientId)
+            elif item == 'mug_rim':
+                topFrame_ID = axiscreator(self.mug_id, offset = self.X_m_top.copy(), physicsClientId = self.physicsClientId)
+            elif item == 'mug_handle':
+                handleFrame_ID = axiscreator(self.mug_id, offset = self.X_mh.copy(), physicsClientId = self.physicsClientId)
+            elif item == 'hook_branch':
+                hookFrame_ID = axiscreator(self.hook_id, self.branchLinkId, physicsClientId = self.physicsClientId)
+            elif item == 'hook_branch_offset':
+                axiscreator(self.hook_id, self.branchLinkId, offset = np.array([0., 0., 0.07]),physicsClientId = self.physicsClientId)
+            elif item == 'distractors':
+                axiscreator(self.bunny_id, physicsClientId = self.physicsClientId)
+                axiscreator(self.duck_id, physicsClientId = self.physicsClientId)
+                axiscreator(self.torus_id, physicsClientId = self.physicsClientId)
+                axiscreator(self.lego_id, physicsClientId = self.physicsClientId)
+            elif item == 'hook_base':
+                hookBaseFrame_ID = axiscreator(self.hook_id, physicsClientId = self.physicsClientId)
+
+    def check_pick_success(self):
+        state = self.get_state()
+        X_sm, R_sm = state['T_sm']
+        X_mh, R_mh = self.X_mh.copy(), self.R_mh.copy()
+        X_sh, R_sh = X_sm + (R_sm @ X_mh), R_sm @ R_mh
+        if X_sh[2] > 0.22:
+            return True
+        else:
+            return False
+
+    def check_place_success(self):
+        p.setCollisionFilterPair(self.target_item, self.table_id, -1, -1, 0, self.physicsClientId)
+        p.setCollisionFilterPair(self.target_item, self.plane_id, -1, -1, 0, self.physicsClientId)
+        if self.support_box_id is not None:
+            p.setCollisionFilterPair(self.target_item, self.support_box_id, -1, -1, 0, self.physicsClientId)
+        for i in range(12):
+            p.setCollisionFilterPair(self.target_item, self.robot, -1, i, 0, self.physicsClientId)
+
+        for _ in range(int(2/self.freq)):
+            p.stepSimulation(physicsClientId = self.physicsClientId)
+
+        state = self.get_state()
+        X_sh = state['T_sh'][0]
+        if X_sh[-1] > 0.:
+            result = True
+        else:
+            result = False
+
+        p.setCollisionFilterPair(self.target_item, self.table_id, -1, -1, 1, self.physicsClientId)
+        p.setCollisionFilterPair(self.target_item, self.plane_id, -1, -1, 1, self.physicsClientId)
+        if self.support_box_id is not None:
+            p.setCollisionFilterPair(self.target_item, self.support_box_id, -1, -1, 1, self.physicsClientId)
+        for i in range(12):
+            p.setCollisionFilterPair(self.target_item, self.robot, -1, i, 1, self.physicsClientId)
+
+        return result
+
+    def pick_plan(self, grasp): 
+        X_sdg, R_sdg = grasp
+
+        R_dg_dgpre = np.eye(3)
+        R_sdg_pre = R_sdg @ R_dg_dgpre
+        X_dg_dgpre = np.array([0., 0., -0.03])
+        sX_dg_dgpre = R_sdg @ X_dg_dgpre
+        X_sdg_pre = X_sdg + sX_dg_dgpre
+
+        R_sde_pre = R_sdg_pre @ self.R_eg.T
+        R_sde = R_sdg @ self.R_eg.T
+        X_sde_pre = X_sdg_pre - R_sde_pre@self.X_eg
+        X_sde = X_sdg - R_sde@self.X_eg
+
+
+        pre_grasp = {'pose':(X_sde_pre, R_sde_pre), 'gripper_val': 0., 'col_check_items': [self.table_id, self.target_item, self.hook_id]}        # Changes
+        grasp1 = {'pose':(X_sde, R_sde), 'gripper_val': 0., 'col_check_items': [self.table_id, self.target_item, self.hook_id]}                   # Changes
+        grasp2 = {'pose':(X_sde, R_sde), 'gripper_val': 1., 'col_check_items': []}
+        lift = {'pose':(X_sde + np.array([0., 0., 0.2]), R_sde), 'gripper_val': 1., 'col_check_items': []}
+
+        return {'pre_grasp': pre_grasp, 'grasp1':grasp1, 'grasp2':grasp2, 'lift':lift}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class BottleTask(FrankaTask):
+    def __init__(self, use_gui = True):
+        super().__init__(use_gui=use_gui)
+
+    def init_task(self, mug_type = 'default0', distractor = False, use_support = False, **kwargs):
+        super().init_task()
+
+        self.mug_scale = 1.
+        self.X_mh = np.array([0., 0.0, -0.03]) * (self.mug_scale) # mug to handle
+        self.R_mh = np.eye(3)
+        self.X_eg = np.array([0, 0, 0.105]) # EE to gripper sweet-spot
+        self.R_eg = np.eye(3)
+        self.X_m_top = np.array([0., 0., 0.15]) * self.mug_scale
+        self.R_m_top = np.eye(3)
+        self.branch_length = 0.065
+        self.branchLinkId = -1
+
+        if mug_type == 'default0':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle_train0/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            self.X_m_top = np.array([0., 0., 0.14]) * self.mug_scale
+        elif mug_type == 'default1':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle_train1/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            self.X_m_top = np.array([0., 0., 0.14]) * self.mug_scale
+        elif mug_type == 'default2':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle_train2/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            self.X_m_top = np.array([0., 0., 0.13]) * self.mug_scale
+        elif mug_type == 'default3':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle_train3/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            self.X_m_top = np.array([0., 0., 0.13]) * self.mug_scale
+        elif mug_type == 'default4':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle_train4/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            self.X_m_top = np.array([0., 0., 0.13]) * self.mug_scale
+        elif mug_type == 'cup1':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle1/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0., 0.065, 0.01]) * (self.mug_scale)
+        elif mug_type == 'cup2':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle2/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0.0, 0.075, 0.01]) * (self.mug_scale)
+        elif mug_type == 'cup3':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle3/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([-0.0, 0.07, 0.015]) * (self.mug_scale)
+        elif mug_type == 'cup4':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle4/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0.0, 0.07, 0.015]) * (self.mug_scale)
+        elif mug_type == 'cup5':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle5/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([-0.0, 0.07, 0.01]) * (self.mug_scale)
+        elif mug_type == 'cup6':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle6/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0., 0.06, 0.015]) * (self.mug_scale)
+        elif mug_type == 'cup7':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle7/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0., 0.08, 0.01]) * (self.mug_scale)
+        elif mug_type == 'cup8':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle8/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0.0, 0.06, 0.01]) * (self.mug_scale)
+        elif mug_type == 'cup9':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle9/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0.0, 0.06, 0.03]) * (self.mug_scale)
+        elif mug_type == 'cup10':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle10/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0.0, 0.05, 0.01]) * (self.mug_scale)
+        else:
+            raise KeyError
+        p.changeDynamics(self.mug_id, -1, lateralFriction=0.8, rollingFriction=0.3, spinningFriction=0.3)
+        self.hook_scale = 1.
+        self.hook_id = p.loadURDF("assets/traybox.urdf", basePosition=[0.5, 0., 0.], globalScaling=0.24 * self.hook_scale, physicsClientId = self.physicsClientId, useFixedBase = True)
+        p.changeDynamics(self.hook_id, -1, lateralFriction = 3., rollingFriction=3., spinningFriction=3.)
+
+        if use_support:
+            self.support_box_id = p.loadURDF("assets/bottle_support.urdf", basePosition=[0.5, 0., 0.3], globalScaling=0.15, physicsClientId = self.physicsClientId, useFixedBase = True)
+            # self.support_box_h = 0.3
+            # self.support_box_id = create_box(w=0.15, l=0.15, h=self.support_box_h, color=(72/255,72/255,72/255,1.))
+            p.changeDynamics(self.support_box_id, -1, lateralFriction = 3., rollingFriction=3., spinningFriction=3.)
+        else:
+            self.support_box_id = None
+
+        if distractor:
+            self.lego_scale = 2.5
+            self.lego_id = p.loadURDF("assets/distractor/lego.urdf", basePosition=[0.7, -0.2, 0.35], baseOrientation=p.getQuaternionFromEuler([0, 0, 0]), globalScaling=self.lego_scale, physicsClientId = self.physicsClientId)
+            self.duck_scale = 0.07
+            self.duck_id = p.loadURDF("assets/distractor/duck.urdf", basePosition=[0.7, 0.2, 0.35], baseOrientation=p.getQuaternionFromEuler([0, 0, 0]), globalScaling=self.duck_scale, physicsClientId = self.physicsClientId)
+            self.torus_scale = 0.07
+            self.torus_id = p.loadURDF("assets/distractor/torus_textured.urdf", basePosition=[0.5, -0.2, 0.35], baseOrientation=p.getQuaternionFromEuler([0, 0, 0]), globalScaling=self.torus_scale, physicsClientId = self.physicsClientId)
+            self.bunny_scale = 0.07
+            self.bunny_id = p.loadURDF("assets/distractor/bunny.urdf", basePosition=[0.5, 0.2, 0.35], baseOrientation=p.getQuaternionFromEuler([0, 0, 0]), globalScaling=self.torus_scale, physicsClientId = self.physicsClientId)
+
+
+    def reset(self, seed = None, mug_pose = 'upright', mug_type = 'default0', distractor = False, use_support = False, step=1):
+        if mug_type == 'cups':
+            mug_type = f'cup{seed%10 + 1}'
+        if mug_type == 'train' or mug_type == 'default':
+            mug_type = f'default{seed%5}'
+        super().reset(seed = seed, step = False, mug_type=mug_type, distractor=distractor, use_support=use_support)
+
+        randomize_mug_pos = True
+        randomize_hook_pos = True
+
+        self.target_item = self.mug_id
+
+        if mug_pose == 'arbitrary' or mug_pose == 'lying':
+            arbitrary_tray = True
+        else:
+            arbitrary_tray = False
+
+        if mug_pose == 'arbitrary':
+            #if seed %2 == 0:
+            if np.random.rand() > 0.5:
+                mug_pose = 'lying'
+            else:
+                mug_pose = 'upright'
+
+
+        # Reset cup orientation
+        if mug_pose == 'upright':
+            mug_orn = np.array([0., 0., np.random.rand()*np.pi*2])
+            mug_orn = p.getQuaternionFromEuler(mug_orn)
+        elif mug_pose == 'lying':
+            mug_orn = np.array([np.pi /4, 0 , -np.random.rand()*np.pi])
+            mug_orn = p.getQuaternionFromEuler(mug_orn)
+            mug_orn = multiply_quats(mug_orn, p.getQuaternionFromEuler(np.array([0., 0., (2*np.random.rand()-1)*np.pi*1/2])))
+        else:
+            raise KeyError
+
+
+        # Sample and mug displacement(s) from center
+        if randomize_mug_pos:
+            if distractor is True:
+                disp_x_abs_max = 0.01
+                disp_y_abs_max = 0.01
+            elif mug_pose == 'upright':
+                disp_x_abs_max = 0.05
+                disp_y_abs_max = 0.05
+            elif mug_pose == 'lying':
+                disp_x_abs_max = 0.03
+                disp_y_abs_max = 0.03
+            mug_disp = np.array([(2*np.random.rand() - 1) * disp_x_abs_max, (2*np.random.rand() - 1) * disp_y_abs_max, 0.])
+        else:
+            mug_disp = np.array([0., 0., 0.])
+        mug_origin = self.center + np.array([-0.05, 0., 0.])
+        if mug_pose == 'lying':
+            mug_origin = self.center + np.array([-0.01, 0., 0.])
+
+        if distractor:
+            p.changeVisualShape(objectUniqueId=self.bunny_id, linkIndex=-1, rgbaColor = np.concatenate([np.random.rand(3), np.array([1.])]))
+            p.changeVisualShape(objectUniqueId=self.lego_id, linkIndex=-1, rgbaColor = np.concatenate([np.random.rand(3), np.array([1.])]))
+            p.changeVisualShape(objectUniqueId=self.torus_id, linkIndex=-1, rgbaColor = np.concatenate([np.random.rand(3), np.array([1.])]))
+            p.changeVisualShape(objectUniqueId=self.duck_id, linkIndex=-1, rgbaColor = np.concatenate([np.random.rand(3), np.array([1.])]))
+
+
+        # Sample and distractors displacement(s) from center
+        if distractor:
+            if randomize_mug_pos:
+                disp_x_max = 0.0
+                disp_y_max = 0.0
+                disps = []
+                disps.append(np.array([np.random.rand() * disp_x_max, np.random.rand() * disp_y_max, 0.]))
+                disps.append(np.array([-np.random.rand() * disp_x_max, np.random.rand() * disp_y_max, 0.]))
+                disps.append(np.array([np.random.rand() * disp_x_max, -np.random.rand() * disp_y_max, 0.]))
+                disps.append(np.array([-np.random.rand() * disp_x_max, -np.random.rand() * disp_y_max, 0.]))
+            else:
+                disps = []
+                disps.append(np.array([0., 0., 0.]))
+                disps.append(np.array([0., 0., 0.]))
+                disps.append(np.array([0., 0., 0.]))
+                disps.append(np.array([0., 0., 0.]))
+
+
+        # Origin pos for mug (and distractors)
+        if distractor:
+            global_offset = np.array([0.0, 0., 0.])
+            dx = 0.13
+            dy = 0.13
+            origins = [self.center + global_offset + np.array([dx, dy, 0.]),
+                       self.center + global_offset + np.array([-dx, dy, 0.]),
+                       self.center + global_offset + np.array([dx, -dy, 0.]),
+                       self.center + global_offset + np.array([-dx, -dy, 0.])]
+            
+
+        # Allocate origin and disp for mugs and distractors
+        if distractor:
+            idx = list(range(4))
+            np.random.shuffle(idx)
+
+            bunny_disp = disps[idx[0]]
+            lego_disp = disps[idx[1]]
+            duck_disp = disps[idx[2]]
+            torus_disp =  disps[idx[3]]
+
+            bunny_origin = origins[idx[0]]
+            lego_origin = origins[idx[1]]
+            duck_origin = origins[idx[2]]
+            torus_origin = origins[idx[3]]
+
+
+
+        # Reset mug
+        mug_pos = mug_origin + mug_disp*(mug_pose != 'lying')
+        if self.support_box_id is not None:
+            # First reset the support
+            support_box_pos = mug_pos + np.array([0., 0., 2.])
+            support_box_pos[-1] = stable_z(self.support_box_id, self.table_id) + (np.random.rand() * 0.01 * randomize_mug_pos)
+            # support_box_pos[-1] = stable_z(self.support_box_id, self.table_id) - self.support_box_h + (np.random.rand() * 0.07 * randomize_mug_pos)
+            p.resetBasePositionAndOrientation(self.support_box_id, support_box_pos, np.array([0., 0., 0., 1.]), physicsClientId = self.physicsClientId)
+
+            # Reset mug on top of the support
+            mug_pos = support_box_pos + np.array([(2*np.random.rand() -1)*0.01*(mug_pose != 'lying'), (2*np.random.rand() -1)*0.01*(mug_pose != 'lying'), 4.])
+            p.resetBasePositionAndOrientation(self.mug_id, mug_pos, mug_orn, physicsClientId = self.physicsClientId)
+            mug_pos[2] = stable_z(self.mug_id, self.support_box_id)
+            p.resetBasePositionAndOrientation(self.mug_id, mug_pos, mug_orn, physicsClientId = self.physicsClientId)
+        else:
+            mug_pos = mug_pos + np.array([0., 0., 4.])
+            p.resetBasePositionAndOrientation(self.mug_id, mug_pos, mug_orn, physicsClientId = self.physicsClientId)
+            mug_pos[2] = stable_z(self.mug_id, self.table_id)
+            p.resetBasePositionAndOrientation(self.mug_id, mug_pos, mug_orn, physicsClientId = self.physicsClientId)
+        
+
+        # Reset distractor
+        if distractor:
+            bunny_pos = bunny_origin + bunny_disp + np.array([0., 0., 4.])
+            bunny_pos[2] = stable_z(self.bunny_id, self.table_id)
+            bunny_orn = p.getQuaternionFromEuler([0., 0., np.random.rand()*np.pi*2])
+
+            lego_pos = lego_origin + lego_disp + np.array([0., 0., 4.])
+            lego_pos[2] = stable_z(self.lego_id, self.table_id)
+            lego_orn = p.getQuaternionFromEuler([0., 0., np.random.rand()*np.pi*2])
+
+            duck_pos = duck_origin + duck_disp + np.array([0., 0., 4.])
+            duck_pos[2] = stable_z(self.duck_id, self.table_id)
+            duck_orn = p.getQuaternionFromEuler([0., 0., np.random.rand()*np.pi*2])
+
+            torus_pos = torus_origin + torus_disp + np.array([0., 0., 4.])
+            torus_pos[2] = stable_z(self.torus_id, self.table_id)
+            torus_orn = p.getQuaternionFromEuler([0., 0., np.random.rand()*np.pi*2])
+
+            p.resetBasePositionAndOrientation(self.bunny_id, bunny_pos, bunny_orn, physicsClientId = self.physicsClientId)
+            p.resetBasePositionAndOrientation(self.lego_id, lego_pos, lego_orn, physicsClientId = self.physicsClientId)
+            p.resetBasePositionAndOrientation(self.duck_id, duck_pos, duck_orn, physicsClientId = self.physicsClientId)
+            p.resetBasePositionAndOrientation(self.torus_id, torus_pos, torus_orn, physicsClientId = self.physicsClientId)
+
+        # Reset Hook
+        hook_pos = self.center + np.array([0.13, 0.0 , - 0.03])
+        if randomize_hook_pos:
+            if distractor:
+                hook_pos = hook_pos + np.array([0., (2*np.random.rand() - 1) * 0.0, -(2*np.random.rand() - 1) * 0.01])
+            else:
+                hook_pos = hook_pos + np.array([0., (2*np.random.rand() - 1) * 0.0, -(2*np.random.rand() - 1) * 0.01])
+        hook_orn = np.array([0., 0., np.pi]) + np.array([0., 0., (2*np.random.rand() - 1) * np.pi / 8])
+        hook_orn = p.getQuaternionFromEuler(hook_orn)
+        if arbitrary_tray:
+            theta_ = np.random.rand() * np.pi/12
+            dOrn = p.getQuaternionFromEuler(np.array([0, theta_, 0]))
+            hook_orn = np.array(p.multiplyTransforms(np.zeros(3),hook_orn, np.zeros(3), dOrn)[-1])
+            hook_pos[-1] += 0.0
+        p.resetBasePositionAndOrientation(self.hook_id, hook_pos, hook_orn, physicsClientId = self.physicsClientId)
+
+
+        # Disable collision for visual distractors with robot
+        for i in range(12):
+            #p.setCollisionFilterPair(self.hook_id, self.robot, -1, i, 0, self.physicsClientId)
+            #p.setCollisionFilterPair(self.hook_id, self.robot, 0, i, 0, self.physicsClientId)
+            if self.support_box_id is not None:
+                p.setCollisionFilterPair(self.support_box_id, self.robot, -1, i, 0, self.physicsClientId)
+            if distractor:
+                p.setCollisionFilterPair(self.bunny_id, self.robot, -1, i, 0, self.physicsClientId)
+                p.setCollisionFilterPair(self.lego_id, self.robot, -1, i, 0, self.physicsClientId)
+                p.setCollisionFilterPair(self.duck_id, self.robot, -1, i, 0, self.physicsClientId)
+                p.setCollisionFilterPair(self.torus_id, self.robot, -1, i, 0, self.physicsClientId)
+        if distractor:
+            p.setCollisionFilterPair(self.bunny_id, self.mug_id, -1, -1, 0, self.physicsClientId)
+            p.setCollisionFilterPair(self.lego_id, self.mug_id, -1, -1, 0, self.physicsClientId)
+            p.setCollisionFilterPair(self.duck_id, self.mug_id, -1, -1, 0, self.physicsClientId)
+            p.setCollisionFilterPair(self.torus_id, self.mug_id, -1, -1, 0, self.physicsClientId)
+
+
+        p.changeDynamics(self.mug_id, -1, linearDamping = 0.3, angularDamping = 0.3)
+        #p.changeDynamics(self.mug_id, -1, contactStiffness = 100000000., contactDamping = 100.)
+
+        # step sim
+        if step:
+            step = int(step/self.freq)
+            for _ in range(step):
+                p.stepSimulation(physicsClientId = self.physicsClientId)
+
+    def get_state(self):
+        state = super().get_state()
+
+        # Suffix guide
+        # ==>  m: Mug, h: Handle, dg: Desired grasp sweet spot, de: Desired End Effector, pre: Pregrasp
+        X_sm, R_sm = p.getBasePositionAndOrientation(self.mug_id, physicsClientId = self.physicsClientId)
+        X_sm, R_sm = np.array(X_sm), Rotation.from_quat(R_sm).as_matrix()
+        X_s_hook, R_s_hook = p.getBasePositionAndOrientation(self.hook_id, physicsClientId = self.physicsClientId)
+        X_s_hook, R_s_hook = np.array(X_s_hook), Rotation.from_quat(R_s_hook).as_matrix()
+        # X_s_branch, R_s_branch = p.getLinkState(self.hook_id, self.branchLinkId)[:2]
+        # X_s_branch, R_s_branch = np.array(X_s_branch), Rotation.from_quat(R_s_branch).as_matrix()
+        # R_s_tip = R_s_branch.copy()
+        # X_s_tip = X_s_branch + (R_s_branch @ np.array([0., 0., self.branch_length]))
+        X_s_branch, R_s_branch = X_s_hook.copy(), R_s_hook.copy()
+        R_s_tip, X_s_tip = R_s_hook.copy(), X_s_hook.copy()
+
+        X_mh, R_mh = self.X_mh.copy(), self.R_mh.copy()
+        X_sh, R_sh = X_sm + (R_sm @ X_mh), R_sm @ R_mh
+
+        state['T_sm'] = (X_sm, R_sm)
+        state['T_sh'] = (X_sh, R_sh)
+        state['T_s_hook'] = (X_s_hook, R_s_hook)
+        state['T_s_tip'] = (X_s_tip, R_s_tip)
+        state['T_s_branch'] = (X_s_branch, R_s_branch)
+
+        return state
+
+#     Z-axis
+#       ↑
+    #       #
+    #       ####
+    #       #  # -> Y-axis
+    #       ####
+    #########
+
+    def oracle_pick_rim(self, mod):
+        state = self.get_state()
+        X_sm, R_sm = state['T_sm']
+        X_se, R_se = state['T_se']
+
+        X_mh, R_mh = self.X_mh.copy(), self.R_mh.copy()
+        X_m_top, R_m_top = self.X_m_top, self.R_m_top
+
+        
+        #yaw = -np.pi / 2 # 0 ~ pi
+        #yaw = yaw + (2*np.random.rand()-1)*np.pi*2/3
+        #yaw = yaw + np.pi/2
+
+        # yaw_mod_1 = 0.
+        # yaw_mod_1 += (2*np.random.rand()-1)*np.pi*1/6
+        # yaw_mod_2 = np.pi 
+        # yaw_mod_2 += (2*np.random.rand()-1)*np.pi*1/6
+
+        # yaw = yaw_mod_1*mod + yaw_mod_2*(1-mod)
+        yaw = (2*np.random.rand()-1)*np.pi
+
+        # R_top_rim = multiply_quats(p.getQuaternionFromEuler(np.array([0., 0., yaw])), p.getQuaternionFromEuler(np.array([0., np.pi/2., 0.])), p.getQuaternionFromEuler(np.array([0., 0., np.pi * ((np.random.rand() > 0.5)-0.5)   ])))
+        R_top_rim = multiply_quats(p.getQuaternionFromEuler(np.array([0., 0., yaw])), p.getQuaternionFromEuler(np.array([0., np.pi/2., 0.])), p.getQuaternionFromEuler(np.array([0., 0., np.pi /2   ])))
+        R_top_rim = p.getMatrixFromQuaternion(R_top_rim)
+        R_top_rim = np.array(R_top_rim).reshape(3,3)
+        rim_X_top_rim = np.array([0., 0., 0.])
+        X_top_rim = R_top_rim @ rim_X_top_rim
+        X_rim_dg = np.array([0., 0., 0.]) 
+        R_rim_dg = np.array([[0. ,1. ,0.],
+                             [1. ,0. ,0.],
+                             [0. ,0. ,-1.]])
+
+        R_sdg = R_sm @ R_m_top @ R_top_rim @ R_rim_dg
+        X_top_dg = X_top_rim + (R_top_rim @ X_rim_dg)
+        X_mdg = X_m_top + (R_m_top @ X_top_dg)
+        X_sdg = X_sm + (R_sm @ X_mdg)
+
+
+        perturb_axis = np.random.randn(3)
+        perturb_axis = perturb_axis / np.linalg.norm(perturb_axis)
+        perturb_angle = (2*np.random.rand()-1) * (np.pi/180 * 5)
+        R_perturb = Rotation.from_rotvec(perturb_angle * perturb_axis).as_matrix()
+        R_sdg = R_sdg @ R_perturb
+
+        R_dg_dgpre = np.eye(3)
+        R_s_dgpre = R_sdg @ R_dg_dgpre
+        X_dg_dgpre = np.array([0., 0., -0.03])
+        sX_dg_dgpre = R_sdg @ X_dg_dgpre
+        X_s_dgpre = X_sdg + sX_dg_dgpre
+
+        pre_grasp = (X_s_dgpre, R_s_dgpre)
+        grasp = X_sdg, R_sdg
+
+        return pre_grasp, grasp
+
+    def oracle_place_handle_horizontal(self, mod, low_var = False):
+        state = self.get_state()
+        X_sm, R_sm = state['T_sm']
+        X_se, R_se = state['T_se']
+        X_s_tip, R_s_tip = state['T_s_tip']
+        X_s_base, R_s_base = state['T_s_hook']
+        R_sg = R_se @ self.R_eg
+        X_sg = X_se + (R_se @ self.X_eg)
+        X_mh, R_mh = self.X_mh.copy(), self.R_mh.copy()
+        X_sh, R_sh = X_sm + (R_sm @ X_mh), R_sm @ R_mh
+
+        X_gh = R_sg.T @ (X_sh - X_sg)
+        X_dgdh = X_gh
+        R_dgdh = R_sg.T @ R_sh
+        X_dhdg = - R_dgdh.T @ X_dgdh
+
+        # if mod:
+        #     # theta = -np.pi*np.random.rand() # -pi~0
+        #     offset = np.pi/4
+        #     if low_var:
+        #         theta = -(np.pi-2*offset)*(0.5 + (np.random.rand()-0.5)*0.3) - offset # 30 percent of original variance
+        #     else:
+        #         theta = -(np.pi-2*offset)*np.random.rand() - offset # -pi/4 ~ -3pi/4
+        #     R_base_dh = np.array([[ 0.0,    np.sin(theta),          np.cos(theta)],
+        #                           [ 0.0,   -np.cos(theta),          np.sin(theta)],
+        #                           [ 1.0,              0.0,                    0.0]])
+        # else:
+        #     offset = np.pi/4
+        #     if low_var:
+        #         theta = (np.pi-2*offset)*(0.5 + (np.random.rand()-0.5)*0.3) + offset # 30 percent of original variance
+        #     else:
+        #         theta = (np.pi-2*offset)*np.random.rand() + offset # pi/4 ~ 3pi/4
+        #     R_base_dh = np.array([[ 0.0,   -np.sin(theta),          np.cos(theta)],
+        #                           [ 0.0,    np.cos(theta),          np.sin(theta)],
+        #                           [-1.0,              0.0,                    0.0]])
+
+        theta = np.random.rand() * 2 * np.pi
+        R_base_dh = np.array([[ np.cos(theta),   -np.sin(theta),       0.0],
+                              [ np.sin(theta),   np.cos(theta),        0.0],
+                              [ 0.0,              0.0,                 1.0]])
+                                
+
+        R_sdg = R_s_base @ R_base_dh @ R_dgdh.T
+
+        sX_tip_dh = np.array([0., 0., 0.02]) # np.array([0., 0., 0.02])
+        R_sdh = R_sdg @ R_dgdh
+        sX_dhdg = R_sdh @ X_dhdg
+        X_sdg = X_s_tip + sX_tip_dh + sX_dhdg
+
+        R_dg_dgpre = np.eye(3)
+        R_s_dgpre = R_sdg @ R_dg_dgpre
+        X_dg_dgpre = np.array([0., 0., -0.03])
+        sX_dg_dgpre = R_sdg @ X_dg_dgpre
+        X_s_dgpre = X_sdg + sX_dg_dgpre
+
+        pre_place = (X_s_dgpre, R_s_dgpre)
+        place = (X_sdg, R_sdg)
+
+        return pre_place, place
+
+
+    def debug(self, debug_items = ['grasp']):
+        super().debug(debug_items=debug_items)
+        for item in debug_items:
+            if item == 'mug':
+                mugFrame_ID = axiscreator(self.mug_id, physicsClientId = self.physicsClientId)
+            elif item == 'mug_rim':
+                topFrame_ID = axiscreator(self.mug_id, offset = self.X_m_top.copy(), physicsClientId = self.physicsClientId)
+            elif item == 'mug_handle':
+                handleFrame_ID = axiscreator(self.mug_id, offset = self.X_mh.copy(), physicsClientId = self.physicsClientId)
+            elif item == 'hook_branch':
+                hookFrame_ID = axiscreator(self.hook_id, self.branchLinkId, physicsClientId = self.physicsClientId)
+            elif item == 'hook_branch_offset':
+                axiscreator(self.hook_id, self.branchLinkId, offset = np.array([0., 0., 0.07]),physicsClientId = self.physicsClientId)
+            elif item == 'distractors':
+                axiscreator(self.bunny_id, physicsClientId = self.physicsClientId)
+                axiscreator(self.duck_id, physicsClientId = self.physicsClientId)
+                axiscreator(self.torus_id, physicsClientId = self.physicsClientId)
+                axiscreator(self.lego_id, physicsClientId = self.physicsClientId)
+            elif item == 'hook_base':
+                hookBaseFrame_ID = axiscreator(self.hook_id, physicsClientId = self.physicsClientId)
+
+    def check_pick_success(self):
+        state = self.get_state()
+        X_sm, R_sm = state['T_sm']
+        X_mh, R_mh = self.X_mh.copy(), self.R_mh.copy()
+        X_sh, R_sh = X_sm + (R_sm @ X_mh), R_sm @ R_mh
+        if X_sh[2] > 0.22:
+            return True
+        else:
+            return False
+
+    def check_place_success(self):
+        p.setCollisionFilterPair(self.target_item, self.table_id, -1, -1, 0, self.physicsClientId)
+        p.setCollisionFilterPair(self.target_item, self.plane_id, -1, -1, 0, self.physicsClientId)
+        if self.support_box_id is not None:
+            p.setCollisionFilterPair(self.target_item, self.support_box_id, -1, -1, 0, self.physicsClientId)
+        for i in range(12):
+            p.setCollisionFilterPair(self.target_item, self.robot, -1, i, 0, self.physicsClientId)
+
+        for _ in range(int(2/self.freq)):
+            p.stepSimulation(physicsClientId = self.physicsClientId)
+
+        state = self.get_state()
+        X_sh = state['T_sh'][0]
+        if X_sh[-1] > 0.:
+            result = True
+        else:
+            result = False
+
+        p.setCollisionFilterPair(self.target_item, self.table_id, -1, -1, 1, self.physicsClientId)
+        p.setCollisionFilterPair(self.target_item, self.plane_id, -1, -1, 1, self.physicsClientId)
+        if self.support_box_id is not None:
+            p.setCollisionFilterPair(self.target_item, self.support_box_id, -1, -1, 1, self.physicsClientId)
+        for i in range(12):
+            p.setCollisionFilterPair(self.target_item, self.robot, -1, i, 1, self.physicsClientId)
+
+        return result
+
+    def pick_plan(self, grasp): 
+        X_sdg, R_sdg = grasp
+
+        R_dg_dgpre = np.eye(3)
+        R_sdg_pre = R_sdg @ R_dg_dgpre
+        X_dg_dgpre = np.array([0., 0., -0.03])
+        sX_dg_dgpre = R_sdg @ X_dg_dgpre
+        X_sdg_pre = X_sdg + sX_dg_dgpre
+
+        R_sde_pre = R_sdg_pre @ self.R_eg.T
+        R_sde = R_sdg @ self.R_eg.T
+        X_sde_pre = X_sdg_pre - R_sde_pre@self.X_eg
+        X_sde = X_sdg - R_sde@self.X_eg
+
+
+        pre_grasp = {'pose':(X_sde_pre, R_sde_pre), 'gripper_val': 0., 'col_check_items': [self.table_id, self.target_item, self.hook_id]}        # Changes
+        grasp1 = {'pose':(X_sde, R_sde), 'gripper_val': 0., 'col_check_items': [self.table_id, self.target_item, self.hook_id]}                   # Changes
+        grasp2 = {'pose':(X_sde, R_sde), 'gripper_val': 1., 'col_check_items': []}
+        lift = {'pose':(X_sde + np.array([0., 0., 0.2]), R_sde), 'gripper_val': 1., 'col_check_items': []}
+
+        return {'pre_grasp': pre_grasp, 'grasp1':grasp1, 'grasp2':grasp2, 'lift':lift}
+
+    def place(self, pre_place, place, sleep = False, IK_time = 1., z_offset = 0.03, max_distance_plan=(0.05, 1.5)):
+        max_distance_plan=(0.1, 1.5)
+        X_sdg, R_sdg = place
+        target_handles = draw_pose(Pose(X_sdg, p.getEulerFromQuaternion(Rotation.from_matrix(R_sdg).as_quat())))
+
+        plan = self.place_plan(place, z_offset = z_offset)
+        pre_place, place, release, retract = plan['pre_place'], plan['place'], plan['release'], plan['retract']
+
+
+        # R_sde_pre = R_sdg_pre @ self.R_eg.T
+        # R_sde = R_sdg @ self.R_eg.T
+        # X_sde_pre = X_sdg_pre - R_sde_pre@self.X_eg
+        # X_sde = X_sdg - R_sde@self.X_eg
+
+        # if self.check_feasible(pose = (X_sde, R_sde), IK_time=IK_time, criteria='controllability') is False:
+        #     raise StopIteration
+
+        # # Reach Preplace Pose
+        # self.IK_teleport(target_T_se=(X_sde, R_sde), gripper_val=1., IK_time = IK_time, criteria='controllability')
+        # self.IK_teleport(target_T_se=(X_sde_pre, R_sde_pre), gripper_val=1., IK_time = IK_time, criteria='closest')
+
+        max_distance=max_distance_plan[0]
+        conf = self.check_feasible_plan([pre_place, place], IK_time=IK_time, verbose=True, max_distance=max_distance)
+        if conf is False:
+            raise StopIteration
+        max_distance=max_distance_plan[1]
+        if self.check_feasible_plan([retract, release], IK_time=IK_time, verbose=True, max_distance=max_distance) is False:
+            raise StopIteration
+        
+        #self.IK_teleport(target_T_se=place['pose'], gripper_val=place['gripper_val'], IK_time = IK_time, criteria='controllability')
+        self.IK_teleport(target_T_se=pre_place['pose'], gripper_val=pre_place['gripper_val'], IK_time = IK_time, criteria='closest', max_distance=max_distance, ref_conf=conf)
+
+
+        # Reach Pre-place pose
+        self.IK(duration = 1, 
+                gripper_val = pre_place['gripper_val'], 
+                target_T_se = pre_place['pose'],
+                sleep = 0.003 * sleep,
+                gripper_force=300,
+        )
+        self.detach()
+
+        # Reach place pose
+        self.IK(duration = 2, 
+                gripper_val = place['gripper_val'], 
+                target_T_se = place['pose'],
+                sleep = 0.003 * sleep,
+                gripper_force=300,
+                init_gripper_val=place['gripper_val']
+        )
+
+        # Release
+        self.IK(duration = 1, 
+                gripper_val = release['gripper_val'],
+                gripper_force = 300, 
+                target_T_se = release['pose'],
+                sleep = 0.003 * sleep
+        )
+
+
+        # Retract
+        self.IK(duration = 2, 
+                gripper_val = retract['gripper_val'], 
+                gripper_force = 1, 
+                target_T_se = (retract['pose'][0] + np.array([0., 0., 0.05]), retract['pose'][1]),
+                sleep = 0.003 * sleep,
+                joint_force=50
+        )
+
+        # Retract
+        self.IK(duration = 2, 
+                gripper_val = retract['gripper_val'], 
+                gripper_force = 1, 
+                target_T_se = (retract['pose'][0] + np.array([0., 0., 0.05]), retract['pose'][1]),
+                sleep = 0.003 * sleep,
+                joint_force=50
+        )
+
+        #remove_handles(target_handles)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class BottleTaskOld(FrankaTask):
+    def __init__(self, use_gui = True):
+        super().__init__(use_gui=use_gui)
+
+    def init_task(self, mug_type = 'default', distractor = False, use_support = False, **kwargs):
+        super().init_task()
+
+        self.mug_scale = 1.
+        self.X_mh = np.array([0., 0.0, -0.03]) * (self.mug_scale) # mug to handle
+        self.R_mh = np.eye(3)
+        self.X_eg = np.array([0, 0, 0.105]) # EE to gripper sweet-spot
+        self.R_eg = np.eye(3)
+        self.X_m_top = np.array([0., 0., 0.15]) * self.mug_scale
+        self.R_m_top = np.eye(3)
+        self.branch_length = 0.065
+        self.branchLinkId = -1
+
+        if mug_type == 'default':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle0/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+        elif mug_type == 'cup1':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle1/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0., 0.065, 0.01]) * (self.mug_scale)
+        elif mug_type == 'cup2':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle2/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0.0, 0.075, 0.01]) * (self.mug_scale)
+        elif mug_type == 'cup3':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle3/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([-0.0, 0.07, 0.015]) * (self.mug_scale)
+        elif mug_type == 'cup4':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle4/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0.0, 0.07, 0.015]) * (self.mug_scale)
+        elif mug_type == 'cup5':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle5/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([-0.0, 0.07, 0.01]) * (self.mug_scale)
+        elif mug_type == 'cup6':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle6/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0., 0.06, 0.015]) * (self.mug_scale)
+        elif mug_type == 'cup7':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle7/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0., 0.08, 0.01]) * (self.mug_scale)
+        elif mug_type == 'cup8':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle8/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0.0, 0.06, 0.01]) * (self.mug_scale)
+        elif mug_type == 'cup9':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle9/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0.0, 0.06, 0.03]) * (self.mug_scale)
+        elif mug_type == 'cup10':
+            self.mug_scale = 1.
+            self.mug_id = p.loadURDF("assets/bottles/bottle10/bottle.urdf", basePosition=[0.5, -0.4, 0.05], globalScaling=self.mug_scale, physicsClientId = self.physicsClientId)
+            #self.X_mh = np.array([0.0, 0.05, 0.01]) * (self.mug_scale)
+        else:
+            raise KeyError
+        p.changeDynamics(self.mug_id, -1, lateralFriction=0.8, rollingFriction=0.3, spinningFriction=0.3)
+        self.hook_scale = 1.
+        self.hook_id = p.loadURDF("assets/traybox.urdf", basePosition=[0.5, 0., 0.], globalScaling=0.2 * self.hook_scale, physicsClientId = self.physicsClientId, useFixedBase = True)
+        p.changeDynamics(self.hook_id, -1, lateralFriction = 3., rollingFriction=3., spinningFriction=3.)
+
+        if use_support:
+            # self.support_box_id = p.loadURDF("assets/traysupport.urdf", basePosition=[0.5, 0., 0.3], globalScaling=0.2, physicsClientId = self.physicsClientId, useFixedBase = True)
+            self.support_box_h = 0.3
+            self.support_box_id = create_box(w=0.15, l=0.15, h=self.support_box_h, color=(72/255,72/255,72/255,1.))
+            p.changeDynamics(self.support_box_id, -1, lateralFriction = 3., rollingFriction=3., spinningFriction=3.)
+        else:
+            self.support_box_id = None
+
+        if distractor:
+            self.lego_scale = 2.5
+            self.lego_id = p.loadURDF("assets/distractor/lego.urdf", basePosition=[0.7, -0.2, 0.35], baseOrientation=p.getQuaternionFromEuler([0, 0, 0]), globalScaling=self.lego_scale, physicsClientId = self.physicsClientId)
+            self.duck_scale = 0.07
+            self.duck_id = p.loadURDF("assets/distractor/duck.urdf", basePosition=[0.7, 0.2, 0.35], baseOrientation=p.getQuaternionFromEuler([0, 0, 0]), globalScaling=self.duck_scale, physicsClientId = self.physicsClientId)
+            self.torus_scale = 0.07
+            self.torus_id = p.loadURDF("assets/distractor/torus_textured.urdf", basePosition=[0.5, -0.2, 0.35], baseOrientation=p.getQuaternionFromEuler([0, 0, 0]), globalScaling=self.torus_scale, physicsClientId = self.physicsClientId)
+            self.bunny_scale = 0.07
+            self.bunny_id = p.loadURDF("assets/distractor/bunny.urdf", basePosition=[0.5, 0.2, 0.35], baseOrientation=p.getQuaternionFromEuler([0, 0, 0]), globalScaling=self.torus_scale, physicsClientId = self.physicsClientId)
+
+
+    def reset(self, seed = None, mug_pose = 'upright', mug_type = 'default', distractor = False, use_support = False, step=1):
+        if mug_type == 'cups':
+            mug_type = f'cup{seed%10 + 1}'
+        super().reset(seed = seed, step = False, mug_type=mug_type, distractor=distractor, use_support=use_support)
+
+        randomize_mug_pos = True
+        randomize_hook_pos = True
+
+        self.target_item = self.mug_id
+
+        if mug_pose == 'arbitrary' or mug_pose == 'lying':
+            arbitrary_tray = True
+        else:
+            arbitrary_tray = False
+
+        if mug_pose == 'arbitrary':
+            #if seed %2 == 0:
+            if np.random.rand() > 0.5:
+                mug_pose = 'lying'
+            else:
+                mug_pose = 'upright'
+
+
+        # Reset cup orientation
+        if mug_pose == 'upright':
+            mug_orn = np.array([0., 0., np.random.rand()*np.pi*2])
+            mug_orn = p.getQuaternionFromEuler(mug_orn)
+        elif mug_pose == 'lying':
+            mug_orn = np.array([np.pi /2, 0., -np.random.rand()*np.pi])
+            mug_orn = p.getQuaternionFromEuler(mug_orn)
+            mug_orn = multiply_quats(mug_orn, p.getQuaternionFromEuler(np.array([0., 0., (2*np.random.rand()-1)*np.pi*1/2])))
+        else:
+            raise KeyError
+
+
+        # Sample and mug displacement(s) from center
+        if randomize_mug_pos:
+            if distractor is True:
+                disp_x_abs_max = 0.01
+                disp_y_abs_max = 0.01
+            elif mug_pose == 'upright':
+                disp_x_abs_max = 0.05
+                disp_y_abs_max = 0.05
+            elif mug_pose == 'lying':
+                disp_x_abs_max = 0.03
+                disp_y_abs_max = 0.03
+            mug_disp = np.array([(2*np.random.rand() - 1) * disp_x_abs_max, (2*np.random.rand() - 1) * disp_y_abs_max, 0.])
+        else:
+            mug_disp = np.array([0., 0., 0.])
+        mug_origin = self.center + np.array([-0.05, 0., 0.])
+
+        if distractor:
+            p.changeVisualShape(objectUniqueId=self.bunny_id, linkIndex=-1, rgbaColor = np.concatenate([np.random.rand(3), np.array([1.])]))
+            p.changeVisualShape(objectUniqueId=self.lego_id, linkIndex=-1, rgbaColor = np.concatenate([np.random.rand(3), np.array([1.])]))
+            p.changeVisualShape(objectUniqueId=self.torus_id, linkIndex=-1, rgbaColor = np.concatenate([np.random.rand(3), np.array([1.])]))
+            p.changeVisualShape(objectUniqueId=self.duck_id, linkIndex=-1, rgbaColor = np.concatenate([np.random.rand(3), np.array([1.])]))
+
+
+        # Sample and distractors displacement(s) from center
+        if distractor:
+            if randomize_mug_pos:
+                disp_x_max = 0.01
+                disp_y_max = 0.01
+                disps = []
+                disps.append(np.array([np.random.rand() * disp_x_max, np.random.rand() * disp_y_max, 0.]))
+                disps.append(np.array([-np.random.rand() * disp_x_max, np.random.rand() * disp_y_max, 0.]))
+                disps.append(np.array([np.random.rand() * disp_x_max, -np.random.rand() * disp_y_max, 0.]))
+                disps.append(np.array([-np.random.rand() * disp_x_max, -np.random.rand() * disp_y_max, 0.]))
+            else:
+                disps = []
+                disps.append(np.array([0., 0., 0.]))
+                disps.append(np.array([0., 0., 0.]))
+                disps.append(np.array([0., 0., 0.]))
+                disps.append(np.array([0., 0., 0.]))
+
+
+        # Origin pos for mug (and distractors)
+        if distractor:
+            global_offset = np.array([0.0, 0., 0.])
+            dx = 0.12
+            dy = 0.12
+            origins = [self.center + global_offset + np.array([dx, dy, 0.]),
+                       self.center + global_offset + np.array([-dx, dy, 0.]),
+                       self.center + global_offset + np.array([dx, -dy, 0.]),
+                       self.center + global_offset + np.array([-dx, -dy, 0.])]
+            
+
+        # Allocate origin and disp for mugs and distractors
+        if distractor:
+            idx = list(range(4))
+            np.random.shuffle(idx)
+
+            bunny_disp = disps[idx[0]]
+            lego_disp = disps[idx[1]]
+            duck_disp = disps[idx[2]]
+            torus_disp =  disps[idx[3]]
+
+            bunny_origin = origins[idx[0]]
+            lego_origin = origins[idx[1]]
+            duck_origin = origins[idx[2]]
+            torus_origin = origins[idx[3]]
+
+
+
+        # Reset mug
+        mug_pos = mug_origin + mug_disp
+        if self.support_box_id is not None:
+            # First reset the support
+            support_box_pos = mug_pos + np.array([0., 0., 2.])
+            # support_box_pos[-1] = stable_z(self.support_box_id, self.table_id) + (np.random.rand() * 0.04 * randomize_mug_pos)
+            support_box_pos[-1] = stable_z(self.support_box_id, self.table_id) - self.support_box_h + (np.random.rand() * 0.07 * randomize_mug_pos)
+            p.resetBasePositionAndOrientation(self.support_box_id, support_box_pos, np.array([0., 0., 0., 1.]), physicsClientId = self.physicsClientId)
+
+            # Reset mug on top of the support
+            mug_pos = support_box_pos + np.array([(2*np.random.rand() -1)*0.01, (2*np.random.rand() -1)*0.01, 4.])
+            p.resetBasePositionAndOrientation(self.mug_id, mug_pos, mug_orn, physicsClientId = self.physicsClientId)
+            mug_pos[2] = stable_z(self.mug_id, self.support_box_id)
+            p.resetBasePositionAndOrientation(self.mug_id, mug_pos, mug_orn, physicsClientId = self.physicsClientId)
+        else:
+            mug_pos = mug_pos + np.array([0., 0., 4.])
+            p.resetBasePositionAndOrientation(self.mug_id, mug_pos, mug_orn, physicsClientId = self.physicsClientId)
+            mug_pos[2] = stable_z(self.mug_id, self.table_id)
+            p.resetBasePositionAndOrientation(self.mug_id, mug_pos, mug_orn, physicsClientId = self.physicsClientId)
+        
+
+        # Reset distractor
+        if distractor:
+            bunny_pos = bunny_origin + bunny_disp + np.array([0., 0., 4.])
+            bunny_pos[2] = stable_z(self.bunny_id, self.table_id)
+            bunny_orn = p.getQuaternionFromEuler([0., 0., np.random.rand()*np.pi*2])
+
+            lego_pos = lego_origin + lego_disp + np.array([0., 0., 4.])
+            lego_pos[2] = stable_z(self.lego_id, self.table_id)
+            lego_orn = p.getQuaternionFromEuler([0., 0., np.random.rand()*np.pi*2])
+
+            duck_pos = duck_origin + duck_disp + np.array([0., 0., 4.])
+            duck_pos[2] = stable_z(self.duck_id, self.table_id)
+            duck_orn = p.getQuaternionFromEuler([0., 0., np.random.rand()*np.pi*2])
+
+            torus_pos = torus_origin + torus_disp + np.array([0., 0., 4.])
+            torus_pos[2] = stable_z(self.torus_id, self.table_id)
+            torus_orn = p.getQuaternionFromEuler([0., 0., np.random.rand()*np.pi*2])
+
+            p.resetBasePositionAndOrientation(self.bunny_id, bunny_pos, bunny_orn, physicsClientId = self.physicsClientId)
+            p.resetBasePositionAndOrientation(self.lego_id, lego_pos, lego_orn, physicsClientId = self.physicsClientId)
+            p.resetBasePositionAndOrientation(self.duck_id, duck_pos, duck_orn, physicsClientId = self.physicsClientId)
+            p.resetBasePositionAndOrientation(self.torus_id, torus_pos, torus_orn, physicsClientId = self.physicsClientId)
+
+        # Reset Hook
+        hook_pos = self.center + np.array([0.13, 0.0 , - 0.0])
+        if randomize_hook_pos:
+            if distractor:
+                hook_pos = hook_pos + np.array([0., (2*np.random.rand() - 1) * 0.01, -(2*np.random.rand() - 1) * 0.01])
+            else:
+                hook_pos = hook_pos + np.array([0., (2*np.random.rand() - 1) * 0.05, -(2*np.random.rand() - 1) * 0.01])
+        hook_orn = np.array([0., 0., np.pi]) + np.array([0., 0., (2*np.random.rand() - 1) * np.pi / 8])
+        hook_orn = p.getQuaternionFromEuler(hook_orn)
+        if arbitrary_tray:
+            theta_ = np.random.rand() * np.pi/12
+            dOrn = p.getQuaternionFromEuler(np.array([0, theta_, 0]))
+            hook_orn = np.array(p.multiplyTransforms(np.zeros(3),hook_orn, np.zeros(3), dOrn)[-1])
+            hook_pos[-1] += 0.0
+        p.resetBasePositionAndOrientation(self.hook_id, hook_pos, hook_orn, physicsClientId = self.physicsClientId)
+
+
+        # Disable collision for visual distractors with robot
+        for i in range(12):
+            #p.setCollisionFilterPair(self.hook_id, self.robot, -1, i, 0, self.physicsClientId)
+            #p.setCollisionFilterPair(self.hook_id, self.robot, 0, i, 0, self.physicsClientId)
+            if self.support_box_id is not None:
+                p.setCollisionFilterPair(self.support_box_id, self.robot, -1, i, 0, self.physicsClientId)
+            if distractor:
+                p.setCollisionFilterPair(self.bunny_id, self.robot, -1, i, 0, self.physicsClientId)
+                p.setCollisionFilterPair(self.lego_id, self.robot, -1, i, 0, self.physicsClientId)
+                p.setCollisionFilterPair(self.duck_id, self.robot, -1, i, 0, self.physicsClientId)
+                p.setCollisionFilterPair(self.torus_id, self.robot, -1, i, 0, self.physicsClientId)
+        if distractor:
+            p.setCollisionFilterPair(self.bunny_id, self.mug_id, -1, -1, 0, self.physicsClientId)
+            p.setCollisionFilterPair(self.lego_id, self.mug_id, -1, -1, 0, self.physicsClientId)
+            p.setCollisionFilterPair(self.duck_id, self.mug_id, -1, -1, 0, self.physicsClientId)
+            p.setCollisionFilterPair(self.torus_id, self.mug_id, -1, -1, 0, self.physicsClientId)
+
+
+        p.changeDynamics(self.mug_id, -1, linearDamping = 0.3, angularDamping = 0.3)
+        #p.changeDynamics(self.mug_id, -1, contactStiffness = 100000000., contactDamping = 100.)
+
+        # step sim
+        if step:
+            step = int(step/self.freq)
+            for _ in range(step):
+                p.stepSimulation(physicsClientId = self.physicsClientId)
+
+    def get_state(self):
+        state = super().get_state()
+
+        # Suffix guide
+        # ==>  m: Mug, h: Handle, dg: Desired grasp sweet spot, de: Desired End Effector, pre: Pregrasp
+        X_sm, R_sm = p.getBasePositionAndOrientation(self.mug_id, physicsClientId = self.physicsClientId)
+        X_sm, R_sm = np.array(X_sm), Rotation.from_quat(R_sm).as_matrix()
+        X_s_hook, R_s_hook = p.getBasePositionAndOrientation(self.hook_id, physicsClientId = self.physicsClientId)
+        X_s_hook, R_s_hook = np.array(X_s_hook), Rotation.from_quat(R_s_hook).as_matrix()
+        # X_s_branch, R_s_branch = p.getLinkState(self.hook_id, self.branchLinkId)[:2]
+        # X_s_branch, R_s_branch = np.array(X_s_branch), Rotation.from_quat(R_s_branch).as_matrix()
+        # R_s_tip = R_s_branch.copy()
+        # X_s_tip = X_s_branch + (R_s_branch @ np.array([0., 0., self.branch_length]))
+        X_s_branch, R_s_branch = X_s_hook.copy(), R_s_hook.copy()
+        R_s_tip, X_s_tip = R_s_hook.copy(), X_s_hook.copy()
+
+        X_mh, R_mh = self.X_mh.copy(), self.R_mh.copy()
+        X_sh, R_sh = X_sm + (R_sm @ X_mh), R_sm @ R_mh
+
+        state['T_sm'] = (X_sm, R_sm)
+        state['T_sh'] = (X_sh, R_sh)
+        state['T_s_hook'] = (X_s_hook, R_s_hook)
+        state['T_s_tip'] = (X_s_tip, R_s_tip)
+        state['T_s_branch'] = (X_s_branch, R_s_branch)
+
+        return state
+
+#     Z-axis
+#       ↑
+    #       #
+    #       ####
+    #       #  # -> Y-axis
+    #       ####
+    #########
+
+    def oracle_pick_rim(self, mod):
+        state = self.get_state()
+        X_sm, R_sm = state['T_sm']
+        X_se, R_se = state['T_se']
+
+        X_mh, R_mh = self.X_mh.copy(), self.R_mh.copy()
+        X_m_top, R_m_top = self.X_m_top, self.R_m_top
+
+        
+        #yaw = -np.pi / 2 # 0 ~ pi
+        #yaw = yaw + (2*np.random.rand()-1)*np.pi*2/3
+        #yaw = yaw + np.pi/2
+
+        # yaw_mod_1 = 0.
+        # yaw_mod_1 += (2*np.random.rand()-1)*np.pi*1/6
+        # yaw_mod_2 = np.pi 
+        # yaw_mod_2 += (2*np.random.rand()-1)*np.pi*1/6
+
+        # yaw = yaw_mod_1*mod + yaw_mod_2*(1-mod)
+        yaw = (2*np.random.rand()-1)*np.pi
+
+        R_top_rim = multiply_quats(p.getQuaternionFromEuler(np.array([0., 0., yaw])), p.getQuaternionFromEuler(np.array([0., np.pi/2., 0.])), p.getQuaternionFromEuler(np.array([0., 0., np.pi * ((np.random.rand() > 0.5)-0.5)   ])))
+        R_top_rim = p.getMatrixFromQuaternion(R_top_rim)
+        R_top_rim = np.array(R_top_rim).reshape(3,3)
+        rim_X_top_rim = np.array([0., 0., 0.])
+        X_top_rim = R_top_rim @ rim_X_top_rim
+        X_rim_dg = np.array([0., 0., 0.]) 
+        R_rim_dg = np.array([[0. ,1. ,0.],
+                             [1. ,0. ,0.],
+                             [0. ,0. ,-1.]])
+
+        R_sdg = R_sm @ R_m_top @ R_top_rim @ R_rim_dg
+        X_top_dg = X_top_rim + (R_top_rim @ X_rim_dg)
+        X_mdg = X_m_top + (R_m_top @ X_top_dg)
+        X_sdg = X_sm + (R_sm @ X_mdg)
+
+
+        perturb_axis = np.random.randn(3)
+        perturb_axis = perturb_axis / np.linalg.norm(perturb_axis)
+        perturb_angle = (2*np.random.rand()-1) * (np.pi/180 * 5)
+        R_perturb = Rotation.from_rotvec(perturb_angle * perturb_axis).as_matrix()
+        R_sdg = R_sdg @ R_perturb
+
+        R_dg_dgpre = np.eye(3)
+        R_s_dgpre = R_sdg @ R_dg_dgpre
+        X_dg_dgpre = np.array([0., 0., -0.03])
+        sX_dg_dgpre = R_sdg @ X_dg_dgpre
+        X_s_dgpre = X_sdg + sX_dg_dgpre
+
+        pre_grasp = (X_s_dgpre, R_s_dgpre)
+        grasp = X_sdg, R_sdg
+
+        return pre_grasp, grasp
+
+    def oracle_place_handle_horizontal(self, mod, low_var = False):
+        state = self.get_state()
+        X_sm, R_sm = state['T_sm']
+        X_se, R_se = state['T_se']
+        X_s_tip, R_s_tip = state['T_s_tip']
+        X_s_base, R_s_base = state['T_s_hook']
+        R_sg = R_se @ self.R_eg
+        X_sg = X_se + (R_se @ self.X_eg)
+        X_mh, R_mh = self.X_mh.copy(), self.R_mh.copy()
+        X_sh, R_sh = X_sm + (R_sm @ X_mh), R_sm @ R_mh
+
+        X_gh = R_sg.T @ (X_sh - X_sg)
+        X_dgdh = X_gh
+        R_dgdh = R_sg.T @ R_sh
+        X_dhdg = - R_dgdh.T @ X_dgdh
+
+        # if mod:
+        #     # theta = -np.pi*np.random.rand() # -pi~0
+        #     offset = np.pi/4
+        #     if low_var:
+        #         theta = -(np.pi-2*offset)*(0.5 + (np.random.rand()-0.5)*0.3) - offset # 30 percent of original variance
+        #     else:
+        #         theta = -(np.pi-2*offset)*np.random.rand() - offset # -pi/4 ~ -3pi/4
+        #     R_base_dh = np.array([[ 0.0,    np.sin(theta),          np.cos(theta)],
+        #                           [ 0.0,   -np.cos(theta),          np.sin(theta)],
+        #                           [ 1.0,              0.0,                    0.0]])
+        # else:
+        #     offset = np.pi/4
+        #     if low_var:
+        #         theta = (np.pi-2*offset)*(0.5 + (np.random.rand()-0.5)*0.3) + offset # 30 percent of original variance
+        #     else:
+        #         theta = (np.pi-2*offset)*np.random.rand() + offset # pi/4 ~ 3pi/4
+        #     R_base_dh = np.array([[ 0.0,   -np.sin(theta),          np.cos(theta)],
+        #                           [ 0.0,    np.cos(theta),          np.sin(theta)],
+        #                           [-1.0,              0.0,                    0.0]])
+
+        theta = np.random.rand() * 2 * np.pi
+        R_base_dh = np.array([[ np.cos(theta),   -np.sin(theta),       0.0],
+                              [ np.sin(theta),   np.cos(theta),        0.0],
+                              [ 0.0,              0.0,                 1.0]])
+                                
+
+        R_sdg = R_s_base @ R_base_dh @ R_dgdh.T
+
+        sX_tip_dh = np.array([0., 0., 0.00]) # np.array([0., 0., 0.02])
+        R_sdh = R_sdg @ R_dgdh
+        sX_dhdg = R_sdh @ X_dhdg
+        X_sdg = X_s_tip + sX_tip_dh + sX_dhdg
+
+        R_dg_dgpre = np.eye(3)
+        R_s_dgpre = R_sdg @ R_dg_dgpre
+        X_dg_dgpre = np.array([0., 0., -0.03])
+        sX_dg_dgpre = R_sdg @ X_dg_dgpre
+        X_s_dgpre = X_sdg + sX_dg_dgpre
+
+        pre_place = (X_s_dgpre, R_s_dgpre)
+        place = (X_sdg, R_sdg)
+
+        return pre_place, place
+
+
+    def debug(self, debug_items = ['grasp']):
+        super().debug(debug_items=debug_items)
+        for item in debug_items:
+            if item == 'mug':
+                mugFrame_ID = axiscreator(self.mug_id, physicsClientId = self.physicsClientId)
+            elif item == 'mug_rim':
+                topFrame_ID = axiscreator(self.mug_id, offset = self.X_m_top.copy(), physicsClientId = self.physicsClientId)
+            elif item == 'mug_handle':
+                handleFrame_ID = axiscreator(self.mug_id, offset = self.X_mh.copy(), physicsClientId = self.physicsClientId)
+            elif item == 'hook_branch':
+                hookFrame_ID = axiscreator(self.hook_id, self.branchLinkId, physicsClientId = self.physicsClientId)
+            elif item == 'hook_branch_offset':
+                axiscreator(self.hook_id, self.branchLinkId, offset = np.array([0., 0., 0.07]),physicsClientId = self.physicsClientId)
+            elif item == 'distractors':
+                axiscreator(self.bunny_id, physicsClientId = self.physicsClientId)
+                axiscreator(self.duck_id, physicsClientId = self.physicsClientId)
+                axiscreator(self.torus_id, physicsClientId = self.physicsClientId)
+                axiscreator(self.lego_id, physicsClientId = self.physicsClientId)
+            elif item == 'hook_base':
+                hookBaseFrame_ID = axiscreator(self.hook_id, physicsClientId = self.physicsClientId)
+
+    def check_pick_success(self):
+        state = self.get_state()
+        X_sm, R_sm = state['T_sm']
+        X_mh, R_mh = self.X_mh.copy(), self.R_mh.copy()
+        X_sh, R_sh = X_sm + (R_sm @ X_mh), R_sm @ R_mh
+        if X_sh[2] > 0.22:
+            return True
+        else:
+            return False
+
+    def check_place_success(self):
+        p.setCollisionFilterPair(self.target_item, self.table_id, -1, -1, 0, self.physicsClientId)
+        p.setCollisionFilterPair(self.target_item, self.plane_id, -1, -1, 0, self.physicsClientId)
+        if self.support_box_id is not None:
+            p.setCollisionFilterPair(self.target_item, self.support_box_id, -1, -1, 0, self.physicsClientId)
+        for i in range(12):
+            p.setCollisionFilterPair(self.target_item, self.robot, -1, i, 0, self.physicsClientId)
+
+        for _ in range(int(2/self.freq)):
+            p.stepSimulation(physicsClientId = self.physicsClientId)
+
+        state = self.get_state()
+        X_sh = state['T_sh'][0]
+        if X_sh[-1] > 0.:
+            result = True
+        else:
+            result = False
+
+        p.setCollisionFilterPair(self.target_item, self.table_id, -1, -1, 1, self.physicsClientId)
+        p.setCollisionFilterPair(self.target_item, self.plane_id, -1, -1, 1, self.physicsClientId)
+        if self.support_box_id is not None:
+            p.setCollisionFilterPair(self.target_item, self.support_box_id, -1, -1, 1, self.physicsClientId)
+        for i in range(12):
+            p.setCollisionFilterPair(self.target_item, self.robot, -1, i, 1, self.physicsClientId)
+
+        return result
+
+    def pick_plan(self, grasp): 
+        X_sdg, R_sdg = grasp
+
+        R_dg_dgpre = np.eye(3)
+        R_sdg_pre = R_sdg @ R_dg_dgpre
+        X_dg_dgpre = np.array([0., 0., -0.03])
+        sX_dg_dgpre = R_sdg @ X_dg_dgpre
+        X_sdg_pre = X_sdg + sX_dg_dgpre
+
+        R_sde_pre = R_sdg_pre @ self.R_eg.T
+        R_sde = R_sdg @ self.R_eg.T
+        X_sde_pre = X_sdg_pre - R_sde_pre@self.X_eg
+        X_sde = X_sdg - R_sde@self.X_eg
+
+
+        pre_grasp = {'pose':(X_sde_pre, R_sde_pre), 'gripper_val': 0., 'col_check_items': [self.table_id, self.target_item, self.hook_id]}        # Changes
+        grasp1 = {'pose':(X_sde, R_sde), 'gripper_val': 0., 'col_check_items': [self.table_id, self.target_item, self.hook_id]}                   # Changes
+        grasp2 = {'pose':(X_sde, R_sde), 'gripper_val': 1., 'col_check_items': []}
+        lift = {'pose':(X_sde + np.array([0., 0., 0.2]), R_sde), 'gripper_val': 1., 'col_check_items': []}
+
+        return {'pre_grasp': pre_grasp, 'grasp1':grasp1, 'grasp2':grasp2, 'lift':lift}
+
+    def place(self, pre_place, place, sleep = False, IK_time = 1., z_offset = 0.03, max_distance_plan=(0.1, 1.5)):
+        super().place(pre_place, place, sleep = False, IK_time = 1., z_offset = 0.03, max_distance_plan=(0.1, 1.5))

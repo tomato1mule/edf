@@ -13,7 +13,7 @@ from pytorch3d import transforms
 
 from edf.utils import preprocess, voxel_filter, binomial_test, voxelize_sample
 from edf.agent import PickAgent, PlaceAgent
-from edf.pybullet_env.env import MugTask, StickTask
+from edf.pybullet_env.env import MugTask, StickTask, BowlTask, BottleTask
 from edf.visual_utils import scatter_plot_ax
 
 
@@ -186,6 +186,10 @@ def eval(eval_config_dir, task_config_dir, pick_agent_config_dir,
         task = MugTask(use_gui=use_gui)
     elif task_type=='stick_task':
         task = StickTask(use_gui=use_gui)
+    elif task_type=='bowl_task':
+        task = BowlTask(use_gui=use_gui)
+    elif task_type=='bottle_task':
+        task = BottleTask(use_gui=use_gui)
     else:
         raise ValueError
 

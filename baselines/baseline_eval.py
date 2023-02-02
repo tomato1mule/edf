@@ -16,14 +16,14 @@ from pytorch3d import transforms
 
 from edf.utils import preprocess, voxelize_sample, OrthoTransform, binomial_test
 from edf.visual_utils import scatter_plot_ax
-from edf.pybullet_env.env import MugTask
+from edf.pybullet_env.env import MugTask, StickTask, BowlTask, BottleTask
 from edf.dist import GaussianDistSE3
 
 from baselines.equiv_tn.sixdof_non_equi_transporter import TransporterAgent
 from baselines.equiv_tn.utils import perturb
 
 
-def eval(schedules, plot_path='logs/baselines/TN/', use_gui=True, visualize_plot=True, save_plot=False, root_dir = 'checkpoint_tn/rim', checkpoint_iter = 1000, task_config_dir = 'config/task_config/mug_task.yaml'):
+def eval(schedules, plot_path='logs/baselines/TN/', use_gui=True, visualize_plot=True, save_plot=False, root_dir = 'checkpoint_tn/rim', checkpoint_iter = 1000, task_config_dir = 'config/task_config/mug_task.yaml', task_type='mug_task', pick_grasp = 'top', place_grasp = 'top'):
     seed = 0
     device = 'cuda'
 
@@ -53,7 +53,7 @@ def eval(schedules, plot_path='logs/baselines/TN/', use_gui=True, visualize_plot
     torch.set_printoptions(precision=4, sci_mode=False)
 
 
-    def pix2pose(p, yaw, z, roll, pitch):
+    def pix2pose(p, yaw, z, roll, pitch, grasp='top'):
         if yaw > np.pi:
             yaw -= 2*np.pi
         yaw = yaw * 180 / np.pi
@@ -65,7 +65,7 @@ def eval(schedules, plot_path='logs/baselines/TN/', use_gui=True, visualize_plot
         pitch = min(max(pitch, -np.pi), np.pi)
         pitch = pitch * 180 / np.pi
 
-        T = ortho_transform.pix_yaw_zrp2pose(grasp_pix=p, yaw=yaw, height=z, roll=roll, pitch=pitch, grasp='top')
+        T = ortho_transform.pix_yaw_zrp2pose(grasp_pix=p, yaw=yaw, height=z, roll=roll, pitch=pitch, grasp=grasp)
         return T
 
     def save_plot_func():
@@ -166,7 +166,16 @@ def eval(schedules, plot_path='logs/baselines/TN/', use_gui=True, visualize_plot
 
 
     ##### Initialize task env #####
-    task = MugTask(use_gui=use_gui)
+    if task_type=='mug_task':
+        task = MugTask(use_gui=use_gui)
+    elif task_type=='stick_task':
+        task = StickTask(use_gui=use_gui)
+    elif task_type=='bowl_task':
+        task = BowlTask(use_gui=use_gui)
+    elif task_type=='bottle_task':
+        task = BottleTask(use_gui=use_gui)
+    else:
+        raise ValueError
 
 
     ##### Evaluate #####
@@ -230,7 +239,7 @@ def eval(schedules, plot_path='logs/baselines/TN/', use_gui=True, visualize_plot
                 p0 = np.array((h, w))
                 p0_theta = theta_i * (2 * np.pi / pick_conf.shape[2])
                 z,r,p = zrp[h,w,theta_i].detach().cpu().numpy() #+ np.random.randn(3) * zrp_log_std[h,w,theta_i].detach().cpu().exp().numpy()
-                T = pix2pose(p0, p0_theta, z, r, p)
+                T = pix2pose(p0, p0_theta, z, r, p, grasp=pick_grasp)
 
                 #T[0][-1] = 0.09
                 pick_ik_success = pick(T)
@@ -280,7 +289,7 @@ def eval(schedules, plot_path='logs/baselines/TN/', use_gui=True, visualize_plot
                 p1_theta = (p1_theta + 2*np.pi) % (2*np.pi)
                 z,r,p = zrp_place[h,w,theta_i].detach().cpu().numpy() #+ np.random.randn(3) * zrp_log_std_place[h,w,theta_i].detach().cpu().exp().numpy()
 
-                T = pix2pose(p1, p1_theta, z, r, p)
+                T = pix2pose(p1, p1_theta, z, r, p, grasp=place_grasp)
 
                 place_ik_success = place(T)
                 if place_ik_success:
@@ -334,6 +343,12 @@ if __name__ == '__main__':
                         help='')
     parser.add_argument('--use-support', action='store_true',
                         help='')
+    parser.add_argument('--task-type', type=str, default='mug_task',
+                        help='')
+    parser.add_argument('--pick-grasp', type=str, default='top',
+                        help='')
+    parser.add_argument('--place-grasp', type=str, default='top',
+                        help='')
 
     args = parser.parse_args()
 
@@ -353,6 +368,9 @@ if __name__ == '__main__':
     mug_type = args.mug_type
     distractor = args.distractor
     use_support = args.use_support
+    task_type = args.task_type
+    pick_grasp = args.pick_grasp
+    place_grasp = args.place_grasp
 
     schedule = {'mug_pose': mug_pose, 'mug_type': mug_type, 
                 'distractor': distractor, 'use_support': use_support, 
@@ -360,4 +378,4 @@ if __name__ == '__main__':
 
     schedules = [schedule]
 
-    eval(schedules=schedules, plot_path=plot_path, use_gui=use_gui, visualize_plot=visualize_plot, save_plot=save_plot, root_dir = root_dir, checkpoint_iter = checkpoint_iter, task_config_dir = task_config_dir)
+    eval(schedules=schedules, plot_path=plot_path, use_gui=use_gui, visualize_plot=visualize_plot, save_plot=save_plot, root_dir = root_dir, checkpoint_iter = checkpoint_iter, task_config_dir = task_config_dir, task_type=task_type, pick_grasp=pick_grasp, place_grasp=place_grasp)

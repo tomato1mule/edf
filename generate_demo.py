@@ -14,6 +14,7 @@ from edf.utils import OrthoTransform
 # PYTHONHASHSEED=0 python3 generate_demo.py --use-gui --cup-pose='arbitrary' --file-name='mug_task_handle_upandlying.gzip' --pick-type='handle' --low-var
 # PYTHONHASHSEED=0 python3 generate_demo.py --use-gui --file-name='mug_task_rim_lowvar.gzip' --pick-type='rim' --low-var
 # PYTHONHASHSEED=0 python3 generate_demo.py --use-gui --file-name='mug_task_rim_5_demo.gzip' --pick-type='rim' --seeds 0 1 2 3 4
+# PYTHONHASHSEED=0 python3 generate_demo.py --use-gui --file-name='mug_task_rim_1_demo.gzip' --pick-type='rim' --seeds 0
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Oracle policy test for mug pick and place test')
 

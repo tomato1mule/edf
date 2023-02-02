@@ -8,7 +8,7 @@ from edf.pybullet_env.utils import voxel_filter
 from edf.pybullet_env.env import StickTask
 from edf.utils import OrthoTransform
 
-# PYTHONHASHSEED=0 python3 generate_demo_stick.py --use-gui --file-name='stick_task_rim.gzip' --pick-type='rim'
+# PYTHONHASHSEED=0 python3 generate_demo_stick.py --use-gui --file-name='stick_task_rim.gzip' --pick-type='rim' --dont-save
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Oracle policy test for mug pick and place test')
 

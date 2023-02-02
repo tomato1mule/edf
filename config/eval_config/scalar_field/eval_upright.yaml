@@ -16,7 +16,7 @@ langevin_dt_pick: 0.001
 optim_lr_pick: 0.005
 X_seed_mean_pick: [0.,0., -29.]
 X_seed_std_pick: [2.5, 2.5, 0.5]
-max_N_query_pick: 30
+max_N_query_pick: 10
 
 place_policy: 'sorted'
 place_dist_temp: 1.
@@ -30,7 +30,7 @@ langevin_dt_place: 0.001
 optim_lr_place: 0.005
 X_seed_mean_place: [0.,0., -29.]
 X_seed_std_place: [2.5, 2.5, 0.5]
-max_N_query_place: 10
+max_N_query_place: 5
 query_temp_place: 1.
 
 schedules:

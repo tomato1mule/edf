@@ -22,7 +22,7 @@ from baselines.equiv_tn.utils import perturb
 
 
 
-def train(sample_dir = 'demo/mug_task_rim.gzip', root_dir = 'checkpoint_tn/rim', plot_path = 'logs/baselines/TN/train/', imshow = True, saveplot = False, lr=1e-5, max_epoch = 200):
+def train(sample_dir = 'demo/mug_task_rim.gzip', root_dir = 'checkpoint_tn/rim', plot_path = 'logs/baselines/TN/train/', imshow = True, saveplot = False, lr=1e-5, max_epoch = 200, save_freq = 50, pick_grasp = 'top', place_grasp = 'top'):
     seed = 0
     device = 'cuda'
 
@@ -89,8 +89,8 @@ def train(sample_dir = 'demo/mug_task_rim.gzip', root_dir = 'checkpoint_tn/rim',
             pick = (pick[4:].numpy(), transforms.quaternion_to_matrix(pick[:4]).numpy())
             place = (place[4:].numpy(), transforms.quaternion_to_matrix(place[:4]).numpy())
 
-            pick = ortho_transform.pose2pix_yaw_zrp(pick, grasp='top') # grasp_pix, yaw, height, roll, pitch 
-            place = ortho_transform.pose2pix_yaw_zrp(place, grasp='top') # grasp_pix, yaw, height, roll, pitch 
+            pick = ortho_transform.pose2pix_yaw_zrp(pick, grasp=pick_grasp) # grasp_pix, yaw, height, roll, pitch 
+            place = ortho_transform.pose2pix_yaw_zrp(place, grasp=place_grasp) # grasp_pix, yaw, height, roll, pitch 
 
             # img_test = (img.copy()[...,:3]*255).astype(np.uint8)
             # img_test = cv2.arrowedLine(img_test, pick[0][...,::-1], (pick[0][...,::-1] + np.array([np.cos(pick[1]/180*np.pi), -np.sin(pick[1]/180*np.pi)]) * 30).astype(int), (255,0,255), thickness = 3, tipLength=0.3)
@@ -133,7 +133,7 @@ def train(sample_dir = 'demo/mug_task_rim.gzip', root_dir = 'checkpoint_tn/rim',
 
             agent.train(data)
             
-            if iters % 50 == 0 or iters == 1:
+            if iters % save_freq == 0 or iters == 1:
                 agent.save()
                 with torch.no_grad():
                     p0, p1, confs = agent.act(img=img, return_output=True, gt_data = data)
@@ -202,6 +202,12 @@ if __name__ == '__main__':
                     help='')
     parser.add_argument('--lr', type=float, default=0.0001,
                     help='')
+    parser.add_argument('--save-freq', type=int, default=50,
+                    help='')
+    parser.add_argument('--pick-grasp', type=str, default='top',
+                        help='')
+    parser.add_argument('--place-grasp', type=str, default='top',
+                        help='')
     args = parser.parse_args()
 
 
@@ -213,5 +219,8 @@ if __name__ == '__main__':
     saveplot = args.saveplot
     max_epoch = args.max_epoch
     lr = args.lr
+    save_freq = args.save_freq
+    pick_grasp = args.pick_grasp
+    place_grasp = args.place_grasp
 
-    train(sample_dir = sample_dir, root_dir = root_dir, plot_path = plot_path, imshow = imshow, saveplot = saveplot, max_epoch = max_epoch, lr = lr)
+    train(sample_dir = sample_dir, root_dir = root_dir, plot_path = plot_path, imshow = imshow, saveplot = saveplot, max_epoch = max_epoch, lr = lr, save_freq=save_freq, pick_grasp=pick_grasp, place_grasp=place_grasp)

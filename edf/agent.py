@@ -102,7 +102,7 @@ class PickAgent(nn.Module):
     def _init_models_optional(self):
         self.langevin = LangevinMH(ranges_X = self.ranges, dt = self.langevin_dt, std_theta = 1., std_X = 1.)
         self.query_model = SimpleQueryModel(irreps_descriptor=self.irreps_descriptor, N_query=self.N_query, 
-                                            query_radius = self.query_radius, irrep_normalization=self.irrep_normalization, layernorm=False)
+                                            query_radius = self.query_radius, irrep_normalization=self.irrep_normalization, layernorm=False, max_N_query = self.max_N_query)
 
     def init_optimizers(self):
         self.optimizer_se3T = torch.optim.Adam(list(self.se3T.parameters()), lr=self.lr_se3T, betas=(0.9, 0.98), eps=1e-09, weight_decay=1e-4, amsgrad=True)

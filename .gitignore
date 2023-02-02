@@ -1,7 +1,6 @@
 # Custom
 demo/
 *.gzip
-!reproducible_pickles/**/*.gzip
 *.pickle
 *.pt
 checkpoint/

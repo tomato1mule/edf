@@ -1,0 +1,80 @@
+source ndf_env.sh 
+cd src/ndf_robot/eval
+
+
+
+### Defaults ###
+        
+CUDA_VISIBLE_DEVICES=0 python evaluate_ndf.py \
+        --demo_exp grasp_side_place_shelf_start_upright_all_methods_multi_instance \
+        --object_class bottle \
+        --opt_iterations 500 \
+        --only_test_ids \
+        --rand_mesh_scale \
+        --model_path multi_category_weights \
+        --save_vis_per_model \
+        --config eval_bottle_gen \
+        --exp test_bottle_eval \
+        --non_thin_feature \
+        --pybullet_viz \
+        --n_demos 10 \
+        --seed 0 &> bottle.txt
+        
+        
+        
+        
+CUDA_VISIBLE_DEVICES=0 python evaluate_ndf.py \
+        --demo_exp grasp_rim_hang_handle_gaussian_precise_w_shelf \
+        --object_class mug \
+        --opt_iterations 500 \
+        --only_test_ids \
+        --rand_mesh_scale \
+        --model_path multi_category_weights \
+        --save_vis_per_model \
+        --config eval_mug_gen \
+        --exp test_mug_eval \
+        --pybullet_viz \
+        --n_demos 10 \
+        --seed 0 &> mug.txt
+
+#######################
+
+
+        
+      
+        
+### Unsegmented object ###
+
+CUDA_VISIBLE_DEVICES=0 python evaluate_ndf_unsegmented.py \
+        --demo_exp grasp_rim_hang_handle_gaussian_precise_w_shelf \
+        --object_class mug \
+        --opt_iterations 500 \
+        --only_test_ids \
+        --rand_mesh_scale \
+        --model_path multi_category_weights \
+        --save_vis_per_model \
+        --config eval_mug_gen \
+        --exp test_mug_eval \
+        --pybullet_viz \
+        --n_demos 10 \
+        --seed 0 &> unsegmented_mug.txt
+
+
+CUDA_VISIBLE_DEVICES=0 python evaluate_ndf_unsegmented.py \
+        --demo_exp grasp_side_place_shelf_start_upright_all_methods_multi_instance \
+        --object_class bottle \
+        --opt_iterations 500 \
+        --only_test_ids \
+        --rand_mesh_scale \
+        --model_path multi_category_weights \
+        --save_vis_per_model \
+        --config eval_bottle_gen \
+        --exp test_bottle_eval \
+        --non_thin_feature \
+        --pybullet_viz \
+        --n_demos 10 \
+        --seed 0 &> unsegmented_bottle.txt
+        
+#######################
+
+

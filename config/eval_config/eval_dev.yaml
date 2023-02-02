@@ -35,18 +35,18 @@ query_temp_place: 1.
 
 
 schedules:
-  - init_seed: 100
-    end_seed: 110
-    mug_pose: 'arbitrary'
-    mug_type: 'cups'
-    distractor: True
-    use_support: True
-  # - init_seed: 103
-  #   end_seed: 111
+  # - init_seed: 110
+  #   end_seed: 120
   #   mug_pose: 'lying'
   #   mug_type: 'cups'
-  #   distractor: False
+  #   distractor: True
   #   use_support: True
+  - init_seed: 110
+    end_seed: 120
+    mug_pose: 'upright'
+    mug_type: 'default'
+    distractor: False
+    use_support: False
 
 # schedules:
 #   - init_seed: 100

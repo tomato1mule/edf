@@ -1,0 +1,1005 @@
+pybullet build time: Nov 11 2022 17:24:54
+FRANKA URDF:  /home/hw/Codes/Research/ndf_robot/pybullet-planning/models/franka_description/robots/panda_arm_hand.urdf
+[33m[WARNING][0m[2022-11-17 20:19:53]: [33mCould not find corresponding placement demo: /home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/place_demo_32074e5642bad0e12c16495e79df12c1_0.npz, skipping [0m
+[33m[WARNING][0m[2022-11-17 20:19:53]: [33mUSING ONLY 10 DEMONSTRATIONS[0m
+Body id: 0 | Name: panda | Rigid: False | Fixed: True
+Joint id: 0 | Name: panda_joint1 | Type: revolute | Circular: False | Lower: -2.897 | Upper: 2.897
+Joint id: 1 | Name: panda_joint2 | Type: revolute | Circular: False | Lower: -1.763 | Upper: 1.763
+Joint id: 2 | Name: panda_joint3 | Type: revolute | Circular: False | Lower: -2.897 | Upper: 2.897
+Joint id: 3 | Name: panda_joint4 | Type: revolute | Circular: False | Lower: -3.072 | Upper: -0.070
+Joint id: 4 | Name: panda_joint5 | Type: revolute | Circular: False | Lower: -2.897 | Upper: 2.897
+Joint id: 5 | Name: panda_joint6 | Type: revolute | Circular: False | Lower: -0.018 | Upper: 3.752
+Joint id: 6 | Name: panda_joint7 | Type: revolute | Circular: False | Lower: -2.897 | Upper: 2.897
+Joint id: 9 | Name: panda_finger_joint1 | Type: prismatic | Circular: False | Lower: 0.000 | Upper: 0.040
+Joint id: 10 | Name: panda_finger_joint2 | Type: prismatic | Circular: False | Lower: 0.000 | Upper: 0.040
+Link id: -1 | Name: panda_link0 | Mass: 0.0 | Collision: 1 | Visual: -1
+Link id: 0 | Name: panda_link1 | Joint: panda_joint1 | Parent: panda_link0 | Mass: 1.0 | Collision: 1 | Visual: -1
+Link id: 1 | Name: panda_link2 | Joint: panda_joint2 | Parent: panda_link1 | Mass: 1.0 | Collision: 1 | Visual: -1
+Link id: 2 | Name: panda_link3 | Joint: panda_joint3 | Parent: panda_link2 | Mass: 1.0 | Collision: 1 | Visual: -1
+Link id: 3 | Name: panda_link4 | Joint: panda_joint4 | Parent: panda_link3 | Mass: 1.0 | Collision: 1 | Visual: -1
+Link id: 4 | Name: panda_link5 | Joint: panda_joint5 | Parent: panda_link4 | Mass: 1.0 | Collision: 1 | Visual: -1
+Link id: 5 | Name: panda_link6 | Joint: panda_joint6 | Parent: panda_link5 | Mass: 1.0 | Collision: 1 | Visual: -1
+Link id: 6 | Name: panda_link7 | Joint: panda_joint7 | Parent: panda_link6 | Mass: 1.0 | Collision: 1 | Visual: -1
+Link id: 7 | Name: panda_link8 | Joint: fixed | Parent: panda_link7 | Mass: 1.0 | Collision: 0 | Visual: -1
+Link id: 8 | Name: panda_hand | Joint: fixed | Parent: panda_link8 | Mass: 1.0 | Collision: 1 | Visual: -1
+Link id: 9 | Name: panda_leftfinger | Joint: panda_finger_joint1 | Parent: panda_hand | Mass: 1.0 | Collision: 1 | Visual: -1
+Link id: 10 | Name: panda_rightfinger | Joint: panda_finger_joint2 | Parent: panda_hand | Mass: 1.0 | Collision: 1 | Visual: -1
+Link id: 11 | Name: tool_link | Joint: fixed | Parent: panda_link8 | Mass: 1.0 | Collision: 0 | Visual: -1
+Joints ['panda_joint1', 'panda_joint2', 'panda_joint3', 'panda_joint4', 'panda_joint5', 'panda_joint6', 'panda_joint7', 'panda_finger_joint1', 'panda_finger_joint2']
+IKFastInfo(module_name='franka_panda.ikfast_panda_arm', base_link='panda_link0', ee_link='panda_link8', free_joints=['panda_joint7'])
+Using IKFast for inverse kinematics
+['/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_2bbd2b37776088354e23e9314af9ae57.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_32bb26b4d2cd5ee0b3b14ef623ad866a.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_991d9df5bf2a33a1c9292f26f73f6538.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_5d6b5d1b135b8cf8b7886d94372e3c76.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_b1271f402910cf05cfdfe3f21f42a111.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_912a49eeda6cd8c5e3c462ac6e0f506f.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_b95559b4f2146b6a823177feb9bf5114.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_4301fe10764677dcdf0266d76aa42ba.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_dc0926ce09d6ce78eb8e919b102c6c08.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_75bf30ec68b8477e7099d25c8e75cf58.npz'] ['/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/place_demo_2bbd2b37776088354e23e9314af9ae57.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/place_demo_32bb26b4d2cd5ee0b3b14ef623ad866a.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/place_demo_991d9df5bf2a33a1c9292f26f73f6538.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/place_demo_5d6b5d1b135b8cf8b7886d94372e3c76.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/place_demo_b1271f402910cf05cfdfe3f21f42a111.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/place_demo_912a49eeda6cd8c5e3c462ac6e0f506f.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/place_demo_b95559b4f2146b6a823177feb9bf5114.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/place_demo_4301fe10764677dcdf0266d76aa42ba.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/place_demo_dc0926ce09d6ce78eb8e919b102c6c08.npz', '/home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/place_demo_75bf30ec68b8477e7099d25c8e75cf58.npz']
+Loading demo from fname: /home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_2bbd2b37776088354e23e9314af9ae57.npz
+Using shelf points
+Loading demo from fname: /home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_32bb26b4d2cd5ee0b3b14ef623ad866a.npz
+Loading demo from fname: /home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_991d9df5bf2a33a1c9292f26f73f6538.npz
+Loading demo from fname: /home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_5d6b5d1b135b8cf8b7886d94372e3c76.npz
+Loading demo from fname: /home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_b1271f402910cf05cfdfe3f21f42a111.npz
+Loading demo from fname: /home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_912a49eeda6cd8c5e3c462ac6e0f506f.npz
+Loading demo from fname: /home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_b95559b4f2146b6a823177feb9bf5114.npz
+Loading demo from fname: /home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_4301fe10764677dcdf0266d76aa42ba.npz
+[32m[INFO][0m[2022-11-17 20:19:59]: [32mShapenet ID: f68e99b57596b33d197a35146ee825cd[0m
+ial frame
+b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+
+b3Printf: panda_leftfinger
+b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+
+b3Printf: No inertial data for link, using mass=1, localinertiadiagonal = 1,1,1, identity local inertial frame
+b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+
+b3Printf: panda_rightfinger
+b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+
+b3Printf: No inertial data for link, using mass=1, localinertiadiagonal = 1,1,1, identity local inertial frame
+b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+
+b3Printf: tool_link
+b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+
+b3Printf: No inertial data for link, using mass=1, localinertiadiagonal = 1,1,1, identity local inertial frame
+b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+
+b3Printf: shelf
+/home/hw/anaconda3/envs/ndf/lib/python3.9/site-packages/torch/nn/functional.py:1967: UserWarning: nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.
+  warnings.warn("nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.")
+/home/hw/anaconda3/envs/ndf/lib/python3.9/site-packages/torch/nn/functional.py:1967: UserWarning:
+
+nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.
+
+[32m[INFO][0m[2022-11-17 20:20:25]: [32mIteration: 0, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f68e99b57596b33d197a35146ee825cd[0m
+[32m[INFO][0m[2022-11-17 20:20:25]: [32mShapenet ID: ee007f1aac12fbe549a44197486ae284[0m
+[32m[INFO][0m[2022-11-17 20:20:45]: [32mIteration: 1, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: ee007f1aac12fbe549a44197486ae284[0m
+[32m[INFO][0m[2022-11-17 20:20:45]: [32mShapenet ID: fd0ccd09330865277602de57eab5e08f[0m
+[32m[INFO][0m[2022-11-17 20:21:11]: [32mIteration: 2, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: fd0ccd09330865277602de57eab5e08f[0m
+[32m[INFO][0m[2022-11-17 20:21:11]: [32mShapenet ID: f47cbefc9aa5b6a918431871c8e05789[0m
+[32m[INFO][0m[2022-11-17 20:21:31]: [32mIteration: 3, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f47cbefc9aa5b6a918431871c8e05789[0m
+[32m[INFO][0m[2022-11-17 20:21:31]: [32mShapenet ID: f0611ec9ff89209bf10c4513652c1c5e[0m
+[32m[INFO][0m[2022-11-17 20:21:56]: [32mIteration: 4, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f0611ec9ff89209bf10c4513652c1c5e[0m
+[32m[INFO][0m[2022-11-17 20:21:56]: [32mShapenet ID: e4915635a488cbfc4c3a35cee92bb95b[0m
+[32m[INFO][0m[2022-11-17 20:22:22]: [32mIteration: 5, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e4915635a488cbfc4c3a35cee92bb95b[0m
+[32m[INFO][0m[2022-11-17 20:22:22]: [32mShapenet ID: f0611ec9ff89209bf10c4513652c1c5e[0m
+[32m[INFO][0m[2022-11-17 20:22:44]: [32mIteration: 6, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f0611ec9ff89209bf10c4513652c1c5e[0m
+[32m[INFO][0m[2022-11-17 20:22:44]: [32mShapenet ID: f853ac62bc288e48e56a63d21fb60ae9[0m
+[32m[INFO][0m[2022-11-17 20:23:10]: [32mIteration: 7, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f853ac62bc288e48e56a63d21fb60ae9[0m
+[32m[INFO][0m[2022-11-17 20:23:10]: [32mShapenet ID: e56e77c6eb21d9bdf577ff4de1ac394c[0m
+[32m[INFO][0m[2022-11-17 20:23:37]: [32mIteration: 8, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e56e77c6eb21d9bdf577ff4de1ac394c[0m
+[32m[INFO][0m[2022-11-17 20:23:37]: [32mShapenet ID: e5a5dac174982cea2dcdfc29ed7a2492[0m
+[32m[INFO][0m[2022-11-17 20:24:04]: [32mIteration: 9, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e5a5dac174982cea2dcdfc29ed7a2492[0m
+[32m[INFO][0m[2022-11-17 20:24:04]: [32mShapenet ID: fca70766d88fc7b9e5054d95cb6a63e2[0m
+[32m[INFO][0m[2022-11-17 20:24:25]: [32mIteration: 10, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: fca70766d88fc7b9e5054d95cb6a63e2[0m
+[32m[INFO][0m[2022-11-17 20:24:25]: [32mShapenet ID: e29e8121d93af93bba803759c05367b0[0m
+[32m[INFO][0m[2022-11-17 20:24:52]: [32mIteration: 11, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e29e8121d93af93bba803759c05367b0[0m
+[32m[INFO][0m[2022-11-17 20:24:52]: [32mShapenet ID: f4851a2835228377e101b7546e3ee8a7[0m
+[32m[INFO][0m[2022-11-17 20:25:19]: [32mIteration: 12, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f4851a2835228377e101b7546e3ee8a7[0m
+[32m[INFO][0m[2022-11-17 20:25:19]: [32mShapenet ID: fec05c85454edafc4310636931b68fdb[0m
+Loading demo from fname: /home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_dc0926ce09d6ce78eb8e919b102c6c08.npz
+Loading demo from fname: /home/hw/Codes/Research/ndf_robot/src/ndf_robot/data/demos/bottle/grasp_side_place_shelf_start_upright_all_methods_multi_instance/grasp_demo_75bf30ec68b8477e7099d25c8e75cf58.npz
+((0.2504736702515667, 0.11568428279263364, 1.1500000000000004), (0.6915325986982461, -0.14758951499903517, -0.1475895149990352, 0.6915325986982462))
+Identified 250 IK solutions with minimum distance of 1.572 in 0.059 seconds
+Identified 250 IK solutions with minimum distance of 0.239 in 0.048 seconds
+((0.2504736702515667, 0.11568428279263364, 1.1500000000000004), (0.6915325986982461, -0.14758951499903517, -0.1475895149990352, 0.6915325986982462))
+Identified 250 IK solutions with minimum distance of 0.422 in 0.016 seconds
+((0.3062335311958113, 0.06612051433438057, 1.15), (-0.1551019275568277, 0.6898865066575491, 0.6898865066575492, -0.15510192755682772))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 4.430 in 0.026 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.026 seconds
+((0.3062335311958113, 0.06612051433438057, 1.15), (-0.1551019275568277, 0.6898865066575491, 0.6898865066575492, -0.15510192755682772))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.24413329387302327, 0.06143746567965472, 1.15), (-0.19819984652750292, 0.6787612399338034, 0.6787612399338036, -0.19819984652750294))
+Identified 250 IK solutions with minimum distance of 4.170 in 0.025 seconds
+Identified 250 IK solutions with minimum distance of 0.200 in 0.024 seconds
+((0.24413329387302327, 0.06143746567965472, 1.15), (-0.19819984652750292, 0.6787612399338034, 0.6787612399338036, -0.19819984652750294))
+Identified 250 IK solutions with minimum distance of 0.313 in 0.027 seconds
+((0.3071628945643222, 0.027071297078119616, 1.15), (0.6434952754736646, -0.2931106112768223, -0.29311061127682236, 0.6434952754736647))
+Identified 250 IK solutions with minimum distance of 1.988 in 0.026 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 0.000 in 0.025 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+((0.3071628945643222, 0.027071297078119616, 1.15), (0.6434952754736646, -0.2931106112768223, -0.29311061127682236, 0.6434952754736647))
+Warning: end configuration is in collision
+((0.266473549985191, 0.04276784052623389, 1.15), (0.44026754509762966, 0.5533213250306794, 0.5533213250306793, 0.4402675450976297))
+Identified 250 IK solutions with minimum distance of 2.377 in 0.020 seconds
+Identified 250 IK solutions with minimum distance of 0.324 in 0.021 seconds
+((0.266473549985191, 0.04276784052623389, 1.15), (0.44026754509762966, 0.5533213250306794, 0.5533213250306793, 0.4402675450976297))
+Identified 250 IK solutions with minimum distance of 0.779 in 0.021 seconds
+((0.30293957449225273, 0.12014772500889175, 1.15), (0.6763201153502223, -0.20637611676902398, -0.206376116769024, 0.6763201153502225))
+Identified 250 IK solutions with minimum distance of 2.476 in 0.019 seconds
+Identified 250 IK solutions with minimum distance of 0.217 in 0.016 seconds
+((0.30293957449225273, 0.12014772500889175, 1.15), (0.6763201153502223, -0.20637611676902398, -0.206376116769024, 0.6763201153502225))
+Identified 250 IK solutions with minimum distance of 0.278 in 0.020 seconds
+((0.3010952342627725, 0.06369290541549844, 1.15), (0.31995210518961625, 0.6305796146282662, 0.6305796146282662, 0.3199521051896163))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+((0.3010952342627725, 0.06369290541549844, 1.15), (0.31995210518961625, 0.6305796146282662, 0.6305796146282662, 0.3199521051896163))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.26697336176671604, -0.024152974713948006, 1.15), (0.6471565626059976, -0.284935753242708, -0.2849357532427081, 0.6471565626059977))
+Identified 250 IK solutions with minimum distance of 3.239 in 0.031 seconds
+Identified 250 IK solutions with minimum distance of 0.318 in 0.026 seconds
+((0.26697336176671604, -0.024152974713948006, 1.15), (0.6471565626059976, -0.284935753242708, -0.2849357532427081, 0.6471565626059977))
+Identified 250 IK solutions with minimum distance of 0.420 in 0.027 seconds
+((0.27547182146753324, 0.12849935932182968, 1.15), (0.6818416682884704, -0.18732842652837223, -0.1873284265283723, 0.6818416682884703))
+Identified 250 IK solutions with minimum distance of 2.682 in 0.029 seconds
+Identified 250 IK solutions with minimum distance of 0.263 in 0.026 seconds
+((0.27547182146753324, 0.12849935932182968, 1.15), (0.6818416682884704, -0.18732842652837223, -0.1873284265283723, 0.6818416682884703))
+Identified 250 IK solutions with minimum distance of 0.289 in 0.024 seconds
+((0.3152701694295909, 0.08380781807175552, 1.15), (0.39977031059667945, 0.5832526886054057, 0.5832526886054058, 0.39977031059667956))
+Identified 250 IK solutions with minimum distance of 2.945 in 0.024 seconds
+Identified 250 IK solutions with minimum distance of 0.805 in 0.026 seconds
+((0.3152701694295909, 0.08380781807175552, 1.15), (0.39977031059667945, 0.5832526886054057, 0.5832526886054058, 0.39977031059667956))
+Identified 250 IK solutions with minimum distance of 0.422 in 0.038 seconds
+Failed to get feasible IK
+((0.2570153801856789, -0.03386730302451699, 1.15), (0.6579211001754499, -0.25911353871213666, -0.2591135387121367, 0.6579211001754496))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 2.501 in 0.029 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.030 seconds
+((0.2570153801856789, -0.03386730302451699, 1.15), (0.6579211001754499, -0.25911353871213666, -0.2591135387121367, 0.6579211001754496))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.2610076064705108, 0.049889700180864915, 1.15), (0.5316864059689665, 0.46616474095302746, 0.4661647409530275, 0.5316864059689667))
+Identified 250 IK solutions with minimum distance of 2.007 in 0.016 seconds
+Identified 250 IK solutions with minimum distance of 0.339 in 0.018 seconds
+((0.2610076064705108, 0.049889700180864915, 1.15), (0.5316864059689665, 0.46616474095302746, 0.4661647409530275, 0.5316864059689667))
+Identified 250 IK solutions with minimum distance of 0.276 in 0.019 seconds
+((0.2827874775745908, -0.042911562732072084, 1.15), (0.49150997901646776, 0.5083482472943437, 0.5083482472943439, 0.49150997901646787))
+Identified 250 IK solutions with minimum distance of 3.448 in 0.030 seconds
+Identified 250 IK solutions with minimum distance of 0.298 in 0.028 seconds
+((0.2827874775745908, -0.042911562732072084, 1.15), (0.49150997901646776, 0.5083482472943437, 0.5083482472943439, 0.49150997901646787))
+Identified 250 IK solutions with minimum distance of 0.405 in 0.027 seconds
+((0.26319607918153265, -0.029445657377110957, 1.15), (-0.06989478687076647, 0.7036438863290791, 0.7036438863290793, -0.06989478687076649))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 2.012 in 0.024 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.022 seconds
+[32m[INFO][0m[2022-11-17 20:25:40]: [32mIteration: 13, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: fec05c85454edafc4310636931b68fdb[0m
+[32m[INFO][0m[2022-11-17 20:25:40]: [32mShapenet ID: f49d6c4b75f695c44d34bdc365023cf4[0m
+[32m[INFO][0m[2022-11-17 20:26:02]: [32mIteration: 14, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f49d6c4b75f695c44d34bdc365023cf4[0m
+[32m[INFO][0m[2022-11-17 20:26:02]: [32mShapenet ID: ff13595434879bba557ef92e2fa0ccb2[0m
+[32m[INFO][0m[2022-11-17 20:26:24]: [32mIteration: 15, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: ff13595434879bba557ef92e2fa0ccb2[0m
+[32m[INFO][0m[2022-11-17 20:26:24]: [32mShapenet ID: f9f67fe61dcf46d7e19818797f240d91[0m
+[32m[INFO][0m[2022-11-17 20:26:50]: [32mIteration: 16, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f9f67fe61dcf46d7e19818797f240d91[0m
+[32m[INFO][0m[2022-11-17 20:26:50]: [32mShapenet ID: f4851a2835228377e101b7546e3ee8a7[0m
+[32m[INFO][0m[2022-11-17 20:27:16]: [32mIteration: 17, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f4851a2835228377e101b7546e3ee8a7[0m
+[32m[INFO][0m[2022-11-17 20:27:16]: [32mShapenet ID: e29e8121d93af93bba803759c05367b0[0m
+[32m[INFO][0m[2022-11-17 20:27:43]: [32mIteration: 18, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e29e8121d93af93bba803759c05367b0[0m
+[32m[INFO][0m[2022-11-17 20:27:43]: [32mShapenet ID: ee007f1aac12fbe549a44197486ae284[0m
+[32m[INFO][0m[2022-11-17 20:28:05]: [32mIteration: 19, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: ee007f1aac12fbe549a44197486ae284[0m
+[32m[INFO][0m[2022-11-17 20:28:05]: [32mShapenet ID: e8b48d395d3d8744e53e6e0633163da8[0m
+[32m[INFO][0m[2022-11-17 20:28:26]: [32mIteration: 20, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e8b48d395d3d8744e53e6e0633163da8[0m
+[32m[INFO][0m[2022-11-17 20:28:26]: [32mShapenet ID: e56e77c6eb21d9bdf577ff4de1ac394c[0m
+[32m[INFO][0m[2022-11-17 20:28:54]: [32mIteration: 21, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e56e77c6eb21d9bdf577ff4de1ac394c[0m
+[32m[INFO][0m[2022-11-17 20:28:54]: [32mShapenet ID: e56e77c6eb21d9bdf577ff4de1ac394c[0m
+[32m[INFO][0m[2022-11-17 20:29:21]: [32mIteration: 22, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e56e77c6eb21d9bdf577ff4de1ac394c[0m
+[32m[INFO][0m[2022-11-17 20:29:21]: [32mShapenet ID: ee3ca78e36c6a7b2a367d39c852840d5[0m
+[32m[INFO][0m[2022-11-17 20:29:43]: [32mIteration: 23, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: ee3ca78e36c6a7b2a367d39c852840d5[0m
+[32m[INFO][0m[2022-11-17 20:29:43]: [32mShapenet ID: e8b48d395d3d8744e53e6e0633163da8[0m
+[32m[INFO][0m[2022-11-17 20:30:05]: [32mIteration: 24, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e8b48d395d3d8744e53e6e0633163da8[0m
+[32m[INFO][0m[2022-11-17 20:30:05]: [32mShapenet ID: fec05c85454edafc4310636931b68fdb[0m
+[32m[INFO][0m[2022-11-17 20:30:32]: [32mIteration: 25, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: fec05c85454edafc4310636931b68fdb[0m
+[32m[INFO][0m[2022-11-17 20:30:32]: [32mShapenet ID: f0611ec9ff89209bf10c4513652c1c5e[0m
+[32m[INFO][0m[2022-11-17 20:30:59]: [32mIteration: 26, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f0611ec9ff89209bf10c4513652c1c5e[0m
+[32m[INFO][0m[2022-11-17 20:30:59]: [32mShapenet ID: f853ac62bc288e48e56a63d21fb60ae9[0m
+((0.26319607918153265, -0.029445657377110957, 1.15), (-0.06989478687076647, 0.7036438863290791, 0.7036438863290793, -0.06989478687076649))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.32454133498642734, -0.027995825075177116, 1.15), (0.5143204875752656, 0.4852570824422253, 0.48525708244222543, 0.5143204875752659))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 2.179 in 0.020 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.018 seconds
+((0.32454133498642734, -0.027995825075177116, 1.15), (0.5143204875752656, 0.4852570824422253, 0.48525708244222543, 0.5143204875752659))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.237578741799931, -0.02462601651177962, 1.15), (0.514467235477503, 0.48510149826622423, 0.48510149826622434, 0.514467235477503))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+((0.237578741799931, -0.02462601651177962, 1.15), (0.514467235477503, 0.48510149826622423, 0.48510149826622434, 0.514467235477503))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.28886073672418777, 0.10358051424691492, 1.15), (0.6309635498555318, -0.3191942962424391, -0.3191942962424392, 0.6309635498555317))
+Identified 250 IK solutions with minimum distance of 1.078 in 0.022 seconds
+Identified 250 IK solutions with minimum distance of 0.318 in 0.021 seconds
+((0.28886073672418777, 0.10358051424691492, 1.15), (0.6309635498555318, -0.3191942962424391, -0.3191942962424392, 0.6309635498555317))
+Identified 250 IK solutions with minimum distance of 0.261 in 0.020 seconds
+((0.2520737373220389, 0.14043902760757432, 1.1500000000000001), (0.5024485714007138, 0.49753937843891516, 0.49753937843891527, 0.5024485714007135))
+Identified 250 IK solutions with minimum distance of 3.187 in 0.020 seconds
+Identified 250 IK solutions with minimum distance of 0.416 in 0.017 seconds
+((0.2520737373220389, 0.14043902760757432, 1.1500000000000001), (0.5024485714007138, 0.49753937843891516, 0.49753937843891527, 0.5024485714007135))
+Identified 250 IK solutions with minimum distance of 0.379 in 0.018 seconds
+((0.3167279982296307, 0.12326214794399871, 1.15), (0.7055217525389118, 0.04731867173138199, 0.047318671731381996, 0.705521752538912))
+Identified 250 IK solutions with minimum distance of 2.534 in 0.026 seconds
+Identified 250 IK solutions with minimum distance of 0.698 in 0.015 seconds
+((0.3167279982296307, 0.12326214794399871, 1.15), (0.7055217525389118, 0.04731867173138199, 0.047318671731381996, 0.705521752538912))
+Identified 250 IK solutions with minimum distance of 0.262 in 0.018 seconds
+((0.24128806150300602, 0.14398824120140824, 1.1500000000000004), (0.6676760995910611, -0.23282745979559075, -0.23282745979559075, 0.6676760995910611))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 3.894 in 0.083 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.082 seconds
+((0.24128806150300602, 0.14398824120140824, 1.1500000000000004), (0.6676760995910611, -0.23282745979559075, -0.23282745979559075, 0.6676760995910611))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.26888574615148453, -0.03496254703019447, 1.15), (0.4881594298193915, 0.5115665851855519, 0.511566585185552, 0.4881594298193916))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 1.091 in 0.063 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.058 seconds
+((0.26888574615148453, -0.03496254703019447, 1.15), (0.4881594298193915, 0.5115665851855519, 0.511566585185552, 0.4881594298193916))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.2693567213421555, -0.023372135680869866, 1.15), (0.7065774261598414, 0.027355819149377205, 0.027355819149377215, 0.7065774261598419))
+Identified 250 IK solutions with minimum distance of 0.908 in 0.046 seconds
+Identified 250 IK solutions with minimum distance of 0.447 in 0.026 seconds
+((0.2693567213421555, -0.023372135680869866, 1.15), (0.7065774261598414, 0.027355819149377205, 0.027355819149377215, 0.7065774261598419))
+Identified 250 IK solutions with minimum distance of 0.354 in 0.019 seconds
+((0.23219470658522956, 0.0701605424299995, 1.15), (0.5958892526596388, -0.3806783400257193, -0.38067834002571943, 0.5958892526596388))
+Identified 250 IK solutions with minimum distance of 2.306 in 0.056 seconds
+Identified 250 IK solutions with minimum distance of 0.273 in 0.034 seconds
+((0.23219470658522956, 0.0701605424299995, 1.15), (0.5958892526596388, -0.3806783400257193, -0.38067834002571943, 0.5958892526596388))
+Identified 250 IK solutions with minimum distance of 0.421 in 0.016 seconds
+((0.23154261734370685, 0.1250531425158996, 1.15), (0.5852823164355764, 0.3967929057679912, 0.3967929057679912, 0.5852823164355763))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+((0.23154261734370685, 0.1250531425158996, 1.15), (0.5852823164355764, 0.3967929057679912, 0.3967929057679912, 0.5852823164355763))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.26242538492884643, -0.006390322844714542, 1.1500000000000001), (0.015746079074421472, 0.7069314400942867, 0.7069314400942868, 0.015746079074421476))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 2.057 in 0.074 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.061 seconds
+((0.26242538492884643, -0.006390322844714542, 1.1500000000000001), (0.015746079074421472, 0.7069314400942867, 0.7069314400942868, 0.015746079074421476))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.2671785362584616, 0.09798774664250316, 1.1500000000000004), (0.6780012403311116, -0.20078425762363453, -0.20078425762363458, 0.6780012403311118))
+Identified 250 IK solutions with minimum distance of 1.774 in 0.019 seconds
+Identified 250 IK solutions with minimum distance of 0.249 in 0.020 seconds
+((0.2671785362584616, 0.09798774664250316, 1.1500000000000004), (0.6780012403311116, -0.20078425762363453, -0.20078425762363458, 0.6780012403311118))
+Identified 250 IK solutions with minimum distance of 0.307 in 0.021 seconds
+((0.2941735462882622, 0.0775257980115597, 1.15), (0.6830766154219151, 0.18277400653194872, 0.18277400653194875, 0.6830766154219154))
+Identified 250 IK solutions with minimum distance of 2.163 in 0.024 seconds
+Identified 250 IK solutions with minimum distance of 0.244 in 0.028 seconds
+((0.2941735462882622, 0.0775257980115597, 1.15), (0.6830766154219151, 0.18277400653194872, 0.18277400653194875, 0.6830766154219154))
+Identified 250 IK solutions with minimum distance of 0.298 in 0.026 seconds
+((0.25289711665602366, -0.010998766234966567, 1.1500000000000004), (0.6158710013771492, -0.34742324283603615, -0.34742324283603626, 0.6158710013771493))
+[32m[INFO][0m[2022-11-17 20:31:35]: [32mIteration: 27, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f853ac62bc288e48e56a63d21fb60ae9[0m
+[32m[INFO][0m[2022-11-17 20:31:35]: [32mShapenet ID: e101cc44ead036294bc79c881a0e818b[0m
+[31m[ERROR][0m[2022-11-17 20:31:57]: [31mUnable to move to joint goals ([-2.14050531  1.38350556  0.30954856 -2.00490433  0.13500758  1.4972101
+ -2.37526723])[0m
+[32m[INFO][0m[2022-11-17 20:32:02]: [32mIteration: 28, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e101cc44ead036294bc79c881a0e818b[0m
+[32m[INFO][0m[2022-11-17 20:32:03]: [32mShapenet ID: f853ac62bc288e48e56a63d21fb60ae9[0m
+[32m[INFO][0m[2022-11-17 20:32:30]: [32mIteration: 29, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f853ac62bc288e48e56a63d21fb60ae9[0m
+[32m[INFO][0m[2022-11-17 20:32:30]: [32mShapenet ID: f83c3b75f637241aebe67d9b32c3ddf8[0m
+[32m[INFO][0m[2022-11-17 20:32:57]: [32mIteration: 30, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f83c3b75f637241aebe67d9b32c3ddf8[0m
+[32m[INFO][0m[2022-11-17 20:32:57]: [32mShapenet ID: e593aa021f3fa324530647fc03dd20dc[0m
+[32m[INFO][0m[2022-11-17 20:33:31]: [32mIteration: 31, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e593aa021f3fa324530647fc03dd20dc[0m
+[32m[INFO][0m[2022-11-17 20:33:31]: [32mShapenet ID: f83c3b75f637241aebe67d9b32c3ddf8[0m
+[32m[INFO][0m[2022-11-17 20:33:58]: [32mIteration: 32, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f83c3b75f637241aebe67d9b32c3ddf8[0m
+[32m[INFO][0m[2022-11-17 20:33:58]: [32mShapenet ID: e8b48d395d3d8744e53e6e0633163da8[0m
+[31m[ERROR][0m[2022-11-17 20:34:21]: [31mUnable to move to joint goals ([-0.47649205  1.57599452 -0.59875319 -1.05292246  1.12237196  0.71348809
+  0.84692989])[0m
+[31m[ERROR][0m[2022-11-17 20:34:22]: [31mUnable to move to joint goals ([-0.03028242  1.54569919 -0.82057223 -1.51119732  1.28147312  0.65759598
+  0.57904695])[0m
+[31m[ERROR][0m[2022-11-17 20:34:25]: [31mUnable to move to joint goals ([ 0.22564598  1.40782137 -1.06170081 -1.78396064  1.16831959  0.38821257
+  0.4194106 ])[0m
+[32m[INFO][0m[2022-11-17 20:34:26]: [32mIteration: 33, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e8b48d395d3d8744e53e6e0633163da8[0m
+[32m[INFO][0m[2022-11-17 20:34:26]: [32mShapenet ID: f853ac62bc288e48e56a63d21fb60ae9[0m
+[32m[INFO][0m[2022-11-17 20:34:53]: [32mIteration: 34, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f853ac62bc288e48e56a63d21fb60ae9[0m
+[32m[INFO][0m[2022-11-17 20:34:53]: [32mShapenet ID: ee007f1aac12fbe549a44197486ae284[0m
+[32m[INFO][0m[2022-11-17 20:35:22]: [32mIteration: 35, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: ee007f1aac12fbe549a44197486ae284[0m
+[32m[INFO][0m[2022-11-17 20:35:22]: [32mShapenet ID: e56e77c6eb21d9bdf577ff4de1ac394c[0m
+[32m[INFO][0m[2022-11-17 20:35:48]: [32mIteration: 36, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e56e77c6eb21d9bdf577ff4de1ac394c[0m
+[32m[INFO][0m[2022-11-17 20:35:48]: [32mShapenet ID: f49d6c4b75f695c44d34bdc365023cf4[0m
+[31m[ERROR][0m[2022-11-17 20:36:11]: [31mUnable to move to joint goals ([-1.56577205  1.76271491  0.70740646 -1.11104106  0.06713213  1.02712356
+ -1.58148931])[0m
+[31m[ERROR][0m[2022-11-17 20:36:22]: [31mUnable to move to joint goals ([-1.14322681  1.32043982  0.20576817 -1.61082353  0.53969985  1.18328914
+ -2.02991935]) within 10.000000 s[0m
+[32m[INFO][0m[2022-11-17 20:36:27]: [32mIteration: 37, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f49d6c4b75f695c44d34bdc365023cf4[0m
+[32m[INFO][0m[2022-11-17 20:36:27]: [32mShapenet ID: ed55f39e04668bf9837048966ef3fcb9[0m
+[32m[INFO][0m[2022-11-17 20:36:54]: [32mIteration: 38, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: ed55f39e04668bf9837048966ef3fcb9[0m
+[32m[INFO][0m[2022-11-17 20:36:54]: [32mShapenet ID: f68e99b57596b33d197a35146ee825cd[0m
+[32m[INFO][0m[2022-11-17 20:37:17]: [32mIteration: 39, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f68e99b57596b33d197a35146ee825cd[0m
+[32m[INFO][0m[2022-11-17 20:37:17]: [32mShapenet ID: e5a5dac174982cea2dcdfc29ed7a2492[0m
+[32m[INFO][0m[2022-11-17 20:37:40]: [32mIteration: 40, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e5a5dac174982cea2dcdfc29ed7a2492[0m
+[32m[INFO][0m[2022-11-17 20:37:40]: [32mShapenet ID: f2279b29f7d45bbd744c199e33849f2a[0m
+[32m[INFO][0m[2022-11-17 20:38:07]: [32mIteration: 41, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f2279b29f7d45bbd744c199e33849f2a[0m
+[32m[INFO][0m[2022-11-17 20:38:07]: [32mShapenet ID: e9371d3abbb3bb7265bca0cae1ecfff5[0m
+Identified 250 IK solutions with minimum distance of 0.568 in 0.030 seconds
+Identified 250 IK solutions with minimum distance of 0.173 in 0.021 seconds
+((0.25289711665602366, -0.010998766234966567, 1.1500000000000004), (0.6158710013771492, -0.34742324283603615, -0.34742324283603626, 0.6158710013771493))
+Identified 250 IK solutions with minimum distance of 0.390 in 0.027 seconds
+((0.22852004054420336, 0.014336070333764966, 1.15), (-0.2778711296040773, 0.6502212203031781, 0.6502212203031782, -0.27787112960407734))
+Identified 250 IK solutions with minimum distance of 1.431 in 0.027 seconds
+Identified 250 IK solutions with minimum distance of 0.280 in 0.026 seconds
+((0.22852004054420336, 0.014336070333764966, 1.15), (-0.2778711296040773, 0.6502212203031781, 0.6502212203031782, -0.27787112960407734))
+Identified 250 IK solutions with minimum distance of 0.397 in 0.024 seconds
+((0.261427813648187, 0.06152977561203725, 1.15), (-0.04939377320623377, 0.7053795114464632, 0.7053795114464633, -0.049393773206233775))
+Identified 250 IK solutions with minimum distance of 0.775 in 0.026 seconds
+Identified 250 IK solutions with minimum distance of 0.202 in 0.021 seconds
+((0.261427813648187, 0.06152977561203725, 1.15), (-0.04939377320623377, 0.7053795114464632, 0.7053795114464633, -0.049393773206233775))
+Identified 250 IK solutions with minimum distance of 0.309 in 0.021 seconds
+((0.2570984285518778, 0.14640769409368642, 1.1500000000000001), (-0.3381301747798639, 0.6210217265952446, 0.6210217265952446, -0.33813017477986407))
+Identified 250 IK solutions with minimum distance of 1.933 in 0.021 seconds
+Identified 250 IK solutions with minimum distance of 0.612 in 0.017 seconds
+((0.2570984285518778, 0.14640769409368642, 1.1500000000000001), (-0.3381301747798639, 0.6210217265952446, 0.6210217265952446, -0.33813017477986407))
+Identified 250 IK solutions with minimum distance of 0.323 in 0.019 seconds
+((0.2667637396696874, 0.03482748736359714, 1.15), (0.5693203853075132, 0.41937369835661403, 0.4193736983566141, 0.5693203853075136))
+Identified 250 IK solutions with minimum distance of 2.098 in 0.026 seconds
+Identified 250 IK solutions with minimum distance of 0.240 in 0.024 seconds
+((0.2667637396696874, 0.03482748736359714, 1.15), (0.5693203853075132, 0.41937369835661403, 0.4193736983566141, 0.5693203853075136))
+Identified 250 IK solutions with minimum distance of 0.440 in 0.015 seconds
+((0.29132412073386704, 0.11465642225353416, 1.15), (0.7071025518055901, 0.0024456553360296604, 0.0024456553360296613, 0.7071025518055902))
+Identified 250 IK solutions with minimum distance of 0.706 in 0.042 seconds
+Identified 250 IK solutions with minimum distance of 0.238 in 0.033 seconds
+((0.29132412073386704, 0.11465642225353416, 1.15), (0.7071025518055901, 0.0024456553360296604, 0.0024456553360296613, 0.7071025518055902))
+Identified 250 IK solutions with minimum distance of 0.432 in 0.014 seconds
+((0.3248422506519033, 0.029610550195420665, 1.1500000000000001), (0.35433370910538575, 0.6119212552213069, 0.6119212552213069, 0.35433370910538586))
+Identified 250 IK solutions with minimum distance of 2.153 in 0.016 seconds
+Identified 250 IK solutions with minimum distance of 0.458 in 0.017 seconds
+((0.3248422506519033, 0.029610550195420665, 1.1500000000000001), (0.35433370910538575, 0.6119212552213069, 0.6119212552213069, 0.35433370910538586))
+Identified 250 IK solutions with minimum distance of 0.273 in 0.019 seconds
+((0.24112905812141638, 0.11891020379314503, 1.15), (0.7069659133128662, 0.01411373138842505, 0.014113731388425052, 0.7069659133128666))
+Identified 250 IK solutions with minimum distance of 0.871 in 0.021 seconds
+Identified 250 IK solutions with minimum distance of 0.278 in 0.020 seconds
+((0.24112905812141638, 0.11891020379314503, 1.15), (0.7069659133128662, 0.01411373138842505, 0.014113731388425052, 0.7069659133128666))
+Identified 250 IK solutions with minimum distance of 0.322 in 0.017 seconds
+((0.2494125599683865, 0.12154641355126465, 1.15), (0.703934443780292, 0.06690514823039152, 0.06690514823039156, 0.7039344437802922))
+Identified 250 IK solutions with minimum distance of 1.340 in 0.033 seconds
+Identified 250 IK solutions with minimum distance of 0.388 in 0.016 seconds
+((0.2494125599683865, 0.12154641355126465, 1.15), (0.703934443780292, 0.06690514823039152, 0.06690514823039156, 0.7039344437802922))
+Identified 250 IK solutions with minimum distance of 0.895 in 0.029 seconds
+((0.2718953997795004, 0.08109219915917601, 1.15), (0.04521166539254765, 0.7056599076838872, 0.7056599076838873, 0.04521166539254765))
+Identified 250 IK solutions with minimum distance of 1.623 in 0.020 seconds
+Identified 250 IK solutions with minimum distance of 0.232 in 0.017 seconds
+((0.2718953997795004, 0.08109219915917601, 1.15), (0.04521166539254765, 0.7056599076838872, 0.7056599076838873, 0.04521166539254765))
+Identified 250 IK solutions with minimum distance of 0.595 in 0.019 seconds
+((0.29611247318180034, -0.01599136620740585, 1.1500000000000001), (0.1982083098384211, 0.6787587685702458, 0.678758768570246, 0.1982083098384211))
+Identified 250 IK solutions with minimum distance of 2.813 in 0.022 seconds
+Identified 250 IK solutions with minimum distance of 0.502 in 0.020 seconds
+((0.29611247318180034, -0.01599136620740585, 1.1500000000000001), (0.1982083098384211, 0.6787587685702458, 0.678758768570246, 0.1982083098384211))
+Identified 250 IK solutions with minimum distance of 1.199 in 0.022 seconds
+((0.2344266785336204, -0.026829153147779394, 1.1500000000000004), (0.6308575898185428, -0.31940366523936314, -0.3194036652393632, 0.6308575898185429))
+Identified 250 IK solutions with minimum distance of 2.515 in 0.031 seconds
+Identified 250 IK solutions with minimum distance of 0.603 in 0.021 seconds
+((0.2344266785336204, -0.026829153147779394, 1.1500000000000004), (0.6308575898185428, -0.31940366523936314, -0.3194036652393632, 0.6308575898185429))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+((0.305538506117497, 0.1375046808706919, 1.15), (0.6285498217375557, -0.323921474425032, -0.32392147442503205, 0.628549821737556))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+((0.305538506117497, 0.1375046808706919, 1.15), (0.6285498217375557, -0.323921474425032, -0.32392147442503205, 0.628549821737556))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.3205603053230655, 0.02237988957629851, 1.15), (0.7068194799098683, -0.020154970105244755, -0.020154970105244766, 0.7068194799098683))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+((0.3205603053230655, 0.02237988957629851, 1.15), (0.7068194799098683, -0.020154970105244755, -0.020154970105244766, 0.7068194799098683))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.3104520434139939, 0.03099960209065472, 1.15), (0.5609641103023506, -0.43048724365849944, -0.43048724365849955, 0.5609641103023506))
+Identified 250 IK solutions with minimum distance of 1.972 in 0.020 seconds
+Identified 250 IK solutions with minimum distance of 0.219 in 0.019 seconds
+((0.3104520434139939, 0.03099960209065472, 1.15), (0.5609641103023506, -0.43048724365849944, -0.43048724365849955, 0.5609641103023506))
+Identified 250 IK solutions with minimum distance of 0.429 in 0.017 seconds
+((0.269878639878941, 0.020132374585408105, 1.15), (0.1533416990748678, 0.6902798876722633, 0.6902798876722636, 0.15334169907486786))
+Identified 250 IK solutions with minimum distance of 2.793 in 0.030 seconds
+[32m[INFO][0m[2022-11-17 20:38:35]: [32mIteration: 42, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e9371d3abbb3bb7265bca0cae1ecfff5[0m
+[32m[INFO][0m[2022-11-17 20:38:35]: [32mShapenet ID: fec05c85454edafc4310636931b68fdb[0m
+[32m[INFO][0m[2022-11-17 20:39:04]: [32mIteration: 43, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: fec05c85454edafc4310636931b68fdb[0m
+[32m[INFO][0m[2022-11-17 20:39:04]: [32mShapenet ID: ed8aff7768d2cc3e45bcca2603f7a948[0m
+[32m[INFO][0m[2022-11-17 20:39:38]: [32mIteration: 44, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: ed8aff7768d2cc3e45bcca2603f7a948[0m
+[32m[INFO][0m[2022-11-17 20:39:38]: [32mShapenet ID: e4915635a488cbfc4c3a35cee92bb95b[0m
+[32m[INFO][0m[2022-11-17 20:40:01]: [32mIteration: 45, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e4915635a488cbfc4c3a35cee92bb95b[0m
+[32m[INFO][0m[2022-11-17 20:40:01]: [32mShapenet ID: e29e8121d93af93bba803759c05367b0[0m
+[32m[INFO][0m[2022-11-17 20:40:23]: [32mIteration: 46, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e29e8121d93af93bba803759c05367b0[0m
+[32m[INFO][0m[2022-11-17 20:40:23]: [32mShapenet ID: f9f67fe61dcf46d7e19818797f240d91[0m
+[32m[INFO][0m[2022-11-17 20:40:57]: [32mIteration: 47, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f9f67fe61dcf46d7e19818797f240d91[0m
+[32m[INFO][0m[2022-11-17 20:40:57]: [32mShapenet ID: f853ac62bc288e48e56a63d21fb60ae9[0m
+[32m[INFO][0m[2022-11-17 20:41:25]: [32mIteration: 48, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f853ac62bc288e48e56a63d21fb60ae9[0m
+[32m[INFO][0m[2022-11-17 20:41:25]: [32mShapenet ID: f83c3b75f637241aebe67d9b32c3ddf8[0m
+[32m[INFO][0m[2022-11-17 20:41:49]: [32mIteration: 49, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f83c3b75f637241aebe67d9b32c3ddf8[0m
+[32m[INFO][0m[2022-11-17 20:41:49]: [32mShapenet ID: fd0ccd09330865277602de57eab5e08f[0m
+[32m[INFO][0m[2022-11-17 20:42:12]: [32mIteration: 50, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: fd0ccd09330865277602de57eab5e08f[0m
+[32m[INFO][0m[2022-11-17 20:42:12]: [32mShapenet ID: fa44223c6f785c60e71da2487cb2ee5b[0m
+[32m[INFO][0m[2022-11-17 20:42:41]: [32mIteration: 51, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: fa44223c6f785c60e71da2487cb2ee5b[0m
+[32m[INFO][0m[2022-11-17 20:42:41]: [32mShapenet ID: ff13595434879bba557ef92e2fa0ccb2[0m
+[32m[INFO][0m[2022-11-17 20:43:05]: [32mIteration: 52, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: ff13595434879bba557ef92e2fa0ccb2[0m
+[32m[INFO][0m[2022-11-17 20:43:05]: [32mShapenet ID: e29e8121d93af93bba803759c05367b0[0m
+[32m[INFO][0m[2022-11-17 20:43:34]: [32mIteration: 53, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e29e8121d93af93bba803759c05367b0[0m
+[32m[INFO][0m[2022-11-17 20:43:35]: [32mShapenet ID: e593aa021f3fa324530647fc03dd20dc[0m
+[32m[INFO][0m[2022-11-17 20:44:08]: [32mIteration: 54, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e593aa021f3fa324530647fc03dd20dc[0m
+[32m[INFO][0m[2022-11-17 20:44:08]: [32mShapenet ID: e9371d3abbb3bb7265bca0cae1ecfff5[0m
+[32m[INFO][0m[2022-11-17 20:44:36]: [32mIteration: 55, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e9371d3abbb3bb7265bca0cae1ecfff5[0m
+[32m[INFO][0m[2022-11-17 20:44:36]: [32mShapenet ID: e4ada697d05ac7acf9907e8bdd53291e[0m
+Identified 250 IK solutions with minimum distance of 0.397 in 0.024 seconds
+((0.269878639878941, 0.020132374585408105, 1.15), (0.1533416990748678, 0.6902798876722633, 0.6902798876722636, 0.15334169907486786))
+Identified 250 IK solutions with minimum distance of 0.328 in 0.023 seconds
+((0.31133210606826056, 0.14159234398459364, 1.15), (0.6560243286826025, -0.2638789119587627, -0.2638789119587627, 0.6560243286826029))
+Identified 250 IK solutions with minimum distance of 3.084 in 0.021 seconds
+Identified 250 IK solutions with minimum distance of 0.349 in 0.027 seconds
+((0.31133210606826056, 0.14159234398459364, 1.15), (0.6560243286826025, -0.2638789119587627, -0.2638789119587627, 0.6560243286826029))
+Identified 250 IK solutions with minimum distance of 0.350 in 0.023 seconds
+((0.29281807868397963, 0.027800857378030036, 1.15), (0.6638341537106186, 0.2435656305132287, 0.24356563051322877, 0.6638341537106188))
+Identified 250 IK solutions with minimum distance of 2.539 in 0.034 seconds
+Identified 250 IK solutions with minimum distance of 0.248 in 0.033 seconds
+((0.29281807868397963, 0.027800857378030036, 1.15), (0.6638341537106186, 0.2435656305132287, 0.24356563051322877, 0.6638341537106188))
+Identified 250 IK solutions with minimum distance of 0.467 in 0.020 seconds
+((0.3078448443051488, -0.007511474789414219, 1.15), (0.1996825636582282, 0.6783265244488657, 0.6783265244488659, 0.19968256365822828))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+((0.3078448443051488, -0.007511474789414219, 1.15), (0.1996825636582282, 0.6783265244488657, 0.6783265244488659, 0.19968256365822828))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.3218761692697083, 0.03130726386437638, 1.15), (0.2895516326015455, 0.6451045280090502, 0.6451045280090505, 0.2895516326015455))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 2.563 in 0.037 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.031 seconds
+((0.3218761692697083, 0.03130726386437638, 1.15), (0.2895516326015455, 0.6451045280090502, 0.6451045280090505, 0.2895516326015455))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.25999891895240657, 0.07782784566494982, 1.15), (0.5415485092370601, 0.45467044344570934, 0.45467044344570945, 0.54154850923706))
+Identified 250 IK solutions with minimum distance of 2.629 in 0.019 seconds
+Identified 250 IK solutions with minimum distance of 0.237 in 0.018 seconds
+((0.25999891895240657, 0.07782784566494982, 1.15), (0.5415485092370601, 0.45467044344570934, 0.45467044344570945, 0.54154850923706))
+Identified 250 IK solutions with minimum distance of 0.385 in 0.020 seconds
+((0.28558034808604693, 0.10498188066441627, 1.15), (-0.382948329771731, 0.594432987581478, 0.594432987581478, -0.38294832977173104))
+Identified 250 IK solutions with minimum distance of 2.481 in 0.179 seconds
+Identified 250 IK solutions with minimum distance of 0.272 in 0.021 seconds
+((0.28558034808604693, 0.10498188066441627, 1.15), (-0.382948329771731, 0.594432987581478, 0.594432987581478, -0.38294832977173104))
+Identified 250 IK solutions with minimum distance of 0.440 in 0.018 seconds
+((0.275475308781915, 0.13223952389059618, 1.15), (0.6304609515723495, 0.320185865619467, 0.3201858656194671, 0.6304609515723497))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+((0.275475308781915, 0.13223952389059618, 1.15), (0.6304609515723495, 0.320185865619467, 0.3201858656194671, 0.6304609515723497))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.24160836532858787, 0.12035848044163505, 1.15), (-0.2134626871277711, 0.6741169640382826, 0.6741169640382828, -0.21346268712777114))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+((0.24160836532858787, 0.12035848044163505, 1.15), (-0.2134626871277711, 0.6741169640382826, 0.6741169640382828, -0.21346268712777114))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.30018797223292015, 0.01753184419242282, 1.15), (-0.13734090206250618, 0.693640740312056, 0.693640740312056, -0.1373409020625062))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+((0.30018797223292015, 0.01753184419242282, 1.15), (-0.13734090206250618, 0.693640740312056, 0.693640740312056, -0.1373409020625062))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.26664311113092726, 0.13889280576967705, 1.15), (-0.04402094151786539, 0.7057351887980935, 0.7057351887980935, -0.04402094151786539))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+((0.26664311113092726, 0.13889280576967705, 1.15), (-0.04402094151786539, 0.7057351887980935, 0.7057351887980935, -0.04402094151786539))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.3187253342413194, 0.11495266498026696, 1.15), (0.10709618500682462, 0.6989495025801105, 0.6989495025801107, 0.10709618500682465))
+Identified 250 IK solutions with minimum distance of 2.062 in 0.018 seconds
+Identified 250 IK solutions with minimum distance of 0.306 in 0.015 seconds
+((0.3187253342413194, 0.11495266498026696, 1.15), (0.10709618500682462, 0.6989495025801105, 0.6989495025801107, 0.10709618500682465))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+((0.317401508948251, 0.003647220339928564, 1.15), (0.650327294772205, -0.27762278306051463, -0.2776227830605147, 0.6503272947722051))
+Identified 250 IK solutions with minimum distance of 1.232 in 0.020 seconds
+Identified 250 IK solutions with minimum distance of 0.180 in 0.018 seconds
+((0.317401508948251, 0.003647220339928564, 1.15), (0.650327294772205, -0.27762278306051463, -0.2776227830605147, 0.6503272947722051))
+Identified 250 IK solutions with minimum distance of 0.512 in 0.020 seconds
+((0.28930473630608433, 0.03446668922742241, 1.15), (-0.32000106765038433, 0.6305547689952191, 0.6305547689952192, -0.3200010676503844))
+Identified 250 IK solutions with minimum distance of 2.014 in 0.028 seconds
+Identified 250 IK solutions with minimum distance of 0.375 in 0.025 seconds
+((0.28930473630608433, 0.03446668922742241, 1.15), (-0.32000106765038433, 0.6305547689952191, 0.6305547689952192, -0.3200010676503844))
+Identified 250 IK solutions with minimum distance of 0.312 in 0.022 seconds
+[32m[INFO][0m[2022-11-17 20:45:10]: [32mIteration: 56, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e4ada697d05ac7acf9907e8bdd53291e[0m
+[32m[INFO][0m[2022-11-17 20:45:10]: [32mShapenet ID: fec05c85454edafc4310636931b68fdb[0m
+[32m[INFO][0m[2022-11-17 20:45:39]: [32mIteration: 57, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: fec05c85454edafc4310636931b68fdb[0m
+[32m[INFO][0m[2022-11-17 20:45:39]: [32mShapenet ID: ee3ca78e36c6a7b2a367d39c852840d5[0m
+[32m[INFO][0m[2022-11-17 20:46:08]: [32mIteration: 58, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: ee3ca78e36c6a7b2a367d39c852840d5[0m
+[32m[INFO][0m[2022-11-17 20:46:08]: [32mShapenet ID: ed8aff7768d2cc3e45bcca2603f7a948[0m
+[32m[INFO][0m[2022-11-17 20:46:36]: [32mIteration: 59, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: ed8aff7768d2cc3e45bcca2603f7a948[0m
+[32m[INFO][0m[2022-11-17 20:46:36]: [32mShapenet ID: fec05c85454edafc4310636931b68fdb[0m
+[32m[INFO][0m[2022-11-17 20:47:04]: [32mIteration: 60, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: fec05c85454edafc4310636931b68fdb[0m
+[32m[INFO][0m[2022-11-17 20:47:04]: [32mShapenet ID: f853ac62bc288e48e56a63d21fb60ae9[0m
+[32m[INFO][0m[2022-11-17 20:47:27]: [32mIteration: 61, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f853ac62bc288e48e56a63d21fb60ae9[0m
+[32m[INFO][0m[2022-11-17 20:47:27]: [32mShapenet ID: e9371d3abbb3bb7265bca0cae1ecfff5[0m
+[32m[INFO][0m[2022-11-17 20:47:50]: [32mIteration: 62, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e9371d3abbb3bb7265bca0cae1ecfff5[0m
+[32m[INFO][0m[2022-11-17 20:47:50]: [32mShapenet ID: ed55f39e04668bf9837048966ef3fcb9[0m
+[32m[INFO][0m[2022-11-17 20:48:25]: [32mIteration: 63, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: ed55f39e04668bf9837048966ef3fcb9[0m
+[32m[INFO][0m[2022-11-17 20:48:25]: [32mShapenet ID: e5a5dac174982cea2dcdfc29ed7a2492[0m
+[32m[INFO][0m[2022-11-17 20:48:53]: [32mIteration: 64, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e5a5dac174982cea2dcdfc29ed7a2492[0m
+[32m[INFO][0m[2022-11-17 20:48:53]: [32mShapenet ID: e56e77c6eb21d9bdf577ff4de1ac394c[0m
+[32m[INFO][0m[2022-11-17 20:49:28]: [32mIteration: 65, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e56e77c6eb21d9bdf577ff4de1ac394c[0m
+[32m[INFO][0m[2022-11-17 20:49:28]: [32mShapenet ID: e29e8121d93af93bba803759c05367b0[0m
+[32m[INFO][0m[2022-11-17 20:49:56]: [32mIteration: 66, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e29e8121d93af93bba803759c05367b0[0m
+[32m[INFO][0m[2022-11-17 20:49:56]: [32mShapenet ID: f9f67fe61dcf46d7e19818797f240d91[0m
+[32m[INFO][0m[2022-11-17 20:50:29]: [32mIteration: 67, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f9f67fe61dcf46d7e19818797f240d91[0m
+[32m[INFO][0m[2022-11-17 20:50:30]: [32mShapenet ID: fca70766d88fc7b9e5054d95cb6a63e2[0m
+[32m[INFO][0m[2022-11-17 20:51:05]: [32mIteration: 68, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: fca70766d88fc7b9e5054d95cb6a63e2[0m
+[32m[INFO][0m[2022-11-17 20:51:05]: [32mShapenet ID: f68e99b57596b33d197a35146ee825cd[0m
+[32m[INFO][0m[2022-11-17 20:51:28]: [32mIteration: 69, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f68e99b57596b33d197a35146ee825cd[0m
+[32m[INFO][0m[2022-11-17 20:51:29]: [32mShapenet ID: fec05c85454edafc4310636931b68fdb[0m
+((0.30792412266375274, 0.03595151658679929, 1.1500000000000001), (-0.43674057660903237, 0.5561094035738021, 0.5561094035738021, -0.4367405766090325))
+Identified 250 IK solutions with minimum distance of 3.135 in 0.034 seconds
+Identified 250 IK solutions with minimum distance of 0.159 in 0.020 seconds
+((0.30792412266375274, 0.03595151658679929, 1.1500000000000001), (-0.43674057660903237, 0.5561094035738021, 0.5561094035738021, -0.4367405766090325))
+Identified 250 IK solutions with minimum distance of 0.421 in 0.021 seconds
+((0.24299346419071582, 0.13663800390221523, 1.15), (0.6054730410229303, -0.36524292819224424, -0.3652429281922443, 0.6054730410229304))
+Identified 250 IK solutions with minimum distance of 2.009 in 0.018 seconds
+Identified 250 IK solutions with minimum distance of 0.352 in 0.016 seconds
+((0.24299346419071582, 0.13663800390221523, 1.15), (0.6054730410229303, -0.36524292819224424, -0.3652429281922443, 0.6054730410229304))
+Identified 250 IK solutions with minimum distance of 0.719 in 0.032 seconds
+((0.30416414933474334, 0.1295443051106942, 1.15), (0.38705001621445256, 0.5917704664381216, 0.5917704664381216, 0.3870500162144527))
+Identified 250 IK solutions with minimum distance of 0.910 in 0.018 seconds
+Identified 250 IK solutions with minimum distance of 0.284 in 0.021 seconds
+((0.30416414933474334, 0.1295443051106942, 1.15), (0.38705001621445256, 0.5917704664381216, 0.5917704664381216, 0.3870500162144527))
+Identified 250 IK solutions with minimum distance of 0.316 in 0.020 seconds
+((0.2580064357292784, 0.04962097943685018, 1.1500000000000001), (0.47163955406672226, 0.5268359621739422, 0.5268359621739424, 0.47163955406672226))
+Identified 250 IK solutions with minimum distance of 3.043 in 0.019 seconds
+Identified 250 IK solutions with minimum distance of 0.274 in 0.019 seconds
+((0.2580064357292784, 0.04962097943685018, 1.1500000000000001), (0.47163955406672226, 0.5268359621739422, 0.5268359621739424, 0.47163955406672226))
+Identified 250 IK solutions with minimum distance of 0.348 in 0.019 seconds
+((0.23636503525636027, 0.03836690505416414, 1.1500000000000004), (-0.05463364764502796, 0.7049930244654901, 0.70499302446549, -0.05463364764502796))
+Identified 250 IK solutions with minimum distance of 1.081 in 0.019 seconds
+Identified 250 IK solutions with minimum distance of 0.287 in 0.020 seconds
+((0.23636503525636027, 0.03836690505416414, 1.1500000000000004), (-0.05463364764502796, 0.7049930244654901, 0.70499302446549, -0.05463364764502796))
+Identified 250 IK solutions with minimum distance of 0.485 in 0.020 seconds
+((0.2660816776241677, 0.1112191754714531, 1.1500000000000001), (0.4848656725709456, 0.5146894982048152, 0.5146894982048154, 0.4848656725709457))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 2.543 in 0.033 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.030 seconds
+((0.2660816776241677, 0.1112191754714531, 1.1500000000000001), (0.4848656725709456, 0.5146894982048152, 0.5146894982048154, 0.4848656725709457))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.23794837285914616, 0.07873316362721458, 1.15), (0.46855577162953255, 0.5295804838479731, 0.5295804838479732, 0.4685557716295326))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 5.004 in 0.061 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.054 seconds
+((0.23794837285914616, 0.07873316362721458, 1.15), (0.46855577162953255, 0.5295804838479731, 0.5295804838479732, 0.4685557716295326))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.24201948509403956, 0.10997495708304832, 1.15), (0.29428945500331244, 0.6429570099733367, 0.6429570099733367, 0.2942894550033125))
+Identified 250 IK solutions with minimum distance of 1.574 in 0.041 seconds
+Identified 250 IK solutions with minimum distance of 0.356 in 0.022 seconds
+((0.24201948509403956, 0.10997495708304832, 1.15), (0.29428945500331244, 0.6429570099733367, 0.6429570099733367, 0.2942894550033125))
+Identified 250 IK solutions with minimum distance of 0.378 in 0.019 seconds
+((0.3015585813935188, 0.0674289163363252, 1.15), (0.5121308490653006, 0.4875674245021443, 0.4875674245021444, 0.5121308490653007))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 2.812 in 0.024 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.025 seconds
+((0.3015585813935188, 0.0674289163363252, 1.15), (0.5121308490653006, 0.4875674245021443, 0.4875674245021444, 0.5121308490653007))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.3215777137236277, 0.0882880583933171, 1.1500000000000001), (0.5854195901015529, 0.3965903472417479, 0.39659034724174796, 0.5854195901015525))
+Identified 250 IK solutions with minimum distance of 4.517 in 0.020 seconds
+Identified 250 IK solutions with minimum distance of 0.233 in 0.016 seconds
+((0.3215777137236277, 0.0882880583933171, 1.1500000000000001), (0.5854195901015529, 0.3965903472417479, 0.39659034724174796, 0.5854195901015525))
+Identified 250 IK solutions with minimum distance of 0.368 in 0.020 seconds
+((0.2579551876636502, 0.0432812447159857, 1.15), (0.6866640142710765, 0.16879730893924477, 0.1687973089392448, 0.6866640142710765))
+Identified 250 IK solutions with minimum distance of 2.990 in 0.028 seconds
+Identified 250 IK solutions with minimum distance of 0.332 in 0.026 seconds
+((0.2579551876636502, 0.0432812447159857, 1.15), (0.6866640142710765, 0.16879730893924477, 0.1687973089392448, 0.6866640142710765))
+Identified 250 IK solutions with minimum distance of 0.369 in 0.020 seconds
+((0.3061206236993208, -0.022584975292337994, 1.15), (0.2286777986996069, 0.6691087089419043, 0.6691087089419043, 0.22867779869960692))
+Identified 250 IK solutions with minimum distance of 1.387 in 0.017 seconds
+Identified 250 IK solutions with minimum distance of 0.265 in 0.018 seconds
+((0.3061206236993208, -0.022584975292337994, 1.15), (0.2286777986996069, 0.6691087089419043, 0.6691087089419043, 0.22867779869960692))
+Identified 250 IK solutions with minimum distance of 0.507 in 0.016 seconds
+((0.26664641682181395, -0.01658295411550531, 1.15), (0.6621364977372268, 0.24814362446832863, 0.2481436244683287, 0.6621364977372274))
+Identified 250 IK solutions with minimum distance of 2.069 in 0.023 seconds
+Identified 250 IK solutions with minimum distance of 0.297 in 0.043 seconds
+((0.26664641682181395, -0.01658295411550531, 1.15), (0.6621364977372268, 0.24814362446832863, 0.2481436244683287, 0.6621364977372274))
+Identified 250 IK solutions with minimum distance of 0.840 in 0.021 seconds
+((0.3113307537276954, 0.07721498357721004, 1.15), (-0.08136048580877905, 0.7024104721236433, 0.7024104721236433, -0.0813604858087791))
+Identified 22 IK solutions with minimum distance of 3.509 in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 0.761 in 0.021 seconds
+Identified 12 IK solutions with minimum distance of 0.761 in 0.500 seconds
+Identified 250 IK solutions with minimum distance of 0.000 in 0.022 seconds
+((0.3113307537276954, 0.07721498357721004, 1.15), (-0.08136048580877905, 0.7024104721236433, 0.7024104721236433, -0.0813604858087791))
+0 0 0 5
+Warning: end configuration is in collision
+0 0 0 5
+Warning: initial configuration is in collision
+((0.2679501197019091, 0.09991076746416988, 1.15), (-0.3660328648607172, 0.6049958196895707, 0.6049958196895711, -0.3660328648607173))
+Identified 250 IK solutions with minimum distance of 2.083 in 0.017 seconds
+[32m[INFO][0m[2022-11-17 20:52:03]: [32mIteration: 70, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: fec05c85454edafc4310636931b68fdb[0m
+[32m[INFO][0m[2022-11-17 20:52:03]: [32mShapenet ID: e9371d3abbb3bb7265bca0cae1ecfff5[0m
+[32m[INFO][0m[2022-11-17 20:52:31]: [32mIteration: 71, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e9371d3abbb3bb7265bca0cae1ecfff5[0m
+[32m[INFO][0m[2022-11-17 20:52:31]: [32mShapenet ID: ed8aff7768d2cc3e45bcca2603f7a948[0m
+[32m[INFO][0m[2022-11-17 20:53:08]: [32mIteration: 72, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: ed8aff7768d2cc3e45bcca2603f7a948[0m
+[32m[INFO][0m[2022-11-17 20:53:08]: [32mShapenet ID: e824b049f16b29f19ab27ff78a8ea481[0m
+[32m[INFO][0m[2022-11-17 20:53:42]: [32mIteration: 73, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e824b049f16b29f19ab27ff78a8ea481[0m
+[32m[INFO][0m[2022-11-17 20:53:42]: [32mShapenet ID: ee007f1aac12fbe549a44197486ae284[0m
+[32m[INFO][0m[2022-11-17 20:54:18]: [32mIteration: 74, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: ee007f1aac12fbe549a44197486ae284[0m
+[32m[INFO][0m[2022-11-17 20:54:19]: [32mShapenet ID: e5a5dac174982cea2dcdfc29ed7a2492[0m
+[32m[INFO][0m[2022-11-17 20:54:56]: [32mIteration: 75, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e5a5dac174982cea2dcdfc29ed7a2492[0m
+[32m[INFO][0m[2022-11-17 20:54:56]: [32mShapenet ID: f9f67fe61dcf46d7e19818797f240d91[0m
+[32m[INFO][0m[2022-11-17 20:55:28]: [32mIteration: 76, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f9f67fe61dcf46d7e19818797f240d91[0m
+[32m[INFO][0m[2022-11-17 20:55:28]: [32mShapenet ID: fa44223c6f785c60e71da2487cb2ee5b[0m
+[32m[INFO][0m[2022-11-17 20:56:02]: [32mIteration: 77, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: fa44223c6f785c60e71da2487cb2ee5b[0m
+[32m[INFO][0m[2022-11-17 20:56:02]: [32mShapenet ID: e29e8121d93af93bba803759c05367b0[0m
+[32m[INFO][0m[2022-11-17 20:56:31]: [32mIteration: 78, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e29e8121d93af93bba803759c05367b0[0m
+[32m[INFO][0m[2022-11-17 20:56:31]: [32mShapenet ID: e56e77c6eb21d9bdf577ff4de1ac394c[0m
+[32m[INFO][0m[2022-11-17 20:57:07]: [32mIteration: 79, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e56e77c6eb21d9bdf577ff4de1ac394c[0m
+[32m[INFO][0m[2022-11-17 20:57:07]: [32mShapenet ID: e101cc44ead036294bc79c881a0e818b[0m
+[32m[INFO][0m[2022-11-17 20:57:42]: [32mIteration: 80, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e101cc44ead036294bc79c881a0e818b[0m
+[32m[INFO][0m[2022-11-17 20:57:42]: [32mShapenet ID: f49d6c4b75f695c44d34bdc365023cf4[0m
+[32m[INFO][0m[2022-11-17 20:58:18]: [32mIteration: 81, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f49d6c4b75f695c44d34bdc365023cf4[0m
+[32m[INFO][0m[2022-11-17 20:58:18]: [32mShapenet ID: f49d6c4b75f695c44d34bdc365023cf4[0m
+[32m[INFO][0m[2022-11-17 20:58:50]: [32mIteration: 82, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f49d6c4b75f695c44d34bdc365023cf4[0m
+[32m[INFO][0m[2022-11-17 20:58:50]: [32mShapenet ID: f47cbefc9aa5b6a918431871c8e05789[0m
+[32m[INFO][0m[2022-11-17 20:59:20]: [32mIteration: 83, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f47cbefc9aa5b6a918431871c8e05789[0m
+[32m[INFO][0m[2022-11-17 20:59:20]: [32mShapenet ID: e824b049f16b29f19ab27ff78a8ea481[0m
+[32m[INFO][0m[2022-11-17 20:59:50]: [32mIteration: 84, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e824b049f16b29f19ab27ff78a8ea481[0m
+[32m[INFO][0m[2022-11-17 20:59:50]: [32mShapenet ID: fd0ccd09330865277602de57eab5e08f[0m
+Identified 250 IK solutions with minimum distance of 0.248 in 0.017 seconds
+((0.2679501197019091, 0.09991076746416988, 1.15), (-0.3660328648607172, 0.6049958196895707, 0.6049958196895711, -0.3660328648607173))
+Identified 250 IK solutions with minimum distance of 0.283 in 0.021 seconds
+((0.31200598379728145, 0.048424823915970305, 1.1500000000000001), (0.520539869660942, -0.47857940207803507, -0.4785794020780353, 0.5205398696609419))
+Identified 250 IK solutions with minimum distance of 0.939 in 0.018 seconds
+Identified 250 IK solutions with minimum distance of 0.195 in 0.015 seconds
+((0.31200598379728145, 0.048424823915970305, 1.1500000000000001), (0.520539869660942, -0.47857940207803507, -0.4785794020780353, 0.5205398696609419))
+Identified 250 IK solutions with minimum distance of 0.261 in 0.020 seconds
+((0.31943305860816035, 0.06511619600847333, 1.15), (0.6941778237974967, -0.13459995894416768, -0.13459995894416768, 0.6941778237974967))
+Identified 250 IK solutions with minimum distance of 1.848 in 0.037 seconds
+Identified 250 IK solutions with minimum distance of 0.581 in 0.019 seconds
+((0.31943305860816035, 0.06511619600847333, 1.15), (0.6941778237974967, -0.13459995894416768, -0.13459995894416768, 0.6941778237974967))
+Identified 250 IK solutions with minimum distance of 0.362 in 0.018 seconds
+((0.2751909298321429, 0.1292771450818921, 1.15), (0.29537282962196987, 0.6424600310689458, 0.6424600310689458, 0.29537282962197))
+Identified 250 IK solutions with minimum distance of 2.162 in 0.024 seconds
+Identified 250 IK solutions with minimum distance of 0.243 in 0.022 seconds
+((0.2751909298321429, 0.1292771450818921, 1.15), (0.29537282962196987, 0.6424600310689458, 0.6424600310689458, 0.29537282962197))
+Identified 250 IK solutions with minimum distance of 0.499 in 0.024 seconds
+((0.2490789303644596, 0.02958144242358926, 1.15), (-0.37963042164202593, 0.5965574096127693, 0.5965574096127695, -0.379630421642026))
+Identified 250 IK solutions with minimum distance of 2.214 in 0.017 seconds
+Identified 250 IK solutions with minimum distance of 0.371 in 0.019 seconds
+((0.2490789303644596, 0.02958144242358926, 1.15), (-0.37963042164202593, 0.5965574096127693, 0.5965574096127695, -0.379630421642026))
+Identified 250 IK solutions with minimum distance of 0.623 in 0.022 seconds
+((0.29308052191172096, -0.0031575229335660815, 1.15), (0.39795395052655935, 0.5844935014696953, 0.5844935014696954, 0.39795395052655946))
+Identified 250 IK solutions with minimum distance of 1.834 in 0.017 seconds
+Identified 250 IK solutions with minimum distance of 0.886 in 0.044 seconds
+((0.29308052191172096, -0.0031575229335660815, 1.15), (0.39795395052655935, 0.5844935014696953, 0.5844935014696954, 0.39795395052655946))
+Identified 250 IK solutions with minimum distance of 1.115 in 0.018 seconds
+((0.28882734647948816, 5.2010096780907844e-05, 1.1500000000000004), (0.6758853763946407, -0.20779547149992164, -0.20779547149992164, 0.6758853763946407))
+Identified 250 IK solutions with minimum distance of 1.993 in 0.020 seconds
+Identified 250 IK solutions with minimum distance of 0.261 in 0.015 seconds
+((0.28882734647948816, 5.2010096780907844e-05, 1.1500000000000004), (0.6758853763946407, -0.20779547149992164, -0.20779547149992164, 0.6758853763946407))
+Identified 250 IK solutions with minimum distance of 0.388 in 0.026 seconds
+((0.3165189070904431, 0.1276437313638628, 1.15), (0.6218272992294532, 0.33664641678325347, 0.3366464167832535, 0.6218272992294532))
+Identified 250 IK solutions with minimum distance of 0.999 in 0.021 seconds
+Identified 250 IK solutions with minimum distance of 0.264 in 0.017 seconds
+((0.3165189070904431, 0.1276437313638628, 1.15), (0.6218272992294532, 0.33664641678325347, 0.3366464167832535, 0.6218272992294532))
+Identified 250 IK solutions with minimum distance of 0.361 in 0.019 seconds
+((0.25328387467098434, 0.043582774496407434, 1.15), (0.4539741258951685, 0.5421323574716028, 0.5421323574716028, 0.4539741258951686))
+Identified 250 IK solutions with minimum distance of 1.378 in 0.014 seconds
+Identified 250 IK solutions with minimum distance of 0.394 in 0.019 seconds
+((0.25328387467098434, 0.043582774496407434, 1.15), (0.4539741258951685, 0.5421323574716028, 0.5421323574716028, 0.4539741258951686))
+Identified 250 IK solutions with minimum distance of 0.354 in 0.018 seconds
+((0.28757407744547747, 0.10609897629280195, 1.15), (0.3567278376731594, 0.6105286642157205, 0.6105286642157206, 0.3567278376731594))
+Identified 250 IK solutions with minimum distance of 1.744 in 0.023 seconds
+Identified 250 IK solutions with minimum distance of 0.275 in 0.021 seconds
+((0.28757407744547747, 0.10609897629280195, 1.15), (0.3567278376731594, 0.6105286642157205, 0.6105286642157206, 0.3567278376731594))
+Identified 250 IK solutions with minimum distance of 0.338 in 0.017 seconds
+((0.2626948909586284, 0.00695131672632715, 1.1500000000000001), (0.31911221645453053, 0.6310050659935124, 0.6310050659935124, 0.31911221645453053))
+Identified 250 IK solutions with minimum distance of 0.910 in 0.026 seconds
+Identified 250 IK solutions with minimum distance of 0.406 in 0.023 seconds
+((0.2626948909586284, 0.00695131672632715, 1.1500000000000001), (0.31911221645453053, 0.6310050659935124, 0.6310050659935124, 0.31911221645453053))
+Identified 250 IK solutions with minimum distance of 0.396 in 0.018 seconds
+((0.22624992752749037, 0.11492232789919173, 1.15), (0.2824423754371025, 0.6482486440845416, 0.6482486440845417, 0.2824423754371025))
+Identified 250 IK solutions with minimum distance of 2.016 in 0.019 seconds
+Identified 250 IK solutions with minimum distance of 0.209 in 0.018 seconds
+((0.22624992752749037, 0.11492232789919173, 1.15), (0.2824423754371025, 0.6482486440845416, 0.6482486440845417, 0.2824423754371025))
+Identified 250 IK solutions with minimum distance of 0.497 in 0.019 seconds
+((0.23056235898652205, -0.04006281188113414, 1.1500000000000004), (-0.471542538455413, 0.5269227974068167, 0.5269227974068167, -0.4715425384554131))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 2.127 in 0.029 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.028 seconds
+((0.23056235898652205, -0.04006281188113414, 1.1500000000000004), (-0.471542538455413, 0.5269227974068167, 0.5269227974068167, -0.4715425384554131))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.28932078277874584, -0.046205563589623286, 1.15), (0.6868530856371979, 0.1680263037463479, 0.16802630374634792, 0.686853085637198))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 1.714 in 0.035 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.030 seconds
+((0.28932078277874584, -0.046205563589623286, 1.15), (0.6868530856371979, 0.1680263037463479, 0.16802630374634792, 0.686853085637198))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.2571727920950833, 0.06605553545752292, 1.15), (0.6858307982008819, -0.17215143403161376, -0.17215143403161381, 0.685830798200882))
+Identified 250 IK solutions with minimum distance of 2.634 in 0.020 seconds
+Identified 250 IK solutions with minimum distance of 0.247 in 0.021 seconds
+((0.2571727920950833, 0.06605553545752292, 1.15), (0.6858307982008819, -0.17215143403161376, -0.17215143403161381, 0.685830798200882))
+Identified 250 IK solutions with minimum distance of 0.772 in 0.020 seconds
+((0.2888777975000386, 0.02224304828858642, 1.15), (0.5344821915272177, -0.46295657133284407, -0.4629565713328442, 0.5344821915272175))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 2.963 in 0.039 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+[32m[INFO][0m[2022-11-17 21:00:14]: [32mIteration: 85, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: fd0ccd09330865277602de57eab5e08f[0m
+[32m[INFO][0m[2022-11-17 21:00:14]: [32mShapenet ID: f49d6c4b75f695c44d34bdc365023cf4[0m
+[32m[INFO][0m[2022-11-17 21:00:50]: [32mIteration: 86, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f49d6c4b75f695c44d34bdc365023cf4[0m
+[32m[INFO][0m[2022-11-17 21:00:50]: [32mShapenet ID: f83c3b75f637241aebe67d9b32c3ddf8[0m
+[32m[INFO][0m[2022-11-17 21:01:26]: [32mIteration: 87, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f83c3b75f637241aebe67d9b32c3ddf8[0m
+[32m[INFO][0m[2022-11-17 21:01:26]: [32mShapenet ID: e824b049f16b29f19ab27ff78a8ea481[0m
+[32m[INFO][0m[2022-11-17 21:01:55]: [32mIteration: 88, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e824b049f16b29f19ab27ff78a8ea481[0m
+[32m[INFO][0m[2022-11-17 21:01:55]: [32mShapenet ID: e4ada697d05ac7acf9907e8bdd53291e[0m
+[32m[INFO][0m[2022-11-17 21:02:26]: [32mIteration: 89, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e4ada697d05ac7acf9907e8bdd53291e[0m
+[32m[INFO][0m[2022-11-17 21:02:26]: [32mShapenet ID: e9371d3abbb3bb7265bca0cae1ecfff5[0m
+[32m[INFO][0m[2022-11-17 21:03:01]: [32mIteration: 90, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e9371d3abbb3bb7265bca0cae1ecfff5[0m
+[32m[INFO][0m[2022-11-17 21:03:01]: [32mShapenet ID: ee007f1aac12fbe549a44197486ae284[0m
+[32m[INFO][0m[2022-11-17 21:03:36]: [32mIteration: 91, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: ee007f1aac12fbe549a44197486ae284[0m
+[32m[INFO][0m[2022-11-17 21:03:36]: [32mShapenet ID: e8b48d395d3d8744e53e6e0633163da8[0m
+[32m[INFO][0m[2022-11-17 21:04:05]: [32mIteration: 92, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e8b48d395d3d8744e53e6e0633163da8[0m
+[32m[INFO][0m[2022-11-17 21:04:05]: [32mShapenet ID: e56e77c6eb21d9bdf577ff4de1ac394c[0m
+[32m[INFO][0m[2022-11-17 21:04:46]: [32mIteration: 93, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e56e77c6eb21d9bdf577ff4de1ac394c[0m
+[32m[INFO][0m[2022-11-17 21:04:46]: [32mShapenet ID: f853ac62bc288e48e56a63d21fb60ae9[0m
+[32m[INFO][0m[2022-11-17 21:05:17]: [32mIteration: 94, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f853ac62bc288e48e56a63d21fb60ae9[0m
+[32m[INFO][0m[2022-11-17 21:05:17]: [32mShapenet ID: f83c3b75f637241aebe67d9b32c3ddf8[0m
+[31m[ERROR][0m[2022-11-17 21:05:52]: [31mUnable to move to joint goals ([-0.27316623  1.64928447 -0.93971419 -1.49370218  0.99845375  0.68969183
+  2.49789573])[0m
+[31m[ERROR][0m[2022-11-17 21:05:53]: [31mUnable to move to joint goals ([ 0.04828326  1.64525661 -0.92495936 -1.84599488  1.07358506  0.71192727
+  2.35350258])[0m
+[31m[ERROR][0m[2022-11-17 21:05:57]: [31mUnable to move to joint goals ([ 0.12215393  1.38063853 -1.03614584 -2.14237606  0.74633855  0.71502615
+  2.28666216])[0m
+[32m[INFO][0m[2022-11-17 21:05:58]: [32mIteration: 95, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f83c3b75f637241aebe67d9b32c3ddf8[0m
+[32m[INFO][0m[2022-11-17 21:05:58]: [32mShapenet ID: fec05c85454edafc4310636931b68fdb[0m
+[32m[INFO][0m[2022-11-17 21:06:29]: [32mIteration: 96, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: fec05c85454edafc4310636931b68fdb[0m
+[32m[INFO][0m[2022-11-17 21:06:29]: [32mShapenet ID: ff13595434879bba557ef92e2fa0ccb2[0m
+[32m[INFO][0m[2022-11-17 21:07:09]: [32mIteration: 97, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: ff13595434879bba557ef92e2fa0ccb2[0m
+[32m[INFO][0m[2022-11-17 21:07:09]: [32mShapenet ID: f9f67fe61dcf46d7e19818797f240d91[0m
+Identified 250 IK solutions with minimum distance of 0.000 in 0.043 seconds
+((0.2888777975000386, 0.02224304828858642, 1.15), (0.5344821915272177, -0.46295657133284407, -0.4629565713328442, 0.5344821915272175))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.27241449229231024, 0.11176841005977359, 1.15), (-0.12009566395177809, 0.6968335751813208, 0.6968335751813209, -0.12009566395177813))
+Identified 250 IK solutions with minimum distance of 2.358 in 0.048 seconds
+Identified 250 IK solutions with minimum distance of 0.452 in 0.024 seconds
+((0.27241449229231024, 0.11176841005977359, 1.15), (-0.12009566395177809, 0.6968335751813208, 0.6968335751813209, -0.12009566395177813))
+Identified 250 IK solutions with minimum distance of 0.392 in 0.018 seconds
+((0.32312718339631596, -0.0017723338707311687, 1.15), (-0.482509032845653, 0.5168994420797458, 0.5168994420797459, -0.4825090328456531))
+Identified 250 IK solutions with minimum distance of 0.926 in 0.015 seconds
+Identified 250 IK solutions with minimum distance of 0.178 in 0.020 seconds
+((0.32312718339631596, -0.0017723338707311687, 1.15), (-0.482509032845653, 0.5168994420797458, 0.5168994420797459, -0.4825090328456531))
+Identified 250 IK solutions with minimum distance of 0.410 in 0.022 seconds
+((0.22809896761496595, -0.015583977296487306, 1.1500000000000001), (-0.3982550484537183, 0.5842883846022668, 0.5842883846022667, -0.39825504845371845))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 2.318 in 0.069 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.062 seconds
+((0.22809896761496595, -0.015583977296487306, 1.1500000000000001), (-0.3982550484537183, 0.5842883846022668, 0.5842883846022667, -0.39825504845371845))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.27901265895681554, -0.02423025708077202, 1.15), (0.08914490017067209, 0.7014650289027679, 0.7014650289027677, 0.08914490017067209))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 1.460 in 0.032 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.031 seconds
+((0.27901265895681554, -0.02423025708077202, 1.15), (0.08914490017067209, 0.7014650289027679, 0.7014650289027677, 0.08914490017067209))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.3224747862220056, 0.008870748631099101, 1.15), (0.3081016131129256, 0.636453765797024, 0.6364537657970241, 0.30810161311292567))
+Identified 250 IK solutions with minimum distance of 2.594 in 0.017 seconds
+Identified 250 IK solutions with minimum distance of 0.321 in 0.014 seconds
+((0.3224747862220056, 0.008870748631099101, 1.15), (0.3081016131129256, 0.636453765797024, 0.6364537657970241, 0.30810161311292567))
+Identified 250 IK solutions with minimum distance of 0.324 in 0.016 seconds
+((0.28081349715640747, -0.023002196523282614, 1.15), (0.573945250289912, 0.41302160920422837, 0.4130216092042285, 0.573945250289912))
+Identified 250 IK solutions with minimum distance of 2.027 in 0.015 seconds
+Identified 250 IK solutions with minimum distance of 0.379 in 0.015 seconds
+((0.28081349715640747, -0.023002196523282614, 1.15), (0.573945250289912, 0.41302160920422837, 0.4130216092042285, 0.573945250289912))
+Identified 250 IK solutions with minimum distance of 0.389 in 0.015 seconds
+((0.2944102262069067, -0.03324619997482836, 1.1500000000000004), (0.1626426898414731, 0.6881477715150507, 0.6881477715150507, 0.16264268984147312))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 2.397 in 0.048 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.044 seconds
+((0.2944102262069067, -0.03324619997482836, 1.1500000000000004), (0.1626426898414731, 0.6881477715150507, 0.6881477715150507, 0.16264268984147312))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.30780861892067746, 0.14817046497896214, 1.15), (0.31875246398100104, 0.6311868714620421, 0.6311868714620423, 0.3187524639810011))
+Identified 250 IK solutions with minimum distance of 2.132 in 0.018 seconds
+Identified 250 IK solutions with minimum distance of 0.197 in 0.020 seconds
+((0.30780861892067746, 0.14817046497896214, 1.15), (0.31875246398100104, 0.6311868714620421, 0.6311868714620423, 0.3187524639810011))
+Identified 250 IK solutions with minimum distance of 0.291 in 0.020 seconds
+((0.2423975377340965, 0.13407153990645904, 1.15), (-0.30710633960736305, 0.6369346090243228, 0.6369346090243229, -0.3071063396073631))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+((0.2423975377340965, 0.13407153990645904, 1.15), (-0.30710633960736305, 0.6369346090243228, 0.6369346090243229, -0.3071063396073631))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.2747772274344904, -0.0425320279343438, 1.1500000000000001), (-0.4668270464098695, 0.5311049884347139, 0.531104988434714, -0.4668270464098696))
+Identified 250 IK solutions with minimum distance of 0.991 in 0.020 seconds
+Identified 250 IK solutions with minimum distance of 0.349 in 0.027 seconds
+((0.2747772274344904, -0.0425320279343438, 1.1500000000000001), (-0.4668270464098695, 0.5311049884347139, 0.531104988434714, -0.4668270464098696))
+Identified 250 IK solutions with minimum distance of 0.315 in 0.040 seconds
+((0.27442144662732004, 0.11539039684731744, 1.1500000000000001), (0.500790392823041, -0.4992083557555347, -0.4992083557555348, 0.5007903928230408))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 250 IK solutions with minimum distance of 1.641 in 0.027 seconds
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 250 IK solutions with minimum distance of 0.000 in 0.026 seconds
+((0.27442144662732004, 0.11539039684731744, 1.1500000000000001), (0.500790392823041, -0.4992083557555347, -0.4992083557555348, 0.5007903928230408))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.22895086501213405, 0.03436350887741364, 1.15), (-0.011491022838201892, 0.7070134060922265, 0.7070134060922268, -0.011491022838201895))
+Identified 250 IK solutions with minimum distance of 2.600 in 0.023 seconds
+Identified 250 IK solutions with minimum distance of 0.411 in 0.028 seconds
+((0.22895086501213405, 0.03436350887741364, 1.15), (-0.011491022838201892, 0.7070134060922265, 0.7070134060922268, -0.011491022838201895))
+Identified 250 IK solutions with minimum distance of 0.813 in 0.042 seconds
+Iteration: 0 | Time: 0.000 | Success: False | True | Cost: inf
+Iteration: 100 | Time: 0.457 | Success: False | False | Cost: inf
+Iteration: 200 | Time: 0.838 | Success: False | True | Cost: inf
+Iteration: 300 | Time: 1.231 | Success: False | False | Cost: inf
+Iteration: 400 | Time: 1.632 | Success: False | True | Cost: inf
+Iteration: 500 | Time: 2.093 | Success: False | False | Cost: inf
+Iteration: 600 | Time: 2.534 | Success: False | True | Cost: inf
+Iteration: 700 | Time: 3.016 | Success: False | False | Cost: inf
+Iteration: 800 | Time: 3.486 | Success: False | False | Cost: inf
+Iteration: 900 | Time: 4.001 | Success: False | False | Cost: inf
+Iteration: 1000 | Time: 4.538 | Success: False | False | Cost: inf
+[32m[INFO][0m[2022-11-17 21:07:40]: [32mIteration: 98, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: f9f67fe61dcf46d7e19818797f240d91[0m
+[32m[INFO][0m[2022-11-17 21:07:40]: [32mShapenet ID: e101cc44ead036294bc79c881a0e818b[0m
+[32m[INFO][0m[2022-11-17 21:08:20]: [32mIteration: 99, Place Success: 0.000, Place [teleport] Success: 0.000, Grasp Success: 0.000, , shapenet_id: e101cc44ead036294bc79c881a0e818b[0m
+numActiveThreads = 0
+stopping threads
+Thread with taskId 0 exiting
+Thread TERMINATED
+destroy semaphore
+semaphore destroyed
+destroy main semaphore
+main semaphore destroyed
+((0.317090938386938, 0.13744231733393508, 1.15), (0.27474361491758637, 0.6515488823273483, 0.6515488823273486, 0.2747436149175865))
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failed to get feasible IK
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+Identified 0 IK solutions with minimum distance of inf in 0.500 seconds
+Failure!
+((0.317090938386938, 0.13744231733393508, 1.15), (0.27474361491758637, 0.6515488823273483, 0.6515488823273486, 0.2747436149175865))
+Warning: end configuration is in collision
+Warning: initial configuration is in collision
+((0.3161514484084013, -0.029693483685473948, 1.15), (0.6726037509814659, 0.2181838540443863, 0.21818385404438637, 0.6726037509814661))
+Identified 250 IK solutions with minimum distance of 2.538 in 0.015 seconds
+Identified 250 IK solutions with minimum distance of 0.352 in 0.027 seconds
+((0.3161514484084013, -0.029693483685473948, 1.15), (0.6726037509814659, 0.2181838540443863, 0.21818385404438637, 0.6726037509814661))
+Identified 250 IK solutions with minimum distance of 1.024 in 0.019 seconds
+finished
+numActiveThreads = 0
+btShutDownExampleBrowser stopping threads
+Thread with taskId 0 exiting
+Thread TERMINATED
+destroy semaphore
+semaphore destroyed
+destroy main semaphore
+main semaphore destroyed
