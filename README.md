@@ -43,44 +43,50 @@ python3 python3 generate_demo.py
 
 ## Train
 ```shell
-python3 train_pick.py --visualize --save-plot --save-checkpoint --print_pbar
-```
-```shell
-python3 train_place.py --visualize --save-plot --save-checkpoint --print_pbar
+bash experiments/train.sh           # Train mug-hanging task with rim grasp, 10 demo.
+# bash experiments/train_bowl.sh    # Train bowl pick-and-place task, 10 demo.
+# bash experiments/train_bottle.sh  # Train bottle pick-and-place task, 10 demo.
+
+# bash experiments/train_1_demo.sh      # Train mug-hanging task with rim grasp, 1 demo.
+# bash experiments/train_5_demo.sh      # Train mug-hanging task with rim grasp, 5 demo.
+# bash experiments/train_lowvar.sh      # Mug-hanging task, 10 demo, but with low-variance, unimodal demos.
+# bash experiments/train_multimodal.sh  # Mug-hanging task, 10 demo, but with high-variance, multimodal demons.
+
+# bash experiments/train_ablation.sh    # Mug-hanging task with NDF-like type-0 only model, 10 demo.
+# bash experiments/train_ablation.sh    # Bowl pick-and-place task with NDF-like type-0 only model, 10 demo.
+# bash experiments/train_ablation.sh    # Bottle pick-and-place task with NDF-like type-0 only model, 10 demo.
+# bash experiments/baseline_train.sh    # Mug-hanging task with SE(3) Transporter Networks, 10 demo.
+# bash experiments/baseline_train_bowl.sh    # Bowl pick-and-place task with SE(3) Transporter Networks, 10 demo.
+# bash experiments/baseline_train_bottle.sh    # Bottle pick-and-place task with SE(3) Transporter Networks, 10 demo.
+
 ```
 
 ## Eval
 ```shell
-python3 eval.py --use-gui --save-plot
+bash experiments/eval_gui.sh     # This will run evaluation for mug-task.
+                                 # Modify experiments/eval_gui.sh to evaluate for bowl- and bottle-tasks.
+                                 # Please don't forget to change the checkpoint files.
+                                 # They should be located in checkpoint/train_pick and checkpoint/train_place  
+
+
 ```
+In the experiments folder, one can find many other evaluation scripts that were used in the paper.
 
 
 
 ## Reproducibility
-For the reproducibility, we fixed all the seeds for the random number generators and used deterministic algorithms only.
-We also provide pickles of the tensor product layers as there is some numerical nondeterminism (of order 1e-6) in the initialization of E3NN that cannot be controlled by simply setting the seeds.
+Our implementation is fully deterministic in a local machine when the seeds are properly fixed.
+However, the results may be different accross different machines.
+This is due to the tiny numerical differences between different processors.
+Unfortunately, even a very small numerical difference would result in completely different output due to the MCMC steps.
+Therefore, we provide download links to the task demonstrations and checkpoints.
+Please download and use these files if reproducbility matters.
 
-Since our algorithm heavily relies on MCMC, very small errors may accumulate to result in huge differences.
-Unfortunately, there are small numerical differences across different platforms for some modules.
-As a result, the reproducibility of the algorithm is not guaranteed across different platforms.
-Nevertheless, reproducibility is at least guaranteed in the same platform.
-Therefore, we provide the checkpoints for the trained models. 
-```shell
-mkdir checkpoint
-wget --load-cookies ~/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies ~/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1GyIz-u928OLP9myUC31QV3rHayyz48J3' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1GyIz-u928OLP9myUC31QV3rHayyz48J3" -O train_pick_reproducible.zip && rm -rf ~/cookies.txt
-wget --load-cookies ~/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies ~/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1_54umYhNJTwEThPPgQUnah9zjog_ap7C' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1_54umYhNJTwEThPPgQUnah9zjog_ap7C" -O train_place_reproducible.zip && rm -rf ~/cookies.txt
-unzip train_pick_reproducible.zip
-unzip train_place_reproducible.zip
-cd ..
-```
-We also provide the train/test datasets.
-```shell
-mkdir demo
-cd demo
-wget --load-cookies ~/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies ~/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1HhusCuLTSYrm4b1mh0MN9nd8s3C5ZsgV' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1HhusCuLTSYrm4b1mh0MN9nd8s3C5ZsgV" -O mug_task.zip && rm -rf ~/cookies.txt
-unzip mug_task.zip 
-cd ..
-```
+Checkpoint: https://drive.google.com/file/d/1TYJ0aJKe1bNPv8QZ6-4Kn2L6K-L246qV/view?usp=share_link
+
+Demo: https://drive.google.com/file/d/1bTS6goVQw_ihEqDumox09tpc6daE6Gu8/view?usp=sharing
+
+please unzip these files and place the contents in 'checkpoint/' and 'demo/' directory, individually.
 
 
 
