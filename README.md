@@ -8,7 +8,7 @@ The paper can be found at: https://openreview.net/forum?id=dnjZSPGmY5O
 
 **Step 1.** We recommend using Anaconda, although not necessary.
 ```shell
-git clone --recursive anon
+git clone --recursive https://github.com/tomato1mule/edf.git
 cd edf
 conda create --name edf python=3.9.12 -y
 conda activate edf
