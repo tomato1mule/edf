@@ -4,6 +4,8 @@ Official PyTorch implementation of Equivariant Descriptor Fields: SE(3)-Equivari
 
 The paper can be found at: https://openreview.net/forum?id=dnjZSPGmY5O
 
+* Coming soon: Motion-planner integrated version with ROS MoveIt (Will be released at the beginning of March 2023).
+
 ## Installation
 
 **Step 1.** We recommend using Anaconda, although not necessary.
