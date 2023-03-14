@@ -27,14 +27,14 @@ setup(
         'torch==1.11.0',
         'torchvision==0.12.0',
         'torchaudio==0.11.0',
-        'torch-scatter==2.0.9',
         'torch-sparse==0.6.13',
         'torch-cluster==1.6.0',
+        'torch-scatter==2.0.9',
         'torch-spline-conv==1.2.1',
         'e3nn==0.4.4',
         'xitorch==0.3.0',
-        'iopath==0.1.9',
-        'fvcore==0.1.5.post20220504',
+        'iopath',        # 0.1.9
+        'fvcore',        # 0.1.5.post20220504
         'pytorch3d==0.7.2',
         'open3d==0.16.0',
         'pyyaml',        # 6.0
@@ -44,9 +44,5 @@ setup(
         'dash==2.7.1',
         'dash_vtk==0.0.9',
         'dash_daq==0.5.0',
-        #'jupyterlab_dash', # 0.1.0a3
-        #'jupyterlab',      # 3.6.1
-        #'nodejs',          # 0.1.1
-        #'npm',             # 0.1.1
-    ]
+    ],
 )

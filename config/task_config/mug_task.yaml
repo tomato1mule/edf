@@ -1,0 +1,4 @@
+sleep: False
+d: 0.017
+d_pick: 0.014
+d_place: 0.017

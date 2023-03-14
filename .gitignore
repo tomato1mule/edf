@@ -1,5 +1,6 @@
 # Custom
-demo/
+demo/*
+!demo/test_demo
 *.gzip
 *.pickle
 *.pt
