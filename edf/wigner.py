@@ -1,3 +1,5 @@
+from typing import List
+
 import torch
 from e3nn.o3._wigner import _Jd
 from e3nn.math._linalg import direct_sum
@@ -82,7 +84,7 @@ def wigner_D(l: int, alpha, beta, gamma, J):
     return Xa @ J @ Xb @ J @ Xc
 
 @torch.jit.script
-def D_from_angles_(ls: list[int], muls: list[int], Js: list[torch.Tensor], alpha, beta, gamma):
+def D_from_angles_(ls: List[int], muls: List[int], Js: List[torch.Tensor], alpha, beta, gamma):
     Ds = []
     for l, mul, J in zip(ls, muls, Js):
         D = wigner_D(l, alpha, beta, gamma, J)
@@ -102,7 +104,7 @@ def D_from_angles(irreps, Js, alpha, beta, gamma):
     #return torch.block_diag(*Ds)
 
 @torch.jit.script
-def D_from_quaternion_(ls: list[int], muls: list[int], Js: list[torch.Tensor], q):
+def D_from_quaternion_(ls: List[int], muls: List[int], Js: List[torch.Tensor], q):
     angle = quat_to_angle_fast(q)
     alpha, beta, gamma = angle[0], angle[1], angle[2]
     return D_from_angles_(ls=ls, muls=muls, Js=Js, alpha=alpha, beta=beta, gamma=gamma)
@@ -129,7 +131,7 @@ def transform_feature_slice(feature, alpha, beta, gamma, l: int, J):
     return feature_transformed
 
 @torch.jit.script
-def transform_feature_(ls: list[int], feature_slices: list[torch.Tensor], Js: list[torch.Tensor], alpha, beta, gamma):
+def transform_feature_(ls: List[int], feature_slices: List[torch.Tensor], Js: List[torch.Tensor], alpha, beta, gamma):
     feature_transformed = []
     for l, feature_slice, J in zip(ls, feature_slices, Js):
         feature_transformed_slice = transform_feature_slice(feature_slice, alpha, beta, gamma, l, J)
@@ -147,7 +149,7 @@ def transform_feature(irreps, feature, alpha, beta, gamma, Js):
     return transform_feature_(ls, feature_slices, Js, alpha, beta, gamma)
 
 @torch.jit.script
-def transform_feature_quat_(ls: list[int], feature_slices: list[torch.Tensor], Js: list[torch.Tensor], q: torch.Tensor):
+def transform_feature_quat_(ls: List[int], feature_slices: List[torch.Tensor], Js: List[torch.Tensor], q: torch.Tensor):
     q = transforms.standardize_quaternion(q / torch.norm(q, dim=-1, keepdim=True))
     angle = quat_to_angle_fast(q)
     alpha, beta, gamma = angle[0], angle[1], angle[2]
@@ -168,7 +170,7 @@ class TransformFeatureQuaternion(torch.nn.Module):
         self.ls = tuple([ir.l for mul, ir in irreps])
         self.slices = tuple([(slice_.start, slice_.stop) for slice_ in irreps.slices()])
         for l in self.ls:
-            self.register_buffer(f'J_{l}', _Jd[l].to(dtype = torch.float32))
+            self.register_buffer(f'J_{l}', _Jd[l].to(dtype = torch.float32), persistent=False)
 
     def forward(self, feature, q):
         feature_slices = []

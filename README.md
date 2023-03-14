@@ -4,13 +4,11 @@ Official PyTorch implementation of Equivariant Descriptor Fields: SE(3)-Equivari
 
 The paper can be found at: https://openreview.net/forum?id=dnjZSPGmY5O
 
-* Coming soon: Motion-planner integrated version with ROS MoveIt (Will be released at the beginning of March 2023).
-
 ## Installation
 
 **Step 1.** We recommend using Anaconda, although not necessary.
 ```shell
-git clone --recursive https://github.com/tomato1mule/edf.git
+git clone --recursive anon
 cd edf
 conda create --name edf python=3.9.12 -y
 conda activate edf
@@ -31,14 +29,9 @@ conda develop .
 
 **Step 3.**
 ```shell
-pip3 install torch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
-pip3 install torch-scatter==2.0.9 -f https://data.pyg.org/whl/torch-1.11.0+cu113.html
-pip3 install torch-sparse==0.6.13 -f https://data.pyg.org/whl/torch-1.11.0+cu113.html
-pip3 install torch-cluster==1.6.0 -f https://pytorch-geometric.com/whl/torch-1.11.0+cu113.html
-pip3 install torch-spline-conv==1.2.1 -f https://pytorch-geometric.com/whl/torch-1.11.0+cu113.html
-pip3 install e3nn==0.4.4 xitorch==0.3.0 iopath==0.1.9 fvcore==0.1.5.post20220504
-pip3 install --no-index --no-cache-dir pytorch3d==0.6.2 -f https://dl.fbaipublicfiles.com/pytorch3d/packaging/wheels/py39_cu113_pyt1110/download.html
+pip3 install -e . --extra-index-url https://download.pytorch.org/whl/cu113 -f https://data.pyg.org/whl/torch-1.11.0+cu113.html -f https://pytorch-geometric.com/whl/torch-1.11.0+cu113.html -f https://dl.fbaipublicfiles.com/pytorch3d/packaging/wheels/py38_cu113_pyt1110/download.html
 ```
+
 
 ## Generate Demo
 ```shell

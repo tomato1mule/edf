@@ -1,2 +1,0 @@
-The pytorch implementation of Transporter Nets are borrowed from:
-https://github.com/HaojHuang/Equivariant-Transporter-Net

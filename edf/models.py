@@ -24,9 +24,7 @@ from e3nn import o3
 from e3nn.math import soft_one_hot_linspace, soft_unit_step
 
 import edf
-from edf.pybullet_env.utils import get_image, axiscreator, img_data_to_pointcloud
 from edf.visual_utils import plot_color_and_depth, scatter_plot, scatter_plot_ax, visualize_samples, visualize_sample_cluster
-from edf.pybullet_env.env import MugTask
 from edf.layers import ClusteringLayer, EdgeSHLayer, SE3TransformerLayer, QuerySHLayer, QuerySHLayerJIT, TensorFieldLayer, TensorFieldLayerJIT, LinearLayer, EquivLayerNorm, EquivLayerNormJIT, LinearLayerJIT
 from edf.utils import check_irreps_sorted
 from edf.wigner import TransformFeatureQuaternion
@@ -232,7 +230,7 @@ class EnergyModel(nn.Module):
 
         self.N_query = N_query
         self.field_cutoff = field_cutoff
-        self.register_buffer('ranges', ranges) # (3,2)
+        self.register_buffer('ranges', ranges, persistent=False) # (3,2)
 
         self.irreps_input = o3.Irreps(irreps_input)
         self.irreps_descriptor = o3.Irreps(irreps_descriptor)
@@ -245,7 +243,7 @@ class EnergyModel(nn.Module):
         if self.learnable_irrep_weight:
             self.register_parameter('irrep_weight_logit', torch.nn.Parameter(1 + torch.zeros(len(self.irreps_descriptor.ls), requires_grad=True, dtype=torch.float32))) # (ls,)
         else:
-            self.register_buffer('irrep_weight_logit', torch.nn.Parameter(2 + torch.zeros(len(self.irreps_descriptor.ls), dtype=torch.float32))) # (ls,)
+            self.register_buffer('irrep_weight_logit', torch.nn.Parameter(2 + torch.zeros(len(self.irreps_descriptor.ls), dtype=torch.float32)), persistent=False) # (ls,)
 
 
         self.energy_type = energy_type
@@ -494,11 +492,11 @@ class QueryModel(nn.Module):
 
 
 class SimpleQueryModel(QueryModel):
-    def __init__(self, irreps_descriptor, N_query, query_radius, irrep_normalization = 'norm', layernorm = False, max_N_query = None):
+    def __init__(self, irreps_descriptor, N_query, query_radius, irrep_normalization = 'norm', layernorm = False, max_N_query = None, query_center = torch.tensor([0., 0., 0.])):
         super().__init__(irreps_descriptor=irreps_descriptor, N_query=N_query, irrep_normalization=irrep_normalization)
         self.query_radius = query_radius   # maximum radius for query points' positions.
 
-        self.register_buffer('query_points', self.init_query_points(self.N_query, self.query_radius)) # (N_query, 3)
+        self.register_buffer('query_points', self.init_query_points(self.N_query, self.query_radius, center=query_center)) # (N_query, 3)
         self.register_parameter('query_feature', torch.nn.Parameter(self.irreps_descriptor.randn(self.N_query, -1, requires_grad=True, normalization=irrep_normalization))) # (N_query, feature_len)
         self.register_parameter('query_attention', torch.nn.Parameter(torch.zeros(self.N_query, requires_grad=True))) # (N_query,)
         if layernorm is True:
@@ -510,12 +508,13 @@ class SimpleQueryModel(QueryModel):
             self.register_parameter('dummy_param', torch.nn.Parameter(torch.randn(1, requires_grad=True)))
         self.max_N_query = max_N_query
 
-    def init_query_points(self, N, max_radius):
+    def init_query_points(self, N, max_radius, center):
+        assert center.ndim ==1 and center.shape[-1] == 3
         ### Generates N points within a ball whose radius is max_radius
         query_points = torch.randn((N+20) * 2, 3) / 2 
         idx = (query_points.norm(dim=-1) < 1.).nonzero()
         query_points = query_points[idx].squeeze(-2)[:N]
-        query_points = max_radius * query_points
+        query_points = max_radius * query_points + center
 
         assert query_points.shape[0] == N
         return query_points

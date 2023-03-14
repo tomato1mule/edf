@@ -18,22 +18,13 @@ from torch_scatter import scatter, scatter_logsumexp, scatter_log_softmax
 from pytorch3d import transforms
 from xitorch.interpolate import Interp1D
 
-import e3nn.nn
-from e3nn import o3
-from e3nn.math import soft_one_hot_linspace, soft_unit_step
-
-import edf
-from edf.pybullet_env.utils import get_image, axiscreator, img_data_to_pointcloud
-from edf.visual_utils import plot_color_and_depth, scatter_plot, scatter_plot_ax, visualize_samples, visualize_sample_cluster
-from edf.pybullet_env.env import MugTask
-from edf.layers import ClusteringLayer, EdgeSHLayer, SE3TransformerLayer
 
 
 
 class QuaternionUniformDist(nn.Module):
     def __init__(self):
         super().__init__()
-        self.register_buffer('dummy', torch.tensor([0.]))
+        self.register_buffer('dummy', torch.tensor([0.]), persistent=False)
         self.is_symmetric = True
 
     def sample(self, N=1):
@@ -64,7 +55,7 @@ class QuaternionUniformDist(nn.Module):
 class IgSO3Dist(nn.Module):
     def __init__(self, std):
         super().__init__()
-        self.register_buffer('dummy', torch.tensor([0.]))
+        self.register_buffer('dummy', torch.tensor([0.]), persistent=False)
         self.is_symmetric = True
 
         self.eps = 0.5 * (std**2)
@@ -160,7 +151,7 @@ class GaussianDistR3(nn.Module):
     def __init__(self, std):
         super().__init__()
         self.std = std
-        self.register_buffer('dummy', torch.tensor([0]))
+        self.register_buffer('dummy', torch.tensor([0]), persistent=False)
         self.is_symmetric = True
         self.is_isotropic = True
 
@@ -201,7 +192,7 @@ class GaussianDistR3(nn.Module):
 class UniformDistR3(nn.Module):
     def __init__(self, ranges):
         super().__init__()
-        self.register_buffer('ranges',ranges) # (3,2)
+        self.register_buffer('ranges', ranges, persistent=False) # (3,2)
         self.is_symmetric = True
         self.is_isotropic = False
 

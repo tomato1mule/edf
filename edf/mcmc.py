@@ -13,20 +13,11 @@ import torch
 import torch.nn as nn
 from torch.nn import functional as F
 
-from torch_cluster import radius_graph, radius
-from torch_scatter import scatter, scatter_logsumexp, scatter_log_softmax
 from pytorch3d import transforms
-from xitorch.interpolate import Interp1D
 
-import e3nn.nn
-from e3nn import o3
-from e3nn.math import soft_one_hot_linspace, soft_unit_step
 
-import edf
-from edf.pybullet_env.utils import get_image, axiscreator, img_data_to_pointcloud
-from edf.visual_utils import plot_color_and_depth, scatter_plot, scatter_plot_ax, visualize_samples, visualize_sample_cluster
-from edf.pybullet_env.env import MugTask
-from edf.layers import ClusteringLayer, EdgeSHLayer, SE3TransformerLayer
+
+
 from edf.dist import UniformDistSE3, GaussianDistSE3, NewGaussianDistSE3
 from edf.utils import normalize_quaternion
 
@@ -42,7 +33,7 @@ class MH(nn.Module):
         self.init_dist = uniform_dist_T
         self.proposal_dist = gaussian_dist_T
 
-        self.register_buffer('dummy', torch.tensor([0]))
+        self.register_buffer('dummy', torch.tensor([0]), persistent=False)
 
     def initialize(self, N_samples):
         T_init = self.init_dist.sample(N=N_samples)
@@ -114,10 +105,10 @@ class MH(nn.Module):
 class LangevinMH(nn.Module):
     def __init__(self, ranges_X, dt, std_theta = 1., std_X = 1.):
         super().__init__()
-        self.register_buffer('dt', torch.tensor(dt))
-        self.register_buffer('std_theta', torch.tensor(std_theta))
-        self.register_buffer('std_X', torch.tensor(std_X))
-        self.register_buffer('ranges_X', ranges_X)
+        self.register_buffer('dt', torch.tensor(dt), persistent=False)
+        self.register_buffer('std_theta', torch.tensor(std_theta), persistent=False)
+        self.register_buffer('std_X', torch.tensor(std_X), persistent=False)
+        self.register_buffer('ranges_X', ranges_X, persistent=False)
         uniform_dist_T = UniformDistSE3(ranges_X=ranges_X)
         self.init_dist = uniform_dist_T
 
@@ -132,9 +123,9 @@ class LangevinMH(nn.Module):
                                    [[0.,-1., 0.],
                                    [1., 0., 0.],
                                    [0., 0., 0.]]])
-        self.register_buffer('so3_basis', so3_basis)
-        self.register_buffer('q_indices', torch.tensor([[1,2,3], [0,3,2], [3,0,1], [2,1,0]], dtype=torch.long))
-        self.register_buffer('q_factor', torch.tensor([[-0.5, -0.5, -0.5], [0.5, -0.5, 0.5], [0.5, 0.5, -0.5], [-0.5, 0.5, 0.5]]))
+        self.register_buffer('so3_basis', so3_basis, persistent=False)
+        self.register_buffer('q_indices', torch.tensor([[1,2,3], [0,3,2], [3,0,1], [2,1,0]], dtype=torch.long), persistent=False)
+        self.register_buffer('q_factor', torch.tensor([[-0.5, -0.5, -0.5], [0.5, -0.5, 0.5], [0.5, 0.5, -0.5], [-0.5, 0.5, 0.5]]), persistent=False)
 
     def initialize(self, N_samples):
         raise NotImplementedError
@@ -324,8 +315,8 @@ class PoseOptimizer(nn.Module):
     def __init__(self, device = 'cpu'):
         super().__init__()
         self.device = device
-        self.register_buffer('q_indices', torch.tensor([[1,2,3], [0,3,2], [3,0,1], [2,1,0]], dtype=torch.long))
-        self.register_buffer('q_factor', torch.tensor([[-0.5, -0.5, -0.5], [0.5, -0.5, 0.5], [0.5, 0.5, -0.5], [-0.5, 0.5, 0.5]]))
+        self.register_buffer('q_indices', torch.tensor([[1,2,3], [0,3,2], [3,0,1], [2,1,0]], dtype=torch.long), persistent=False)
+        self.register_buffer('q_factor', torch.tensor([[-0.5, -0.5, -0.5], [0.5, -0.5, 0.5], [0.5, 0.5, -0.5], [-0.5, 0.5, 0.5]]), persistent=False)
 
     def to(self, device):
         self.device = device
@@ -445,15 +436,15 @@ class LangevinMHDeprecated(nn.Module):
         self.dt = dt
         self.std_theta = std_theta
         self.std_X = std_X
-        self.register_buffer('std', torch.tensor(np.sqrt(2*self.dt) * std_theta))
-        self.register_buffer('ranges_X', ranges_X)
+        self.register_buffer('std', torch.tensor(np.sqrt(2*self.dt) * std_theta), persistent=False)
+        self.register_buffer('ranges_X', ranges_X, persistent=False)
         uniform_dist_T = UniformDistSE3(ranges_X=ranges_X)
         gaussian_dist_T = NewGaussianDistSE3(std_theta = np.sqrt(2*self.dt) * std_theta, std_X = np.sqrt(2*self.dt) * std_X)
 
         self.init_dist = uniform_dist_T
         self.proposal_dist = gaussian_dist_T
 
-        self.register_buffer('dummy', torch.tensor([0]))
+        self.register_buffer('dummy', torch.tensor([0]), persistent=False)
         so3_basis = torch.tensor([[[0., 0., 0.],
                                    [0., 0.,-1.],
                                    [0., 1., 0.]],
@@ -465,9 +456,9 @@ class LangevinMHDeprecated(nn.Module):
                                    [[0.,-1., 0.],
                                    [1., 0., 0.],
                                    [0., 0., 0.]]])
-        self.register_buffer('so3_basis', so3_basis)
-        self.register_buffer('q_indices', torch.tensor([[1,2,3], [0,3,2], [3,0,1], [2,1,0]], dtype=torch.long))
-        self.register_buffer('q_factor', torch.tensor([[-0.5, -0.5, -0.5], [0.5, -0.5, 0.5], [0.5, 0.5, -0.5], [-0.5, 0.5, 0.5]]))
+        self.register_buffer('so3_basis', so3_basis, persistent=False)
+        self.register_buffer('q_indices', torch.tensor([[1,2,3], [0,3,2], [3,0,1], [2,1,0]], dtype=torch.long), persistent=False)
+        self.register_buffer('q_factor', torch.tensor([[-0.5, -0.5, -0.5], [0.5, -0.5, 0.5], [0.5, 0.5, -0.5], [-0.5, 0.5, 0.5]]), persistent=False)
 
 
     def initialize(self, N_samples):

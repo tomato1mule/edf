@@ -5,6 +5,7 @@ import datetime
 import yaml
 import numpy as np
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 
 import torch
 import torch.nn as nn
@@ -19,6 +20,8 @@ from edf.mcmc import MH, LangevinMH, PoseOptimizer
 from edf.dist import GaussianDistSE3
 from edf.layers import IrrepwiseDotProduct
 from edf.visual_utils import scatter_plot, scatter_plot_ax
+
+from edf.data import PointCloud, SE3
 
 class PickAgent(nn.Module):
     def __init__(self, config_dir, device = 'cpu', lr_se3T = None, lr_energy_fast = None, lr_energy_slow = None, lr_query_fast = None, lr_query_slow = None, std_theta_perturb = None, std_X_perturb = None, max_N_query = None, langevin_dt = 1e-3):
@@ -76,19 +79,19 @@ class PickAgent(nn.Module):
         self.energy_model = EnergyModel(N_query = self.N_query, field_cutoff = self.field_cutoff,
                                 irreps_input = self.irreps_descriptor, irreps_descriptor = self.irreps_descriptor, 
                                 sh_lmax = self.sh_lmax_descriptor, number_of_basis = self.number_of_basis_descriptor, 
-                                ranges = self.ranges, layernorm=self.edf_layernorm, tp_type=self.tp_type).requires_grad_(False)
+                                ranges = self.ranges.detach().clone(), layernorm=self.edf_layernorm, tp_type=self.tp_type).requires_grad_(False)
 
         self.energy_model_train = EnergyModel(N_query = self.N_query, field_cutoff = self.field_cutoff,
                                         irreps_input = self.irreps_descriptor, irreps_descriptor = self.irreps_descriptor, 
                                         sh_lmax = self.sh_lmax_descriptor, number_of_basis = self.number_of_basis_descriptor, 
-                                        ranges = self.ranges, layernorm=self.edf_layernorm, tp_type=self.tp_type)
+                                        ranges = self.ranges.detach().clone(), layernorm=self.edf_layernorm, tp_type=self.tp_type)
 
 
         self.synchronize_params()
         self.energy_model = torch.jit.script(self.energy_model)
         self.energy_model_train = torch.jit.script(self.energy_model_train)
         
-        self.metropolis = MH(ranges_X = self.ranges, std_theta = self.std_theta, std_X = self.std_X)
+        self.metropolis = MH(ranges_X = self.ranges.detach().clone(), std_theta = self.std_theta, std_X = self.std_X)
         #self.langevin = LangevinMH(ranges_X = self.ranges, dt = 0.1, std_theta = 1., std_X = 1.)
         self.pose_optim = PoseOptimizer()
         self.irrepwise_dot = IrrepwiseDotProduct(self.irreps_descriptor)
@@ -100,9 +103,9 @@ class PickAgent(nn.Module):
         self.param_synced = True
 
     def _init_models_optional(self):
-        self.langevin = LangevinMH(ranges_X = self.ranges, dt = self.langevin_dt, std_theta = 1., std_X = 1.)
+        self.langevin = LangevinMH(ranges_X = self.ranges.detach().clone(), dt = self.langevin_dt, std_theta = 1., std_X = 1.)
         self.query_model = SimpleQueryModel(irreps_descriptor=self.irreps_descriptor, N_query=self.N_query, 
-                                            query_radius = self.query_radius, irrep_normalization=self.irrep_normalization, layernorm=False, max_N_query = self.max_N_query)
+                                            query_radius = self.query_radius, irrep_normalization=self.irrep_normalization, layernorm=False, max_N_query = self.max_N_query, query_center=self.query_center)
 
     def init_optimizers(self):
         self.optimizer_se3T = torch.optim.Adam(list(self.se3T.parameters()), lr=self.lr_se3T, betas=(0.9, 0.98), eps=1e-09, weight_decay=1e-4, amsgrad=True)
@@ -159,6 +162,7 @@ class PickAgent(nn.Module):
 
     def _load_config_optional(self, config):
         self.query_radius = config['query_radius']
+        self.query_center = torch.tensor(config['query_center'])
 
     # def load_tp_path(self, tp_pickle_path):
     #     try:
@@ -352,9 +356,17 @@ class PickAgent(nn.Module):
         idx = torch.multinomial(prob, num_samples=len(prob), replacement=replacement)
         return Ts[idx]
 
-    def train_once(self, inputs, target_T, N_transforms, mh_iter, langevin_iter, edf_norm_std = False,
-                   temperature = 1., pbar = True, verbose = True, visual_info = None, inputs_Q = None, CD_ratio = 0., query_temperature = None, surrogate_query = False):
+    def train_once(self, scene: PointCloud, target_T: SE3, N_transforms, mh_iter, langevin_iter, edf_norm_std = False,
+                   temperature = 1., pbar = True, verbose = True, grasp: Optional[PointCloud] = None, CD_ratio = 0., query_temperature = None, surrogate_query = False):
         assert self.param_synced is True
+
+        inputs = {"feature": scene.colors, "pos": scene.points}
+        if grasp is not None:
+            inputs_Q = {"feature": grasp.colors, "pos": grasp.points}
+        else:
+            inputs_Q = None
+        target_T = target_T.poses.detach().clone()
+
 
         t1 = time.time()
         target_T = self.perturb_dist.propose(target_T)
@@ -429,48 +441,6 @@ class PickAgent(nn.Module):
         t2 = time.time()
 
 
-
-
-
-        if visual_info is not None:
-            try:
-                figsize = visual_info['figsize']
-            except KeyError:
-                figsize = (8*(1+self.right_equiv), 8)
-            fig, axes = plt.subplots(1, 1+self.right_equiv, figsize=figsize, subplot_kw={'projection':'3d'})
-            if self.right_equiv:
-                visual_info['ax'] = axes[0]
-                visual_info['ax_query'] = axes[1]
-            else:
-                visual_info['ax'] = axes
-
-            self.visualize(visual_info = visual_info, 
-                           edf_outputs = {k: v.detach().cpu() for k, v in edf_outputs.items()},
-                           T = best_neg_T, target_T = target_T, Ts = Ts)
-            if self.right_equiv:
-                self.visualize_query(visual_info=visual_info, edf_outputs={k: v.detach().cpu() for k, v in edf_outputs.items()})
-
-            try:
-                show = visual_info['show']
-            except KeyError:
-                show = True
-            try:
-                save_path = visual_info['save_path']
-                assert 'file_name' in visual_info.keys()
-                file_name = visual_info['file_name']
-            except KeyError:
-                save_path = None
-                file_name = None
-            if save_path is not None:
-                if os.path.exists(save_path) is False:
-                    os.makedirs(save_path)
-                fig.savefig(save_path + file_name)
-            if show:
-                plt.show()
-            fig.clear()
-            plt.close('all')
-
-
         if verbose:
             print(f"Target Energy: {E_pos.detach().cpu().item()}")
             print(f"Sample Energy: {E_neg.detach().cpu()}")
@@ -486,8 +456,21 @@ class PickAgent(nn.Module):
         else:
             print(f"MCMC Time: {logs['mcmc_time']:.4f} || Total time: {t2-t1} || Mean Reject ratio: {(logs['N_rejected'].type(torch.float32)/mh_iter).mean()} || Loss: {Loss.item()}", flush=True)
 
-    def forward(self, inputs: dict, T_seed: Union[torch.Tensor, int], mh_iter: int = None, langevin_iter: int = None, 
-                temperature: float = 1., pbar: bool = True, inputs_Q: Union[None, dict] = None, 
+        
+        logs = {k: (v.detach().clone().cpu() if isinstance(v,torch.Tensor) else v) for k,v in logs.items()}
+        logs['edf_outputs'] = {k: (v.detach().clone().cpu() if isinstance(v,torch.Tensor) else v) for k,v in edf_outputs.items()}
+        logs['E_pos'] = E_pos.detach().clone().cpu()
+        logs['E_neg'] = E_neg.detach().clone().cpu()
+        logs['loss'] = Loss.item()
+        logs['target_T'] = target_T.detach().clone().cpu()
+        logs['sampled_Ts'] = Ts.detach().clone().cpu()
+        logs['best_neg_T'] = best_neg_T.detach().clone().cpu()
+
+        return logs
+
+
+    def forward(self, scene: PointCloud, T_seed: Union[torch.Tensor, int], mh_iter: int = None, langevin_iter: int = None, 
+                temperature: float = 1., pbar: bool = True, grasp: Optional[PointCloud] = None, 
                 policy: str = 'sorted', policy_temperature: float = None, 
                 traj_len: int = 1, optim_iter: int = 0, optim_lr: float = 1e-3, query_temperature: Union[float, None] = None, resample=True):
         assert self.param_synced is True
@@ -502,7 +485,11 @@ class PickAgent(nn.Module):
             q_seed = torch.randn(N_transforms, 4, device=self.device)
             T_seed = torch.cat((q_seed/q_seed.norm(dim=-1, keepdim=True), X_seed), dim=-1)
 
-        #assert self.energy_model.requires_graD is False
+        inputs = {"feature": scene.colors, "pos": scene.points}
+        if grasp is not None:
+            inputs_Q = {"feature": grasp.colors, "pos": grasp.points}
+        else:
+            inputs_Q = None
         Ts, edf_outputs, logs = self.sample(inputs = inputs, inputs_Q = inputs_Q, 
                                             T_seed = T_seed, mh_iter = mh_iter, langevin_iter = langevin_iter,
                                             temperature = temperature, pbar = pbar, learning = False, 
@@ -629,16 +616,21 @@ class PickAgent(nn.Module):
         torch.save({'se3T_state_dict': self.se3T.state_dict(),
                     'energy_model_state_dict': self.energy_model.state_dict(),
                     'query_model_state_dict': self.query_model.state_dict()}, 
-                   path + filename)
+                   os.path.join(path, filename))
 
-    def load(self, dir):
+    def load(self, dir, strict: bool = True):
         loaded = torch.load(dir, map_location=self.device)
-        self.se3T.load_state_dict(loaded['se3T_state_dict'])
-        self.energy_model.load_state_dict(loaded['energy_model_state_dict'])
+        self.se3T.load_state_dict(loaded['se3T_state_dict'], strict=strict)
+        self.energy_model.load_state_dict(loaded['energy_model_state_dict'], strict=strict)
         self.param_synced = False # Unnecessary but for safety
-        self.energy_model_train.load_state_dict(loaded['energy_model_state_dict'])
+        self.energy_model_train.load_state_dict(loaded['energy_model_state_dict'], strict=strict)
         self.param_synced = True # # Unnecessary but for safety
-        self.query_model.load_state_dict(loaded['query_model_state_dict'])
+        self.query_model.load_state_dict(loaded['query_model_state_dict'], strict=strict)
+
+        # There is a bug with torch.jit scripts that non-persistent buffers are included in state_dict().
+        # Therefore, these non-persistent buffers must be manually reset.
+        self.energy_model.ranges = self.ranges.to(self.energy_model.ranges.device)
+        self.energy_model_train.ranges = self.ranges.to(self.energy_model_train.ranges.device)
 
     def debug_energy(self, inputs, T, temperature = 1., inputs_Q = None, grad_type = 'lie_grad'):
         input_device = T.device
@@ -729,6 +721,30 @@ class PickAgent(nn.Module):
         visualizer_query = None
 
         return logP.detach().to(input_device), grad.to(input_device), visualizer, visualizer_query
+    
+    def warmup(self, warmup_iters: int, N_poses: int, N_points_scene: int, N_points_grasp: Optional[int] = None):
+        mean = self.ranges.mean(dim=-1)
+        std = (self.ranges[...,1] - self.ranges[...,0]) / 4
+        points = torch.randn(N_points_scene, 3, device=self.ranges.device, dtype=self.ranges.dtype) * std + mean
+        colors = torch.randn(N_points_scene, 3, device=self.ranges.device, dtype=self.ranges.dtype)
+        scene = PointCloud(points=points, colors=colors)
+
+        if N_points_grasp is not None:
+            mean = self.ranges_Q.mean(dim=-1)
+            std = (self.ranges_Q[...,1] - self.ranges_Q[...,0]) / 4
+            points = torch.randn(N_points_grasp, 3, device=self.ranges_Q.device, dtype=self.ranges_Q.dtype) * std + mean
+            colors = torch.randn(N_points_grasp, 3, device=self.ranges_Q.device, dtype=self.ranges_Q.dtype)
+            grasp = PointCloud(points=points, colors=colors)
+        else:
+            grasp = None
+
+        print(f"Warmup with {warmup_iters} iterations.")
+        for iter in tqdm(range(warmup_iters)):
+            self.forward(scene = scene, T_seed = N_poses, mh_iter = 3, langevin_iter = 3, pbar = False, grasp = grasp)
+
+        
+        
+
 
 
         
@@ -749,8 +765,8 @@ class PlaceAgent(PickAgent):
         self.query_radius = config['query_radius']
 
     def _init_models_optional(self):
-        self.langevin = LangevinMH(ranges_X = self.ranges, dt = self.langevin_dt, std_theta = 1., std_X = 1.)
-        #self.langevin = MH(ranges_X = self.ranges, std_theta = 0.2, std_X = 0.2)
+        self.langevin = LangevinMH(ranges_X = self.ranges.detach().clone(), dt = self.langevin_dt, std_theta = 1., std_X = 1.)
+        #self.langevin = MH(ranges_X = self.ranges.detach().clone(), std_theta = 0.2, std_X = 0.2)
         self.query_model = EquivWeightQueryModel(irreps_descriptor=self.irreps_out_Q, N_query = self.N_query, max_N_query = self.max_N_query,
                                                  max_radius=self.max_radius_Q, field_cutoff=self.field_cutoff_Q, sh_lmax=self.sh_lmax_descriptor_Q, 
                                                  number_of_basis=self.number_of_basis_descriptor_Q, query_radius=self.query_radius, irrep_normalization=self.irrep_normalization, layernorm=self.edf_layernorm)

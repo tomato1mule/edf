@@ -23,11 +23,6 @@ import e3nn.nn
 from e3nn import o3
 from e3nn.math import soft_one_hot_linspace, soft_unit_step
 
-import edf
-from edf.pybullet_env.utils import get_image, axiscreator, img_data_to_pointcloud
-from edf.visual_utils import plot_color_and_depth, scatter_plot, scatter_plot_ax, visualize_samples, visualize_sample_cluster
-from edf.pybullet_env.env import MugTask
-
 
 class EquivLayerNormJIT(nn.Module):
     def __init__(self, irreps, eps = 1e-5, centerize_vectors = False, affine = True):
@@ -78,17 +73,17 @@ class EquivLayerNormJIT(nn.Module):
         self.max_scatter_index_elementwise = scatter_index_elementwise.max().item()
         self.feature_dim_unique = self.max_scatter_index_elementwise + 1
 
-        self.register_buffer('scatter_index_elementwise', scatter_index_elementwise.unsqueeze(-2))
-        self.register_buffer('scatter_index_irrepwise', scatter_index_irrepwise.unsqueeze(-2))
-        self.register_buffer('counts_elementwise', counts_elementwise.unsqueeze(-2))
-        self.register_buffer('counts_irrepwise', counts_irrepwise.unsqueeze(-2))
-        self.register_buffer('counts_irrepwise_unbiased', counts_irrepwise_unbiased.unsqueeze(-2))
-        self.register_buffer('scalar_mask_elementwise', scalar_mask_elementwise.unsqueeze(-2))
+        self.register_buffer('scatter_index_elementwise', scatter_index_elementwise.unsqueeze(-2), persistent=False)
+        self.register_buffer('scatter_index_irrepwise', scatter_index_irrepwise.unsqueeze(-2), persistent=False)
+        self.register_buffer('counts_elementwise', counts_elementwise.unsqueeze(-2), persistent=False)
+        self.register_buffer('counts_irrepwise', counts_irrepwise.unsqueeze(-2), persistent=False)
+        self.register_buffer('counts_irrepwise_unbiased', counts_irrepwise_unbiased.unsqueeze(-2), persistent=False)
+        self.register_buffer('scalar_mask_elementwise', scalar_mask_elementwise.unsqueeze(-2), persistent=False)
 
         #scale_logit = torch.randn(len(self.irreps))/3
         #scale_logit.requires_grad = True
         #self.scale_logit = torch.nn.Parameter(scale_logit)
-        self.scale = torch.nn.Parameter(torch.ones(1, len(self.irreps), requires_grad=True))
+        self.scale = torch.nn.Parameter(torch.ones(1, len(self.irreps), requires_grad=True))     ################################################################ TODO: register parameter #####################################
 
     # def get_offset(self):
     #     offset = []
@@ -276,11 +271,9 @@ class LinearLayerJIT(nn.Module):
             layers.append(
                 o3.Linear(self.irreps_list[i], self.irreps_list[i+1], biases = biases, path_normalization = path_normalization)
             )
-            warnings.filterwarnings('ignore', category=torch.jit.TracerWarning, message="Converting a tensor to a Python boolean might cause the trace to be incorrect*")
-            layers.append(
-                torch.jit.trace(e3nn.nn.NormActivation(self.irreps_list[i+1], F.gelu), self.irreps_list[i+1].randn(1,-1))
-            )
-            warnings.filterwarnings('default')
+            nonlinearity = e3nn.nn.NormActivation(self.irreps_list[i+1], F.gelu)
+            nonlinearity.biases = 0
+            layers.append(nonlinearity)
         layers.append(
             o3.Linear(self.irreps_list[-2], self.irreps_list[-1], biases = biases, path_normalization = path_normalization)
         )
@@ -853,7 +846,7 @@ class IrrepwiseDotProduct(nn.Module):
                                     (i, i, i, 'uuu', False)
                                     for i, (mul, ir) in enumerate(irreps)
                                 ], irrep_normalization='component', path_normalization='element')
-        self.register_buffer('inv_normalizer', torch.sqrt(torch.tensor(irreps.ls, dtype=torch.float32)*2 + 1))
+        self.register_buffer('inv_normalizer', torch.sqrt(torch.tensor(irreps.ls, dtype=torch.float32)*2 + 1), persistent=False)
 
     def forward(self, x, y):
         return self.tp(x, y) * self.inv_normalizer
