@@ -24,9 +24,12 @@ conda activate edf
 
 **Step 3.** Install Dependencies
 ```shell
-pip install torch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
+CUDA=cu113
+pip install torch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/${CUDA}
+pip install torch-cluster==1.6.0 -f https://data.pyg.org/whl/torch-1.11.0+${CUDA}.html
+pip install torch-scatter==2.0.9 -f https://data.pyg.org/whl/torch-1.11.0+${CUDA}.html
 pip install iopath fvcore
-pip install --no-index --no-cache-dir pytorch3d==0.7.2 -f https://dl.fbaipublicfiles.com/pytorch3d/packaging/wheels/py38_cu113_pyt1110/download.html
+pip install --no-index --no-cache-dir pytorch3d==0.7.2 -f https://dl.fbaipublicfiles.com/pytorch3d/packaging/wheels/py38_${CUDA}_pyt1110/download.html
 pip install -e .
 ```
 
@@ -35,6 +38,11 @@ pip install -e .
 ```shell
 python pick_train.py
 python place_train.py
+```
+## Evaluate
+```shell
+python evaluate_pick.py
+python evaluate_place.py
 ```
 
 
