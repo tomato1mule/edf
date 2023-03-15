@@ -20,6 +20,7 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: Ubuntu 22.04",
     ],
+    packages=['edf'],
     python_requires="<3.9",
     install_requires=[
         'numpy==1.23.5',
