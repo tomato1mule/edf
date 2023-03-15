@@ -24,7 +24,6 @@ from e3nn import o3
 from e3nn.math import soft_one_hot_linspace, soft_unit_step
 
 import edf
-from edf.visual_utils import plot_color_and_depth, scatter_plot, scatter_plot_ax, visualize_samples, visualize_sample_cluster
 from edf.layers import ClusteringLayer, EdgeSHLayer, SE3TransformerLayer, QuerySHLayer, QuerySHLayerJIT, TensorFieldLayer, TensorFieldLayerJIT, LinearLayer, EquivLayerNorm, EquivLayerNormJIT, LinearLayerJIT
 from edf.utils import check_irreps_sorted
 from edf.wigner import TransformFeatureQuaternion

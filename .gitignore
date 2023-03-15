@@ -5,11 +5,7 @@ demo/*
 *.pickle
 *.pt
 checkpoint/
-plot_imgs/
-logs/
-_backup/
-checkpoint_baseline/
-logs_baseline/
+!checkpoint_example/**
 
 
 

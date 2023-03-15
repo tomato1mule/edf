@@ -19,7 +19,6 @@ from edf.models import SE3Transformer, EnergyModel, QueryTensorField, SimpleQuer
 from edf.mcmc import MH, LangevinMH, PoseOptimizer
 from edf.dist import GaussianDistSE3
 from edf.layers import IrrepwiseDotProduct
-from edf.visual_utils import scatter_plot, scatter_plot_ax
 
 from edf.data import PointCloud, SE3
 
