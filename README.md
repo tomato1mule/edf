@@ -5,8 +5,7 @@ Official PyTorch implementation of Equivariant Descriptor Fields: SE(3)-Equivari
 The paper can be found at: https://openreview.net/forum?id=dnjZSPGmY5O
 
 > **Note**\
-> This is a standalone implementation of EDFs without PyBullet simulation environments.\
-> To reproduce our experimental results in the paper, please check https://github.com/tomato1mule/edf/tree/iclr2023_rebuttal_ver
+> This is a standalone implementation of EDFs without PyBullet simulation environments. To reproduce our experimental results in the paper, please check the following branch:  https://github.com/tomato1mule/edf/tree/iclr2023_rebuttal_ver
 
 
 ## Installation
