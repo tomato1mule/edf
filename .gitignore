@@ -1,11 +1,9 @@
 # Custom
 demo/*
 !demo/test_demo
-*.gzip
-*.pickle
-*.pt
 checkpoint/
 !checkpoint_example/**
+!demo/test_demo/
 
 
 
