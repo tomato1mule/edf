@@ -90,6 +90,9 @@ Demo: https://drive.google.com/file/d/1bTS6goVQw_ihEqDumox09tpc6daE6Gu8/view?usp
 
 please unzip these files and place the contents in 'checkpoint/' and 'demo/' directory, individually.
 
+# Acknowledgement
+We thank the authors of *Equivariant Transporter* Networks for generously allowing us to borrow and modify the implementation of Transporter Networks. The original implementations are available at: https://github.com/HaojHuang/Equivariant-Transporter-Net.
+
 
 
 
