@@ -8,7 +8,7 @@ The paper can be found at: https://openreview.net/forum?id=dnjZSPGmY5O
 > This is a standalone implementation of EDFs without PyBullet simulation environments. To reproduce our experimental results in the paper, please check the following branch:  https://github.com/tomato1mule/edf/tree/iclr2023_rebuttal_ver
 
 > **Note**\
-> EDF+ROS MoveIt example will be coming soon.
+> EDF+ROS MoveIt example (unstable): https://github.com/tomato1mule/edf_pybullet_ros_experiment
 
 
 ## Installation
