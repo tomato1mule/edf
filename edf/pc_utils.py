@@ -70,7 +70,7 @@ def draw_geometry(geometries):
     viewer.create_window()
     for geometry in geometries:
         if type(geometry) == PointCloud:
-            geometry = geometry.to_pcd()
+            geometry = geometry.to_o3d()
         viewer.add_geometry(geometry)
     opt = viewer.get_render_option()
     opt.show_coordinate_frame = True

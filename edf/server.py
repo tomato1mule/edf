@@ -14,7 +14,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 
 from edf.data import SE3, PointCloud
-from edf.env_interface import RESET, FEASIBLE, INFEASIBLE
+from edf.env_interface import RESET, FEASIBLE, INFEASIBLE, TERMINATE
 
 
 DEFAULT_VTK_INTERACTION_SETTING=[
@@ -211,6 +211,11 @@ class DashEdfDemoServer():
                                                           html.Div(id='reset')
                                                           ],
                                                          id='reset-info'),
+                                                html.Br(),
+                                                html.Div([html.Button('Done', id='done-count', n_clicks=0),
+                                                          html.Div(id='done_button')
+                                                          ],
+                                                         id='done-info'),
 
                                               ], id="right-panel"),                            
                                     ],
@@ -274,6 +279,11 @@ class DashEdfDemoServer():
             Output(component_id='reset', component_property="children"),
             Input(component_id='reset-count', component_property="n_clicks")
         )(self._reset_button_cb)
+
+        self.app.callback(
+            Output(component_id='done_button', component_property="children"),
+            Input(component_id='done-count', component_property="n_clicks")
+        )(self._done_button_cb)
 
         self.app.callback(
             Output(component_id='robot-state-msg', component_property="children"),
@@ -367,7 +377,15 @@ class DashEdfDemoServer():
         else:
             self._user_response = RESET
             self._request_response_flag, self._user_response_ready = False, True
-            return f"Sent reset signal at {datetime.now()}."
+            return f"Sent RESET signal at {datetime.now()}."
+        
+    def _done_button_cb(self, n_click):
+        if not self._request_response_flag or n_click < 1:
+            return f""
+        else:
+            self._user_response = TERMINATE
+            self._request_response_flag, self._user_response_ready = False, True
+            return f"Sent TERMINATE signal at {datetime.now()}."
         
     def _robot_state_msg_cb(self, n):
         if self._robot_state_msg_update_flag:
