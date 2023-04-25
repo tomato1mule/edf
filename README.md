@@ -42,9 +42,14 @@ python pick_train.py
 python place_train.py
 ```
 
-If you want load already trained checkpoints, please rename 'checkpoint_example' folder to 'checkpoint'.
+If you want to load already trained checkpoints, please rename 'checkpoint_example' folder to 'checkpoint'.
 ## Evaluate
 Please run the example notebook codes for visualizing sampled poses from trained models (evaluate_pick.ipynb and evaluate_place.ipynb)
+
+## View train log
+```shell
+python train_log_viewer.py --logdir="checkpoint/mug_10_demo/ {pick or place} /trainlog_iter_{iter}.gzip"
+```
 
 
 

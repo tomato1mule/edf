@@ -151,7 +151,7 @@ for epoch in range(1, max_epochs+1):
                 pick_agent.save(agent_param_dir, filename)
 
                 log_filename = f'trainlog_iter_{iter}.gzip'
-                gzip_save(train_logs, dir=agent_param_dir, filename=log_filename)
+                gzip_save(train_logs, path=os.path.join(agent_param_dir, log_filename))
                 
         if verbose:
             print("===============================", flush=True)
