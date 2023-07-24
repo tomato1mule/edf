@@ -51,6 +51,18 @@ Please run the example notebook codes for visualizing sampled poses from trained
 python train_log_viewer.py --logdir="checkpoint/mug_10_demo/ {pick or place} /trainlog_iter_{iter}.gzip"
 ```
 
+# Citing
+If you find our paper useful, please consider citing our paper:
+```
+@inproceedings{
+ryu2023equivariant,
+title={Equivariant Descriptor Fields: {SE}(3)-Equivariant Energy-Based Models for End-to-End Visual Robotic Manipulation Learning},
+author={Hyunwoo Ryu and Hong-in Lee and Jeong-Hoon Lee and Jongeun Choi},
+booktitle={The Eleventh International Conference on Learning Representations },
+year={2023},
+url={https://openreview.net/forum?id=dnjZSPGmY5O}
+}
+```
 
 
 
