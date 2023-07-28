@@ -56,7 +56,7 @@ If you find our paper useful, please consider citing our paper:
 ```
 @inproceedings{
 ryu2023equivariant,
-title={Equivariant Descriptor Fields: {SE}(3)-Equivariant Energy-Based Models for End-to-End Visual Robotic Manipulation Learning},
+title={Equivariant Descriptor Fields: SE(3)-Equivariant Energy-Based Models for End-to-End Visual Robotic Manipulation Learning},
 author={Hyunwoo Ryu and Hong-in Lee and Jeong-Hoon Lee and Jongeun Choi},
 booktitle={The Eleventh International Conference on Learning Representations },
 year={2023},
