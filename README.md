@@ -4,12 +4,11 @@ Official PyTorch implementation of Equivariant Descriptor Fields: SE(3)-Equivari
 
 The paper can be found at: https://openreview.net/forum?id=dnjZSPGmY5O
 
-Please also find our new work, Diffusion-EDFs at: https://github.com/tomato1mule/diffusion_edf
+> [!TIP]
+> Please also find our new work, Diffusion-EDFs at: https://sites.google.com/view/diffusion-edfs/home
 
-> **Note**\
 > This is a standalone implementation of EDFs without PyBullet simulation environments. To reproduce our experimental results in the paper, please check the following branch:  https://github.com/tomato1mule/edf/tree/iclr2023_rebuttal_ver
 
-> **Note**\
 > EDF+ROS MoveIt example (unstable): https://github.com/tomato1mule/edf_pybullet_ros_experiment
 
 
