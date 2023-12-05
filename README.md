@@ -2,7 +2,8 @@
 
 Official PyTorch implementation of Equivariant Descriptor Fields: SE(3)-Equivariant Energy-Based Models for End-to-End Visual Robotic Manipulation Learning (ICLR 2023 Poster).
 
-The paper can be found at: https://openreview.net/forum?id=dnjZSPGmY5O
+The paper can be found at: https://arxiv.org/abs/2206.08321
+Project Website: https://sites.google.com/view/edf-robotics
 
 > [!TIP]
 > Please also find our new work, Diffusion-EDFs at: https://sites.google.com/view/diffusion-edfs/home
